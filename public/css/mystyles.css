@@ -1,0 +1,40 @@
+.bethapa-table-header {
+    font-weight: bold;
+    color: #806104;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    width: 100%;
+}
+.bethapa-component-header {
+      font-weight: bold;
+    color: #343a40;
+    font-size: 3.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    width: 100%;
+}
+.bethapa-table-miniheader {
+    font-weight: bold;
+    color: #180480;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    margin-left: 40px;
+    width: 100%;
+    padding: initial;
+}
+button.add-newm {
+    display: inline-block;
+    float: right;
+    font-size: 0.6em;
+    /* padding: 0px; */
+    background: #E86325;
+    font-weight: bold;
+    /* border: 1px solid black; */
+    box-shadow: 0px 0px 0.5px black;
+}
+.mysalessect {
+    padding: 0rem;
+    float: right;
+}
