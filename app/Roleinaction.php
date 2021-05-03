@@ -16,7 +16,7 @@ class Roleinaction extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['rolename','ucret',
+    protected $fillable = ['rolename','ucret'
     ];
     //public function maincomponentSubmenus(){
         // creating a relationship between the students model 

@@ -126,7 +126,7 @@
                     aria-controls="custom-tabs-two-messages" aria-selected="false">BRANCH PAYOUT</a>
                   </li>
                  
-                  <li class="nav-item">
+                  <li class="nav-item" v-if="branchexpensesaccessSetting > 0 ">
                     <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
                      href="#custom-tabs-two-settings" role="tab" @click="loadbranchExpenses()"
                      aria-controls="custom-tabs-two-settings" aria-selected="false">BRANCH EXPENSES</a>
@@ -146,17 +146,17 @@
                   </li>
 
 
-                     <li class="nav-item" >
+                     <li class="nav-item" v-if="cashcreditaccessSetting > 0 "  >
                     <a class="nav-link" id="custom-tabs-two-five-tab" data-toggle="pill"  @click="loadAdmincashout()"
                     href="#custom-tabs-two-five" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">CASH CREDIT</a>
                   </li>
 
-                   <li class="nav-item" >
+                   <li class="nav-item"   v-if="fishdebitaccessSetting > 0 ">
                     <a class="nav-link" id="custom-tabs-two-six-tab" data-toggle="pill"  @click="loadfishcollectionrecords()"
                     href="#custom-tabs-two-six" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">FISH COLLECTION</a>
                   </li>
-                   <li class="nav-item" >
-                    <a class="nav-link" id="custom-tabs-two-seven-tab" data-toggle="pill"  @click="loadAdmincashout()"
+                   <li class="nav-item"  v-if="fishcreditaccessSetting > 0 " >
+                    <a class="nav-link" id="custom-tabs-two-seven-tab" data-toggle="pill"  @click="loadfishcreditsrecords()"
                     href="#custom-tabs-two-seven" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">FISH CREDIT</a>
                   </li>
 
@@ -2181,7 +2181,228 @@
 
 <!-- end of tabb -->
                     <div class="tab-pane fade" id="custom-tabs-two-seven" role="tabpanel" aria-labelledby="custom-tabs-two-seven-tab">
-                     seven  is. 
+                    
+                    
+  <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
+                  
+                  
+                    <div class="form-group">
+                  <label>Role</label>
+                    <select name ="roletoallow" v-model="form.roletoallow" id ="roletoallow"   :class="{'is-invalid': form.errors.has('roletoallow')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
+
+                    </select>
+                    
+
+                                <has-error :form="form" field="roletoallow"></has-error>
+
+
+                     <label>Component</label>
+                    <select name ="componentto" v-model="form.componentto" id ="componentto"   :class="{'is-invalid': form.errors.has('componentto')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in componentslist' v-bind:value='data.sysname'> ({{ data.sysname }}) - {{ data.componentname }}</option>
+
+                    </select>
+                    
+
+                                <has-error :form="form" field="componentto"></has-error>
+                       <button type="submit" id="submit" name= "submit" ref="myBtn" class="btn btn-info btn-sm">Proceed</button>
+                                    </div>
+                                </form> -->
+                  
+                       <div class="bethapa-table-header">
+                         <!-- v-if="allowedtoaddnewcashcollection > 0" -->
+                    FISH CASH CREDIT DETAILS
+                     <!-- <button  type="button" class="add-newm" @click="newCashcreditfish" >Credit / Give Cash</button> -->
+                    <button type="button" class="add-newm" @click="newCashcredit" >Make Credit </button>
+                     </div>
+
+
+                      <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                       <th>#</th>
+                      
+                      <th>DATE</th>
+                      <th>BRANCH</th>
+                     
+                      <th>FROM </th>
+                      
+                      <th>AMOUNT</th>
+                      <th>USER INITIATED</th>
+                        <th>APPROVED</th>
+                         <th>USER - APPROVED</th>
+                         <th>STATUS</th>
+                         <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+
+                   <tr v-for="cinshopt in fishcashcreditrecords.data" :key="cinshopt.id">
+                       <td>{{cinshopt.id}}</td>
+                       <td>{{(cinshopt.transferdate)}}</td>
+                       <td>   <template v-if="cinshopt.branch_name">	{{cinshopt.branch_name.branchname}}</template></td>
+                       <td> <template v-if="cinshopt.branch_namefrom">	{{cinshopt.branch_namefrom.branchname}}</template></td>
+                       <td>{{ (currencydetails) }}  {{formatPrice(cinshopt.amount)}}</td>
+                       <td> <template v-if="cinshopt.cerated_userdetails">	{{cinshopt.cerated_userdetails.name}}</template></td>
+                       <td>{{(cinshopt.comptime)}}</td>
+                       <td> <template v-if="cinshopt.approved_userdetails">	{{cinshopt.approved_userdetails.name}}</template></td>
+                       <td> <template v-if="cinshopt.status_name">	{{cinshopt.status_name.name}}</template></td>
+                     <td>
+                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  </button>
+                       <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                   
+
+                       </td>
+                  
+                     
+                    </tr>
+              
+                     
+                  </tbody>
+              
+ 
+                                   </table>
+                
+    <div class="card-footer">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <pagination :data="shopcashoutrecords" @pagination-change-page="paginationResultsBranches"></pagination>
+                </ul>
+              </div>
+                 
+                    </div>
+ 
+ <!-- tab one end -->
+
+
+<!-- Modal add menu -->
+<div class="modal fade" id="addnewcashCreditfish">
+        <div class="modal-dialog modal-dialog-top modal-lg">
+        <div  class="modal-content">
+            <div  class="modal-header">
+                <h4  v-show="!editmode"    class="modal-title">CREDIT BRANCH WITH FISH</h4> 
+                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
+                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
+                 <form class="form-horizontal" @submit.prevent="editmode ? updatebranchpayout():CreateNewcashcreditfish()"> 
+
+                    <div  class="modal-body">
+              
+              
+               <form @submit.prevent="SavetheCollectionbranch()">
+  
+  
+   <div class="form-group">
+
+
+                
+  
+  
+                   <div class="form-group">
+                         <label><b>BRANCH&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.0em;" right > <b> {{ (shopbalancngname) }}  </b></span></span>
+                 
+                    <hr>
+                       <label><b>B/F &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.0em;" right > <b> {{currencydetails}} {{ formatPrice(shopopenningbalancecacollectpoint) }}   </b></span></span>
+                 
+                    <hr>
+                  </div>
+
+                    
+                   
+
+                   
+                          </div>
+
+
+
+
+<div class ="bethapa-table-header">COLLECTION</div>
+                  
+   <div class="form-group row">
+                   <label class="col-sm-2 col-form-label">Branch </label>
+                              <div class="col-sm-6">
+                        <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEventdddd" class="form-control" :class="{'is-invalid': form.errors.has('branchnametobalance')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
+
+                    </select>
+                    <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn89" class="btn btn-primary btn-sm">Saveit</button>
+
+                                <has-error :form="form" field="branchnametobalance"></has-error>
+                              </div>
+
+                        </div>
+  
+  
+  
+  
+  
+               
+ 
+</form>
+
+                                  
+                 <div class="form-group row">
+                   <label class="col-sm-2 col-form-label">Date </label>
+                              <div class="col-sm-6">
+                           <input v-model="form.transferdate" type="date" name="transferdate"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('transferdate') }">
+                       <has-error :form="form" field="transferdate"></has-error>
+                              </div>
+
+                        </div>
+  
+                      
+               <div class="form-group row">
+                   <label class="col-sm-2 col-form-label">Amount </label>
+                              <div class="col-sm-6">
+                          <input v-model="form.amount" type="number" name="amount"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
+      <has-error :form="form" field="amount"></has-error>
+                              </div>
+
+                        </div>
+  <div class="form-group row">
+                   <label class="col-sm-2 col-form-label">Comment </label>
+                              <div class="col-sm-6">
+                          <textarea v-model="form.description" type="text" name="description"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+      <has-error :form="form" field="description"></has-error>
+                              </div>
+
+                        </div>
+                      
+                      
+                
+                 
+                 </div>
+                 
+                  <div  class="modal-footer">
+                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
+                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
+                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
+                        </div>
+                 </form>
+                       </div>
+                          </div>
+                <!-- mmmm -->
+
+
+
+
+
+
+
+
                   </div>
 
   <div class="tab-pane fade" id="custom-tabs-two-eight" role="tabpanel" aria-labelledby="custom-tabs-two-eight-tab">
@@ -2282,9 +2503,13 @@
            
          branchcashInSettings:'',
          branchpayoutaccessSettings:'',
+         branchexpensesaccessSetting:'',
          submenuaccessSettings:'',
          shopbalancingaccessSettings:'',
          cashcollectionaccessSetting:'',
+         cashcreditaccessSetting:'',
+         fishcreditaccessSetting:'',
+         fishdebitaccessSetting:'',
          /// fish macines
          fishmachinestotal:'',
          machineoneopenningcode:'',
@@ -2301,6 +2526,7 @@
           shopcashoutrecords : {},
           shopcintransferrecords:{},
           fishcollectionrecords:{},
+          fishcashcreditrecords:{},
           datarecordsSubmenusauthorised:{},
           allowedrolecomponentsObject :{},
           shopbalancingdatarecords :{},
@@ -2593,6 +2819,17 @@ loadShopbalancingrecords(){
 
 
 
+ loadfishcreditsrecords(){
+ axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
+     //  this.getRoles();
+     //  this.getUsertypes();
+     axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+     axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
+     axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
+     axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
+     axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+ },
+
 
  loadfishcollectionrecords(){
  axios.get("api/fishcollections").then(({ data }) => (this.fishcollectionrecords = data));
@@ -2631,6 +2868,12 @@ loadShopbalancingrecords(){
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
         axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
+        axios.get("api/branchexpensesaccessSetting").then(({ data }) => (this.branchexpensesaccessSetting = data));
+        
+
+        axios.get("api/fishcreditaccessSetting").then(({ data }) => (this.fishcreditaccessSetting = data));
+        axios.get("api/fishdebitaccessSetting").then(({ data }) => (this.fishdebitaccessSetting = data));
+        axios.get("api/cashcreditaccessSetting").then(({ data }) => (this.cashcreditaccessSetting = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
         axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
          axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
@@ -2650,11 +2893,15 @@ loadShopbalancingrecords(){
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
         axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
+        axios.get("api/branchexpensesaccessSetting").then(({ data }) => (this.branchexpensesaccessSetting = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
+        axios.get("api/cashcreditaccessSetting").then(({ data }) => (this.cashcreditaccessSetting = data));
         axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
         axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
         axios.get('/api/mybranch').then(function (response) { this.mybrancheslist = response.data;}.bind(this));
         axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+         axios.get("api/fishcreditaccessSetting").then(({ data }) => (this.fishcreditaccessSetting = data));
+        axios.get("api/fishdebitaccessSetting").then(({ data }) => (this.fishdebitaccessSetting = data));
         ///////////////
      axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
@@ -2681,6 +2928,10 @@ loadbranchExpenses(){
         axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
+        axios.get("api/cashcreditaccessSetting").then(({ data }) => (this.cashcreditaccessSetting = data));
+        axios.get("api/branchexpensesaccessSetting").then(({ data }) => (this.branchexpensesaccessSetting = data));
+         axios.get("api/fishcreditaccessSetting").then(({ data }) => (this.fishcreditaccessSetting = data));
+        axios.get("api/fishdebitaccessSetting").then(({ data }) => (this.fishdebitaccessSetting = data));
   
 this.checkSubmenuaccessfeatures();
   },
@@ -2698,7 +2949,11 @@ axios.get("api/payouts").then(({ data }) => (this.branchpayoutrecords = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
         axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
+        axios.get("api/branchexpensesaccessSetting").then(({ data }) => (this.branchexpensesaccessSetting = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
+        axios.get("api/cashcreditaccessSetting").then(({ data }) => (this.cashcreditaccessSetting = data));
+         axios.get("api/fishcreditaccessSetting").then(({ data }) => (this.fishcreditaccessSetting = data));
+        axios.get("api/fishdebitaccessSetting").then(({ data }) => (this.fishdebitaccessSetting = data));
 
 
   },
@@ -2715,6 +2970,10 @@ axios.get("api/payouts").then(({ data }) => (this.branchpayoutrecords = data));
         axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
+        axios.get("api/branchexpensesaccessSetting").then(({ data }) => (this.branchexpensesaccessSetting = data));
+        axios.get("api/cashcreditaccessSetting").then(({ data }) => (this.cashcreditaccessSetting = data));
+         axios.get("api/fishcreditaccessSetting").then(({ data }) => (this.fishcreditaccessSetting = data));
+        axios.get("api/fishdebitaccessSetting").then(({ data }) => (this.fishdebitaccessSetting = data));
      this.checkComponentaccessfeatures();
   
 
@@ -2788,7 +3047,14 @@ newCashcredit(){
      
      $('#addnewcashcredit').modal('show');
             },
-            
+ 
+newCashcreditfish(){
+        this.editmode = false;
+        this.form.clear();
+        this.form.reset();
+     
+     $('#addnewcashCreditfish').modal('show');
+            },           
 newCashcollection(){
         this.editmode = false;
         this.form.clear();
@@ -3311,7 +3577,7 @@ if (result.isConfirmed) {
                         )
                    
    axios.get("api/cashindetails").then(({ data }) => (this.shopcintransferrecords = data));
-
+    axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
   }).catch(()=>{
      Swal.fire({  
          icon: 'error',
@@ -3393,7 +3659,7 @@ if (result.isConfirmed) {
                         )
                    
    axios.get("api/cashindetails").then(({ data }) => (this.shopcintransferrecords = data));
-
+axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
   }).catch(()=>{
      Swal.fire({  
          icon: 'error',
@@ -3476,18 +3742,23 @@ if (result.isConfirmed) {
 
 
 ////////////////////////////////////////////////////////
-    CreateNewcashcredit(){
+  
+         
+
+   CreateNewcashcredit(){
       this.$Progress.start();
-        this.form.post('api/cashoutfromoffice')
+        this.form.post('api/makecashcredit')
         .then(()=>{
 
          
     $('#addnewcashcredit').modal('hide');
   //  Fire.$emit('AfterAction');
- axios.get("api/cashoutfromoffice").then(({ data }) => (this.admincashoutrecords = data));
+ axios.get("api/cashindetails").then(({ data }) => (this.admincashindatarecords = data));
+  axios.get("api/fishcollections").then(({ data }) => (this.fishcollectionrecords = data));
+  axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
   Toast.fire({
   icon: 'success',
-  title: 'Transaction Successfill'
+  title: 'Component Feature Authorised'
 });
         this.$Progress.finish();
 
@@ -3497,7 +3768,11 @@ if (result.isConfirmed) {
         })
          
     },
-         
+
+
+
+
+
              CreateNewcashcollection(){
       this.$Progress.start();
         this.form.post('api/makecashcollection')

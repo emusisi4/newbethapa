@@ -789,7 +789,7 @@
                   
                   
                     <div class="form-group">
-                  <label>Role</label>
+                  <label>Rol nnnne</label>
                     <select name ="mycpmponentto" v-model="form.mycpmponentto" id ="mycpmponentto" v-on:change="myClickEventroletoaddcomponent"  :class="{'is-invalid': form.errors.has('mycpmponentto')}">
                     <option value=" ">  </option>
                     <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
@@ -805,7 +805,7 @@
 
                                 
                                 </div>
-                                  <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtnroledd" class="btn btn-primary btn-sm">Saveit</button>
+                                  <button type="submit" id="submit" hidden="hidden" name= "submit" ref="desbutton" class="btn btn-primary btn-sm">Saveit</button>
                                 </form>
 
               <div class="bethapa-table-header">
@@ -2089,7 +2089,7 @@ getUsertypes: function(){ axios.get('/api/getUsertypes').then(function (response
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     /// submiting the balancing record date and branch
-myClickEventroletoaddcomponent($event) { const elem = this.$refs.myBtnroledd
+myClickEventroletoaddcomponent($event) { const elem = this.$refs.desbutton
             elem.click()
         },
         myClickEventusertoaddbranch($event) { const elem = this.$refs.myBtnroledd122

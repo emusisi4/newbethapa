@@ -130,6 +130,9 @@ Route::apiResources(['payouts' => 'API\BranchpayoutsController']);
 Route::get('shopcashinaccessSettings', 'APIController@shopcashinaccessSettings');
 Route::apiResources(['cashindetails' => 'API\CashCollectionController']);
 Route::apiResources(['fishcollections' => 'API\CashCollectionController']);
+// Route::apiResources(['fishcredits' => 'API\cashoutfromofficeforfish']);
+Route::apiResources(['cashoutfromofficeforfish' => 'API\CashCreditController']);
+
 Route::get('branchcashInSettings', 'APIController@branchcashInSettings');
 Route::get('rolesaccessSettings', 'APIController@rolesaccessSettings');
 Route::get('mainmenuaccessSettings', 'APIController@mainmenuaccessSettings');
@@ -138,6 +141,8 @@ Route::apiResources(['branchtobalance' => 'API\BranchbalacingController']);
 Route::get('shopbalancingaccessSettings', 'APIController@shopbalancingaccessSettings');
 Route::apiResources(['currentbalancingrecords' => 'API\CurrentShopbalancingContoller']);
 Route::get('branchpayoutaccessSettings', 'APIController@branchpayoutaccessSettings');
+Route::get('branchexpensesaccessSetting', 'APIController@branchexpensesaccessSetting');
+
 Route::get('componentaccessSettings', 'APIController@componentaccessSettings');
 Route::get('featuresaccessSettings', 'APIController@featuresaccessSettings');
 Route::get('getbranchnamebalancing', 'APIController@Branchnametobalancefunction'); 
@@ -192,10 +197,10 @@ Route::get('getdeleteexpensetype', 'APIController@getdeleteexpensetype');
 
 
 
+Route::get('fishcreditaccessSetting', 'APIController@fishcreditaccessSetting');
+Route::get('fishdebitaccessSetting', 'APIController@fishdebitaccessSetting');
 
-
-
-
+Route::get('cashcreditaccessSetting', 'APIController@cashcreditaccessSetting');
 Route::get('cashcollectionaccessSetting', 'APIController@cashcollectionaccessSetting');
 Route::get('geteditcashcollection', 'APIController@geteditcashcollection');
 
@@ -246,7 +251,9 @@ Route::get('getdaycashinbranch', 'APIController@Branchtobalancedayscashin');
 Route::apiResources(['brachtocollectorcredit' => 'API\BranchtocollectfromController']);
 
 Route::apiResources(['makecashcollection' => 'API\CashCollectionController']);
+Route::apiResources(['makecashcredit' => 'API\CashCreditController']);
 
+Route::apiResources(['cashoutfromofficeforfish' => 'API\CashCreditController']);
 Route::get('gettodayscashout', 'APIController@Branchtodayscashout'); 
 Route::get('gettodayexpenses', 'APIController@Branchtodaysexpenses'); 
 Route::get('gettodayspayout', 'APIController@Branchtodayspayout'); 
