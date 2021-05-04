@@ -22,7 +22,7 @@ th {
 
 
 <!-- general component access -->
- <!-- <div  v-if="generalcomponentaccessComponentfeatures > 0 "> -->
+ <div  v-if="genrealfishreportsAccess > 0 ">
 
 
    <div class="bethapa-component-header" >FISH REPORTS </div>    
@@ -115,11 +115,11 @@ th {
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab"
+                    <a class="nav-link active" id="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0" 
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab" 
                       @click="loadDailyrecordreport()"
                       aria-controls="custom-tabs-two-home" aria-selected="true">Daily Fish Reports</a>
-                      <!--  v-if="mainmenuaccessComponent > 0" -->
+                      <!--  v-if="dailyfishreportAccessComponent > 0" -->
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
@@ -159,8 +159,8 @@ th {
       <div class="tab-content" id="custom-tabs-two-tabContent">
                   
                   <!-- tab one start -->
-                  <div class="tab-pane fade show active"  id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                 <!-- v-if="mainmenuaccessComponent > 0" -->
+                  <div class="tab-pane fade show active"  id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0">
+                 <!-- v-if="dailyfishreportAccessComponent > 0" -->
                  <div class="bethapa-table-header">
                 <form @submit.prevent="savenewRecordtoview()">
                  
@@ -795,12 +795,12 @@ th {
 
           <!-- end of the body -->
 </div> 
-
+</div>
 <!-- closure of allowed -->
 
 
 <!--   if not authorised -->
-<div  v-if="generalcomponentaccessComponentfeatures < 1 ">
+<div  v-if="genrealfishreportsAccess < 1 ">
    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 mt-4">
@@ -842,8 +842,8 @@ th {
           brancheslist: null,
           currencydetails:null,
          // accessusercoponent : null,
-         generalcomponentaccessComponentfeatures:'',
-         mainmenuaccessComponent:'',
+         genrealfishreportsAccess:'',
+         dailyfishreportAccessComponent:'',
          submenuaccessComponent : '',
          vuedetailsaccessComponent : '',
          formfeaturesaccessComponent:'',
@@ -1269,8 +1269,8 @@ if (result.isConfirmed) {
        this.getRoles();
      
       axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
-     axios.get("api/generalcomponentaccessComponentfeatures").then(({ data }) => (this.generalcomponentaccessComponentfeatures = data));
-     axios.get("api/mainmenuaccessComponent").then(({ data }) => (this.mainmenuaccessComponent = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
      axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
 
 
@@ -1399,8 +1399,8 @@ if (result.isConfirmed) {
        axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
        
     axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
-     axios.get("api/generalcomponentaccessComponentfeatures").then(({ data }) => (this.generalcomponentaccessComponentfeatures = data));
-     axios.get("api/mainmenuaccessComponent").then(({ data }) => (this.mainmenuaccessComponent = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
 axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
   
 
@@ -1545,8 +1545,8 @@ if (result.isConfirmed) {
               axios.get("api/geteditmainmenu").then(({ data }) => (this.allowedtoeditmainmenu = data));
               axios.get("api/getdeletemainmenu").then(({ data }) => (this.allowedtodeletemainmenu = data));
 
-     axios.get("api/generalcomponentaccessComponentfeatures").then(({ data }) => (this.generalcomponentaccessComponentfeatures = data));
-     axios.get("api/mainmenuaccessComponent").then(({ data }) => (this.mainmenuaccessComponent = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
    
            },
          
@@ -1560,8 +1560,8 @@ if (result.isConfirmed) {
      axios.get("api/vuedetailsaccessComponent").then(({ data }) => (this.vuedetailsaccessComponent = data));
             this.loadDailyrecordreport();
 
-     axios.get("api/generalcomponentaccessComponentfeatures").then(({ data }) => (this.generalcomponentaccessComponentfeatures = data));
-     axios.get("api/mainmenuaccessComponent").then(({ data }) => (this.mainmenuaccessComponent = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
    
             Fire.$on('AfterAction', () =>{
 this.loadDailyrecordreport();

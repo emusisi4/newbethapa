@@ -75,6 +75,9 @@ Route::apiResources(['shopcashoutdetails' => 'API\ShopcasoutdetailsController'])
 Route::apiResources(['approvecashin' => 'API\ApproveCashinController']);
 Route::apiResources(['approvefishcashin' => 'API\Approvefishcashin']);
 Route::get('generalcomponentaccessSettings', 'APIController@generalcomponentaccessSettings');
+Route::get('dailyfishreportAccessComponent', 'APIController@dailyfishreportAccessComponent');
+Route::get('genrealfishreportsAccess', 'APIController@genrealfishreportsAccess');
+
 Route::get('mainmenuaccessComponent', 'APIController@mainmenuaccessComponent');
 Route::get('submenuaccessComponent', 'APIController@submenuaccessComponent');
 Route::get('formfeaturesaccessComponent', 'APIController@formfeaturesaccessComponent');

@@ -300,6 +300,7 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
     ]);
     
    
+    DB::table('salesdetails')->where('branch', $bxn)->where('datedone', $datedonessd)->where('machineno', 101)->delete();
     
     Salesdetail::Create([
       'machineno'      => '101',
@@ -314,7 +315,7 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
     
       'salesamount'    =>    ($machineonesales - $machineonepayout)*500,
       'salesfigure'    =>    $machineonesales - $machineonepayout,
-    
+      //'payoutamount'    =>    ($machineonepayout - $machineonepayout)*500,
       'monthmade'    => $monthmade,
       'yearmade'    => $yearmade,
       
