@@ -25,7 +25,11 @@ class Expense extends Authenticatable
         // creating a relationship between the students model 
         return $this->belongsTo(Expensetype::class, 'expensetype'); 
     }
-
+    
+    public function expenseName(){
+        // creating a relationship between the students model 
+        return $this->hasMany(Madeexpense::class, 'expense', 'id'); 
+    }
     public function expenseCategory(){
         // creating a relationship between the students model 
         return $this->belongsTo(Expensescategory::class, 'expensecategory'); 
@@ -33,11 +37,7 @@ class Expense extends Authenticatable
 
 
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+   
     protected $hidden = [
       //  'hid', 'id',
     ];

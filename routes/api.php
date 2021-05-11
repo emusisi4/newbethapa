@@ -103,7 +103,10 @@ Route::get('branchraccountbalancesSettings', 'APIController@branchraccountbalanc
 
 
 
-
+Route::get('expensecategoriesaccessSettings', 'APIController@expensecategoriesaccessSettings');
+Route::get('expensetypesaccessSettings', 'APIController@expensetypesaccessSettings');
+Route::get('allcompanyexpensesaccessSettings', 'APIController@allcompanyexpensesaccessSettings');
+Route::get('makeofficeexpenseaccessSettings', 'APIController@makeofficeexpenseaccessSettings');
 
 
 Route::get('branchcashOutSettings', 'APIController@branchcashOutSettings');
@@ -202,7 +205,7 @@ Route::get('getdeleteexpensetype', 'APIController@getdeleteexpensetype');
 
 Route::get('fishcreditaccessSetting', 'APIController@fishcreditaccessSetting');
 Route::get('fishdebitaccessSetting', 'APIController@fishdebitaccessSetting');
-
+Route::get('getWalletlist', 'APIController@getWallets');
 Route::get('cashcreditaccessSetting', 'APIController@cashcreditaccessSetting');
 Route::get('cashcollectionaccessSetting', 'APIController@cashcollectionaccessSetting');
 Route::get('geteditcashcollection', 'APIController@geteditcashcollection');

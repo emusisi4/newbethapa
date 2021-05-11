@@ -13,7 +13,7 @@ th {
   font-size: 23px;
 }
 </style>
-</style>
+
 <template>
 
     <div>
@@ -346,21 +346,23 @@ th {
                  <div class="bethapa-table-header">
                     SYSTEM SUB MENUS <button type="button" class="add-newm" @click="newSubmenumodal" >Add New </button>
                      </div>
+      <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Menu</label>
+                    <div class="col-sm-6">
+                      
 
-          
+
+                                  </div>
+                   
+      
+                  </div>
+       
+
             
              <table class="table">
                   <thead>
                     <tr> 
-                      <th>#</th>
-                      <th>SUB MENU NAME</th>
-                      <th>MAIN MENU</th>
-                      
-                      <th>ROUTE</th>
-                      <th>DESCRIPTION</th>
-                      <th>ORDER</th>
-                      <th>CREATED</th>
-                    
+                     
                       </tr>
                     
                   </thead>
@@ -371,19 +373,46 @@ th {
                                                   
                     <td>{{submenuinfo.id}}</td>
                     
-                     <td>{{submenuinfo.submenuname}}</td>
-                      <td>
-                         <template v-if="submenuinfo.maincomponent_submenus">	{{submenuinfo.maincomponent_submenus.mainmenuname}}</template>
+                    <td>
 
-                       
-                      </td>
-               
-                     <td>{{submenuinfo.description  }}</td>
-                     <td>{{submenuinfo.dorder}}</td>
-                     <td>{{submenuinfo.created_at  }}</td>
-                     <td>{{submenuinfo.updated_at}}</td>
-                        
-                    </tr>
+
+  <div class="progress" style="height: 50px;">
+    <div
+         class="progress-bar bg-primary"
+         role="progressbar"
+         v-bind:style="{ width: value +'%'}"
+         v-bind:aria-valuenow="submenuinfo.id"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         ></div>
+  </div>
+
+
+
+
+
+
+
+
+
+<div class="progress" style="height: 20px;">
+  <div class="progress-bar bg-info" role="progressbar" style='width: 70%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+   
+</div>
+
+<div class="progress" style="height: 20px;">
+  <div class="progress-bar bg-danger" role="progressbar" style='width: 10%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  
+</div>
+
+<div class="progress" style="height: 20px;">
+  <div class="progress-bar bg-success" role="progressbar" style='width: 20%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  
+</div>
+
+
+                    </td>
+                                        </tr>
               
                     
                   </tbody>
@@ -485,8 +514,7 @@ th {
                 class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
               <has-error :form="form" field="description"></has-error>
                                                  </div>
-                   
-      
+                         
                   </div>
                           
                  </div>

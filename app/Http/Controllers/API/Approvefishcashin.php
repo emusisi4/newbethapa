@@ -182,6 +182,10 @@ DB::table('cintransfers')
 ->where('id', $id)
 ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
 
+
+/// Updating the daily records
+
+
 // }
 
 

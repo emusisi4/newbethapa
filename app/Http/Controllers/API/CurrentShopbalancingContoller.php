@@ -275,7 +275,22 @@ $dorder = \DB::table('branches')->where('id', '=', $userbranch)->count('dorder')
 $bxn = $request['branchnametobalance'];
 $datedonessd = $request['datedone'];
 DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedonessd)->where('machineno', 101)->delete();
-
+// $totalcollection = \DB::table('cintransfers')
+   
+//     ->where('branchto', '=', $bxn)
+//     ->where('transferdate', '=', $datedonessd)
+//     ->where('status', '=', 1)
+   
+//     ->sum('amount');
+     
+//     ////
+//     $totalcredits = \DB::table('couttransfers')
+   
+//     ->where('branchto', '=', $bxn)
+//     ->where('transferdate', '=', $datedonessd)
+//     ->where('status', '=', 1)
+   
+//     ->sum('amount');
 
     /// working and Updating the daily Codes
     Dailyreportcode::Create([
@@ -294,12 +309,16 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
       'currentsalesfigure'   =>    $todayssaes,
       'dorder'  =>    $dorder,
       'ucret'   => $userid,
+      'totalcollection' => $totalcashout,
+      'totalcredits'=> $totalcashin,
       'monthmade'    => $monthmade,
       'yearmade'     => $yearmade,
     
     ]);
+    ///// Updating the collection and credits 
+
+
     
-   
     DB::table('salesdetails')->where('branch', $bxn)->where('datedone', $datedonessd)->where('machineno', 101)->delete();
     
     Salesdetail::Create([
@@ -391,10 +410,10 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
 //             ->sum('amount');
      
 //         /// getting the cashin
-//            $totalcashin = \DB::table('couttransfers')->where('transferdate', '=', $dateinq)->where('branchto', '=', $inpbranch)->where('status', '=', 1)
+//            $totalcashin = \DB::table('couttransfers')->where('transferdate', '=', $dateinq)->where('branchinact', '=', $inpbranch)->where('status', '=', 1)
 //      ->sum('amount');
 //       /// getting the cashout
-//             $totalcashout = \DB::table('cintransfers')->where('transferdate', '=', $dateinq)->where('branchto', '=', $inpbranch)->where('status', '=', 1)->sum('amount');
+//             $totalcashout = \DB::table('cintransfers')->where('transferdate', '=', $dateinq)->where('branchinact', '=', $inpbranch)->where('status', '=', 1)->sum('amount');
      
 //       /// getting the payout
 //             $totalpayout = \DB::table('branchpayouts')->where('datepaid', '=', $dateinq)->where('branch', '=', $inpbranch)->sum('amount');

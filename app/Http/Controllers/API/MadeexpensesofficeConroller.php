@@ -29,7 +29,7 @@ class MadeexpensesofficeConroller extends Controller
     {
       $userid =  auth('api')->user()->id;
      $userbranch =  auth('api')->user()->branch;
-    $userrole =  auth('api')->user()->type;
+    $userrole =  auth('api')->user()->mmaderole;
      //   if($userrole = 1)
 
 
@@ -57,7 +57,7 @@ class MadeexpensesofficeConroller extends Controller
       
          return   Madeexpense::with(['branchName','expenseName'])->latest('id')
       // return   Madeexpense::latest('id')
-        ->where('del', 0)
+     //   ->where('del', 0)
        // ->where('branch', $userbranch)
        ->paginate(20);
       }
@@ -66,7 +66,7 @@ class MadeexpensesofficeConroller extends Controller
          //  -> where('ucret', $userid)
            
 
-       return   Madeexpense::get()->count();
+     
 
 
 
@@ -84,12 +84,7 @@ class MadeexpensesofficeConroller extends Controller
       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request)
     {
         //
@@ -98,9 +93,10 @@ class MadeexpensesofficeConroller extends Controller
 
 
        $this->validate($request,[
-        'expensename'   => 'required | String |max:191',
+      //  'expensename'   => 'required | String |max:191',
         'description'   => 'required',
         'amount'  => 'required',
+        'expense'  => 'required',
         'datemade'  => 'required',
         'branch'  => 'required',
        // 'expensetype'   => 'sometimes |min:0'
@@ -114,12 +110,12 @@ class MadeexpensesofficeConroller extends Controller
   
      
   //       $dats = $id;
-  $exp = $request['expensename'];
+  $exp = $request['expense'];
   $expcat = DB::table('expenses')->where('expenseno', $exp )->value('expensecategory');
   $exptyo = \DB::table('expenses')->where('expenseno', $exp)->value('expensetype');
 
        return Madeexpense::Create([
-      'expense' => $request['expensename'],
+      'expense' => $request['expense'],
      //'expenseno' => $hid,
       'description' => $request['description'],
       'amount' => $request['amount'],
@@ -134,24 +130,14 @@ class MadeexpensesofficeConroller extends Controller
   ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
     }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
+    
     public function update(Request $request, $id)
     {
         //
@@ -170,12 +156,7 @@ $this->validate($request,[
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
         //

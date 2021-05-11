@@ -104,8 +104,8 @@
             <div class="card card-primary card-outline card-tabs">
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <!--  v-if="branchcashOutSettings > 0 " -->
-                  <li class="nav-item" >
+                    <!--  -->
+                  <li class="nav-item"  v-if="expensecategoriesaccessSettings > 0 " >
                     <a class="nav-link active" id="custom-tabs-two-home-tab"
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab"
                      @click="loadExpensecategories()" aria-controls="custom-tabs-two-home" aria-selected="true">EXPENSE CATEGORIES</a>
@@ -113,21 +113,21 @@
 <!--   v-if="branchcashInSettings > 0 " -->
 
 
-                  <li class="nav-item" > 
+                  <li class="nav-item"  v-if="expensetypesaccessSettings > 0 " > 
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
                      @click="loadExpensetypes()" aria-controls="custom-tabs-two-profile" aria-selected="false">EXPENSE TYPES</a>
                   </li>
 
  <!-- v-if="branchpayoutaccessSettings > 0 " -->
- <li class="nav-item">
+ <li class="nav-item"  v-if="allcompanyexpensesaccessSettings > 0 " >
                     <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
                      href="#custom-tabs-two-settings" role="tab" @click="loadGeneralExpenses()"
                      aria-controls="custom-tabs-two-settings" aria-selected="false">GEneral Expenses</a>
                   </li>
 
 
-                  <li class="nav-item"  >
+                  <li class="nav-item"  v-if="makeofficeexpenseaccessSettings > 0 "  >
                     <a class="nav-link" id="custom-tabs-two-messages-tab"
                     @click="loadExpensesmadebyoffice()" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
                     aria-controls="custom-tabs-two-messages" aria-selected="false">MAKE EXPENSE</a>
@@ -135,10 +135,10 @@
                  
                  
 <!--  -->
-                   <li class="nav-item" v-if="shopbalancingaccessSettings > 0 ">
+                   <li class="nav-item" v-if="expenserequestsaccessSetting > 0 ">
                     <a class="nav-link" id="custom-tabs-two-three-tab" data-toggle="pill"
                      href="#custom-tabs-two-three" role="tab" @click="loadShopbalancingrecords()" 
-                     aria-controls="custom-tabs-two-three" aria-selected="false">SHOP BALANCING</a>
+                     aria-controls="custom-tabs-two-three" aria-selected="false">EXPENSE REQUESTS</a>
                   </li>
 
 <!-- -->
@@ -167,7 +167,7 @@
                   
                   <!-- tab one start -->
                   <!-- v-if="branchcashOutSettings > 0 " -->
-                 <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel"  aria-labelledby="custom-tabs-two-home-tab"> 
+                 <div class="tab-pane fade show active" id="custom-tabs-two-home" v-if="expensecategoriesaccessSettings > 0 "  role="tabpanel"  aria-labelledby="custom-tabs-two-home-tab"> 
                
                  <div class="bethapa-table-header">
                       EXPENSE CATEGORIES 
@@ -303,7 +303,7 @@
                    
                    
     <!-- tab one start -->
-                  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                  <div class="tab-pane fade show active" id="custom-tabs-two-home" v-if="expensetypesaccessSettings > 0 " role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                  
                   <div class="bethapa-table-header">
                       EXPENSE TYPES 
@@ -439,7 +439,7 @@
 
 
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmm -->
-                  <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+                  <div class="tab-pane fade" v-if="allcompanyexpensesaccessSettings > 0 " id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
                     
                     
               
@@ -633,7 +633,7 @@
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
 
 
-  <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
+  <div class="tab-pane fade" v-if="makeofficeexpenseaccessSettings > 0 "  id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
              
 
                  <form @submit.prevent="SaveRoletoaddmainmenu()">
@@ -659,13 +659,13 @@
                                 </form>
 
               <div class="bethapa-table-header">
-                    COMPANY EXPENDITURES
+                    Expenses made
                       <!-- <button type="button"  class="add-newm" @click="newBranchpayoutbranch" >Add New </button> -->
-                        <button type="button" v-if="allowedtomakeofficeexpense > 0" class="add-newm" @click="newBranchpayoutbranch" >Pay Ticket / Slip</button>
+                        <button type="button" v-if="allowedtomakeofficeexpense > 0" class="add-newm" @click="newofficeexpenditure" >Add Expenditure</button>
                      </div>
         
                     
-                    
+       
               <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
@@ -684,23 +684,21 @@
                   </thead>
                   <tbody>
                     <tr>
-
-                                       <tr v-for="allmadeexpenses in officemadeexpensesrecords.data" :key="allmadeexpenses.id">
-                    
-                 <td>{{allmadeexpenses.id}}</td>
+                       <tr v-for="offcmadeexp in officemadeexpensesrecords.data" :key="offcmadeexp.id">
+                    <td>{{offcmadeexp.id}}</td>
                   
-                    <td>{{allmadeexpenses.datemade}}</td>
-                           <td>    <template v-if="allmadeexpenses.branch_name">	{{allmadeexpenses.branch_name.branchname}}</template></td>
-                           <td>    <template v-if="allmadeexpenses.expense_name">	{{allmadeexpenses.expense_name.expensename}}</template></td>
-                          <td>{{allmadeexpenses.description}}</td>
+                    <td>{{offcmadeexp.datemade}}</td>
+                           <td>    <template v-if="offcmadeexp.branch_name">	{{offcmadeexp.branch_name.branchname}}</template></td>
+                           <td>    <template v-if="offcmadeexp.expense_name">	{{offcmadeexp.expense_name.expensename}}</template></td>
+                          <td>{{offcmadeexp.description}}</td>
                        
-                               <td> {{currencydetails}} {{formatPrice((allmadeexpenses.amount))}}</td>
-                               <td>   <div v-if="((allmadeexpenses.explevel)) == 1">
+                               <td> {{currencydetails}} {{formatPrice((offcmadeexp.amount))}}</td>
+                               <td>   <div v-if="((offcmadeexp.explevel)) == 1">
                                 <span class="cell" style="color:#dc3545 ;">  
    
                     <span style="font-size:1.0em;" center >  Branch </span></span>
                               </div>
-                               <div v-if="((allmadeexpenses.explevel)) == 2">
+                               <div v-if="((offcmadeexp.explevel)) == 2">
                                 <span class="cell" style="color:#1591a5 ;">  
    
                     <span style="font-size:1.0em;" center >  Office </span></span>
@@ -708,19 +706,19 @@
                               
                               </td>
 
-   <td>   <div v-if="((allmadeexpenses.walletexpense)) == 1">
+   <td>   <div v-if="((offcmadeexp.walletexpense)) == 1">
                                 <span class="cell" style="color:green ;">  
    
                     <span style="font-size:1.0em;" center >  Collections </span></span>
                               </div>
-                               <div v-if="((allmadeexpenses.walletexpense)) == 2">
+                               <div v-if="((offcmadeexp.walletexpense)) == 2">
                                 <span class="cell" style="color:#1591a5 ;">  
    
                     <span style="font-size:1.0em;" center >  Investment </span></span>
                               </div>
                               
-                                 <div v-if="((allmadeexpenses.walletexpense)) == 4">
-                                <span class="cell" style="color:#1578a5 ;">  
+                                 <div v-if="((offcmadeexp.walletexpense)) == 4">
+                                <span class="cell" style="color:#1378a5 ;">  
    
                     <span style="font-size:1.0em;" center >  Branch </span></span>
                               </div>
@@ -728,23 +726,19 @@
                                </td>
 
                                
-                          <td>     
-                            
-            <button type="button" v-if="allowedtoeditofficeexpense > 0"  class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(allmadeexpenses)"> Edit</button>
-            <button type="button" v-if="allowedtodeleteofficeexpense > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecord(allmadeexpenses.id)"> Del </button>
+                          <td> 
+                                <!-- v-if="allowedtoeditadmincashcollection > 0 "    -->
+                             <button type="button" v-if="allowedtoeditofficeexpense > 0" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editOfficemadeexpense(offcmadeexp)">Edit</button>
+      <button type="button" v-if="allowedtodeleteofficeexpense > 0"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(offcmadeexp.id)"> DEl </button>
+
+<!-- v-if="allowedtodeleteadmincashcollection > 0 " -->
                       </td>
-
-
-               
-                              
-                               
                     </tr>
               
-                     
+                    
                   </tbody>
-              
- 
                                    </table>
+
    
    
                       <div class="card-footer">
@@ -760,30 +754,32 @@
 
 
 <!-- Modal add menu -->
-<div class="modal fade" id="addnewpayoutbranch">
+<div class="modal fade" id="makeofficeexpensemodal">
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">New Payout Registration</h4> 
+                <h4  v-show="!editmode"    class="modal-title">Office Expenses</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
-                 <form class="form-horizontal" @submit.prevent="editmode ? updatepayout():createNewpayout()"> 
+                 <form class="form-horizontal" @submit.prevent="editmode ? updadeexpenseforofficeuse():createNewofficeexpense()"> 
 
                     <div  class="modal-body">
               
-              
-                 
-                 <div class="form-group row">
+                      <div class="form-group row">
 
-                            <label class="col-sm-2 col-form-label">ReceiptNo   </label>
+                            <label class="col-sm-2 col-form-label">Branch </label>
                               <div class="col-sm-6">
-                          <input v-model="form.receiptno" type="text" name="receiptno"
-        class="form-control" :class="{ 'is-invalid': form.errors.has('receiptno') }">
-      <has-error :form="form" field="receiptno"></has-error>
+                            <select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
+<option value=" ">  </option>
+<option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
 
+</select>
+            <has-error :form="form" field="branch"></has-error>
                               </div>
 
                         </div>
+                 
+               
                 
                       
                
@@ -792,11 +788,14 @@
 
                            <div class="form-group row">
 
-                            <label class="col-sm-2 col-form-label">Amount </label>
+                            <label class="col-sm-2 col-form-label">Expense </label>
                               <div class="col-sm-6">
-                                 <input v-model="form.amount" type="text" name="amount"
-        class="form-control" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
+                            <select name ="expense" v-model="form.expense" id ="expense"  class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
+<option value=" ">  </option>
+<option v-for='data in expenseslist' v-bind:value='data.id'>{{ data.expensename }}</option>
+
+</select>
+            <has-error :form="form" field="expense"></has-error>
                               </div>
 
                         </div>
@@ -805,28 +804,53 @@
                
    <div class="form-group row">
 
-                            <label class="col-sm-2 col-form-label">Branch </label>
+                            <label class="col-sm-2 col-form-label">Amount </label>
                               <div class="col-sm-6">
-                             <select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
-<option value=""> Branch of origin </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branch"></has-error>
+                              <input v-model="form.amount" type="number" name="amount"
+       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
+      <has-error :form="form" field="amount"></has-error>
                               </div>
 
                         </div>
                 
                         <div class="form-group row">
 
-                            <label class="col-sm-2 col-form-label">Receipt date </label>
+                            <label class="col-sm-2 col-form-label">Expense Date </label>
                               <div class="col-sm-6">
-                               <input v-model="form.datemade" type="date" name="datemade"
-        class="form-control" :class="{ 'is-invalid': form.errors.has('datemade') }">
+                                <input v-model="form.datemade" type="date" name="datemade"
+       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('datemade') }">
       <has-error :form="form" field="datemade"></has-error>
                               </div>
 
                         </div>
+                        <!--  -->
+                         <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Wallet </label>
+                              <div class="col-sm-6">
+                              <select name ="walletexpense" v-model="form.walletexpense" id ="walletexpense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('walletexpense')}">
+                  <option value=" ">  </option>
+                  <option v-for='data in walletlist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+
+                  </select>
+            <has-error :form="form" field="walletexpense"></has-error>
+                              </div>
+
+                        </div>
+                
+                 <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Description </label>
+                              <div class="col-sm-6">
+                                    <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+                 
+                <has-error :form="form" field="description"></has-error>
+     
+                              </div>
+
+                        </div>
+                
+
                 
                       
                 
@@ -1871,15 +1895,22 @@
             ///////////////////////////////////
           brancheslist: [],
           mybrancheslist:[],
+          // walletlist:[],
        
-       
+        expenseslist:{},
+            walletlist:{},
          gencomponentaccessExpenses:'',
          branchcashOutSettings:'',
-           
+          expensecategoriesaccessSettings:'',
+
+expensetypesaccessSettings:'',
+allcompanyexpensesaccessSettings:'',
+makeofficeexpenseaccessSettings:'',
+
          branchcashInSettings:'',
          branchpayoutaccessSettings:'',
          submenuaccessSettings:'',
-         shopbalancingaccessSettings:'',
+         expenserequestsaccessSetting:'',
          cashcollectionaccessSetting:'',
      ///    
 
@@ -1893,10 +1924,11 @@
           datarecordsSubmenusauthorised:{},
           allowedrolecomponentsObject :{},
           shopbalancingdatarecords :{},
+          officemadeexpensesrecords:{},
            datarecordscompanyexpenses :{},
           admincashindatarecords:{},
           admincashoutrecords:{},
-          officemadeexpensesrecords:{},
+          
           allowedrolecomponentfeaturesObject : {},
           allowedtoaddmainmenuaccess:{},
           allowedtoaddsubmenuaccess:{},
@@ -1908,6 +1940,8 @@
           allowedtoviewshopBalancingRecord:{},
           allowedtodeletepayout:{},
           allowedtomakeofficeexpense:{},
+           
+              
           allowedtoeditofficeexpense:{},
           allowedtodeleteofficeexpense:{},
           allowedtoaddexpensecategory:{},
@@ -1942,6 +1976,7 @@ expenseslist:{},
                 id: '',
                 name:'',
                  expensecategory : '',
+                 walletexpense:'',
    expensetypes : '',
                 email:'',
                 rolename:'',
@@ -1953,7 +1988,7 @@ expcatcatname: '',
 openningbalance:'',
 contact:'', 
 location:'',
-expense:'',
+expense: '',
 description:'',
 ///
  receiptno : '',
@@ -2087,7 +2122,7 @@ myClickEventformainmenuas($event) { const elem = this.$refs.myBtnmainmen
 
 SaveRoletoaddmainmenu (){ 
     this.form.post('api/roletoaddmainmenu');
-      axios.get("api/payouts").then(({ data }) => (this.officemadeexpensesrecords = data));
+      axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
             },
 
 SaveRoletoaddsubment (){ 
@@ -2195,10 +2230,16 @@ loadShopbalancingrecords(){
 
         this.checkBranchescomponentfeatures();
         axios.get("api/gencomponentaccessExpenses").then(({ data }) => (this.gencomponentaccessExpenses = data));
+
+
+ axios.get("api/allcompanyexpensesaccessSettings").then(({ data }) => (this.allcompanyexpensesaccessSettings = data));
+        axios.get("api/makeofficeexpenseaccessSettings").then(({ data }) => (this.makeofficeexpenseaccessSettings = data));
+         axios.get("api/expensetypesaccessSettings").then(({ data }) => (this.expensetypesaccessSettings = data));
+        axios.get("api/expensecategoriesaccessSettings").then(({ data }) => (this.expensecategoriesaccessSettings = data));
         axios.get("api/branchcashOutSettings").then(({ data }) => (this.branchcashOutSettings = data));
         axios.get("api/branchcashInSettings").then(({ data }) => (this.branchcashInSettings = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
-        axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
+       
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
  axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
@@ -2213,10 +2254,14 @@ loadShopbalancingrecords(){
      //  this.getUsertypes();
         this.checkBranchescomponentfeatures();
         axios.get("api/gencomponentaccessExpenses").then(({ data }) => (this.gencomponentaccessExpenses = data));
+        axios.get("api/expensecategoriesaccessSettings").then(({ data }) => (this.expensecategoriesaccessSettings = data));
+        axios.get("api/expensetypesaccessSettings").then(({ data }) => (this.expensetypesaccessSettings = data));
+         axios.get("api/allcompanyexpensesaccessSettings").then(({ data }) => (this.allcompanyexpensesaccessSettings = data));
+        axios.get("api/makeofficeexpenseaccessSettings").then(({ data }) => (this.makeofficeexpenseaccessSettings = data));
         axios.get("api/branchcashOutSettings").then(({ data }) => (this.branchcashOutSettings = data));
         axios.get("api/branchcashInSettings").then(({ data }) => (this.branchcashInSettings = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
-        axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
+       
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
         axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
@@ -2250,33 +2295,38 @@ loadGeneralExpenses(){
               axios.get("api/geteditCompanyexpense").then(({ data }) => (this.allowedtoeditCompanyexpense = data));
               axios.get("api/deleteCompanyexpense").then(({ data }) => (this.allowedtodeleteCompanyexpense = data));
               axios.get("api/getaddCompanyexpense").then(({ data }) => (this.allowedtoaddnewexpensereccord = data));
-              
+      axios.get("api/expensecategoriesaccessSettings").then(({ data }) => (this.expensecategoriesaccessSettings = data));    
+      axios.get("api/expensetypesaccessSettings").then(({ data }) => (this.expensetypesaccessSettings = data));    
     axios.get("api/gencomponentaccessExpenses").then(({ data }) => (this.gencomponentaccessExpenses = data));
         axios.get("api/branchcashOutSettings").then(({ data }) => (this.branchcashOutSettings = data));
         axios.get("api/branchcashInSettings").then(({ data }) => (this.branchcashInSettings = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
-        axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
+       
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
-  
+   axios.get("api/allcompanyexpensesaccessSettings").then(({ data }) => (this.allcompanyexpensesaccessSettings = data));
+        axios.get("api/makeofficeexpenseaccessSettings").then(({ data }) => (this.makeofficeexpenseaccessSettings = data));
 this.checkSubmenuaccessfeatures();
   },
 
 loadExpensesmadebyoffice(){
   //   this.checkMainmenuaccessfeatures();
-axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
+       axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
           
         axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
-
+ axios.get("api/allcompanyexpensesaccessSettings").then(({ data }) => (this.allcompanyexpensesaccessSettings = data));
+        axios.get("api/makeofficeexpenseaccessSettings").then(({ data }) => (this.makeofficeexpenseaccessSettings = data));
       axios.get("api/gencomponentaccessExpenses").then(({ data }) => (this.gencomponentaccessExpenses = data));
         axios.get("api/branchcashOutSettings").then(({ data }) => (this.branchcashOutSettings = data));
-        
+        axios.get("api/expensetypesaccessSettings").then(({ data }) => (this.expensetypesaccessSettings = data));
+        axios.get("api/expensecategoriesaccessSettings").then(({ data }) => (this.expensecategoriesaccessSettings = data));
         axios.get("api/branchcashInSettings").then(({ data }) => (this.branchcashInSettings = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
-        axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
+        axios.get("api/getWalletlist").then(({ data }) => (this.walletlist = data));
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
 ///
+     axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
    axios.get("api/getaddnewofficeexpense").then(({ data }) => (this.allowedtomakeofficeexpense = data));
       axios.get("api/geteditofficeexpense").then(({ data }) => (this.allowedtoeditofficeexpense = data));
        axios.get("api/getdeleteofficeexpense").then(({ data }) => (this.allowedtodeleteofficeexpense = data));
@@ -2291,11 +2341,15 @@ axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpens
       //  this.getUsertypes();
     axios.get("api/gencomponentaccessExpenses").then(({ data }) => (this.gencomponentaccessExpenses = data));
         axios.get("api/branchcashOutSettings").then(({ data }) => (this.branchcashOutSettings = data));
+        axios.get("api/expensecategoriesaccessSettings").then(({ data }) => (this.expensecategoriesaccessSettings = data));
+        axios.get("api/expensetypesaccessSettings").then(({ data }) => (this.expensetypesaccessSettings = data));
         axios.get("api/branchcashInSettings").then(({ data }) => (this.branchcashInSettings = data));
         axios.get("api/submenuaccessSettings").then(({ data }) => (this.submenuaccessSettings = data));
-        axios.get("api/shopbalancingaccessSettings").then(({ data }) => (this.shopbalancingaccessSettings = data));
+       
         axios.get("api/branchpayoutaccessSettings").then(({ data }) => (this.branchpayoutaccessSettings = data));
         axios.get("api/cashcollectionaccessSetting").then(({ data }) => (this.cashcollectionaccessSetting = data));
+         axios.get("api/allcompanyexpensesaccessSettings").then(({ data }) => (this.allcompanyexpensesaccessSettings = data));
+        axios.get("api/makeofficeexpenseaccessSettings").then(({ data }) => (this.makeofficeexpenseaccessSettings = data));
      this.checkComponentaccessfeatures();
   
 
@@ -2385,14 +2439,16 @@ newCashcollection(){
      
      $('#addnewExpensecategorymodal').modal('show');
             },
-   editPayout(officemadeexpensesrecords){
+   editOfficemadeexpense(officemadeexpensesrecords){
                 this.editmode = true;
                  this.form.clear();
         this.form.reset();
         this.form.fill(officemadeexpensesrecords);
 
-$('#addnewpayoutbranch').modal('show');
+$('#makeofficeexpensemodal').modal('show');
             },
+
+            
 
  editBranchexpenserecord(officemadeexpensesrecords){
                 this.editmode = true;
@@ -2692,7 +2748,7 @@ if (result.isConfirmed) {
             },
            
 
-deletepayout(id){
+deletemadeexpense(id){
    Swal.fire({
   title: 'Are you sure?',
   text: "You won't be able to revert this!",
@@ -2705,7 +2761,7 @@ deletepayout(id){
 
 /// send request ti
 if (result.isConfirmed) {
-  this.form.delete('api/payouts/'+id).then(()=>{
+  this.form.delete('api/makeexpenseofficeuser/'+id).then(()=>{
   
                         Swal.fire(
                           'Deleted!',
@@ -2713,7 +2769,7 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
- axios.get("api/payouts").then(({ data }) => (this.officemadeexpensesrecords = data));
+axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
   axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
      axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
@@ -2819,13 +2875,13 @@ this.form.put('api/makeexpense/'+this.form.id)
   });
    },
 
-   updatepayout(){
+   updadeexpenseforofficeuse(){
     this.$Progress.start();
           
-this.form.put('api/payouts/'+this.form.id)
+this.form.put('api/makeexpenseofficeuser/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addnewpayoutbranch').modal('hide');
+   $('#makeofficeexpensemodal').modal('hide');
   
     Swal.fire(
         'Update!',
@@ -2833,7 +2889,7 @@ this.form.put('api/payouts/'+this.form.id)
         'success'
       )
       this.$Progress.finish();
-      axios.get("api/payouts").then(({ data }) => (this.officemadeexpensesrecords = data));
+     axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
   axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
      axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
@@ -3062,7 +3118,8 @@ createNewcompanyexpense(){
         .then(()=>{
 
          
-    $('#addnewcompanyexpensemodal').modal('hide');
+    $('#addnewcompanyexpensemodal').modal('show');
+    this.form.reset();
        axios.get("api/expenses").then(({ data }) => (this.datarecordscompanyexpenses = data));
       axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
@@ -3082,6 +3139,74 @@ createNewcompanyexpense(){
         })
          
     },
+
+  newofficeexpenditure(){
+                      this.editmode = false;
+                 this.form.clear();
+        this.form.reset();
+$('#makeofficeexpensemodal').modal('show');
+            },
+            deleteRecord(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/makeexpense/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+     createNewofficeexpense(){
+
+                                this.$Progress.start();
+                                this.form.post('api/makeexpenseofficeuser')
+                                .then(()=>{
+
+
+                                // Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+
+       }, 
+
+
+
+
+
 createNewpayout(){
       this.$Progress.start();
         this.form.post('api/payouts')
@@ -3089,7 +3214,7 @@ createNewpayout(){
 
          
     $('#addnewpayoutbranch').modal('hide');
-    axios.get("api/payouts").then(({ data }) => (this.officemadeexpensesrecords = data));
+   axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
       axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
      axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
@@ -3223,7 +3348,7 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
-     axios.get("api/payouts").then(({ data }) => (this.officemadeexpensesrecords = data));
+    axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
   }).catch(()=>{
      Swal.fire({  
          icon: 'error',

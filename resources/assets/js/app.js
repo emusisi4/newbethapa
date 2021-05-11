@@ -80,6 +80,8 @@ let routes = [
 { path: '/expenses', component: require('./components/Expensescomponent.vue') },
 { path: '/fishmanagement', component: require('./components/Fishcodessetting.vue') },
 { path: '/fishsalesreport', component: require('./components/Dailyfishsalesreport.vue') },
+{ path: '/financereports', component: require('./components/Financereports.vue') },
+
 ////////
 { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
 { path: '/cashtransactions', component: require('./components/Cashtransactions.vue')},

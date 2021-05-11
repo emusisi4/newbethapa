@@ -705,7 +705,9 @@
                       <th>BRANCH</th>
                       <th>EXPENSE</th>
                        <th>DESCRIPTION</th>
+                             
                       <th>AMOUNT</th>
+                      <th>STATUS</th>
                        <th></th>
                     </tr>
                   </thead>
@@ -723,16 +725,28 @@
                           <td>{{alldayexpense.description}}</td>
                        
                                <td> {{ (currencydetails) }} {{formatPrice((alldayexpense.amount))}}</td>
+                              <td> <div v-if="((alldayexpense.approvalstate))== 0">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Pending </span></span>
+                              </div>
+                              <div v-if="((alldayexpense.approvalstate))== 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Approved </span></span>
+                              </div>
                               
+                              </td>
                        
                 
                 <td>
+                  <div v-if="alldayexpense.approvalstate == 0" >
       <button type="button" v-if="allowedtoeditexpenserecord > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editBranchexpenserecord(alldayexpense)">Edit</button>
       <button type="button" v-if="allowedtodeleteexpenserecord > 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteBranchexpenserecord(alldayexpense.id)"> DEl </button>
 
 
 
-
+</div>
                              
                               </td>
 
