@@ -30,7 +30,7 @@ th {
             <div class="col-sm-2 col-2">
                 <div class="small-box bg-secondary">
                     <div class="inner"><h4><strong> Sales </strong></h4> 
-                    <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance)}}</b></h5></div>
+                    <h5><b> {{ (currencydetails) }} {{formatPrice(selecteddatetotalsales)}}</b></h5></div>
                      <div class="icon"><i class="ion ion-bag"></i></div> 
                      <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a></div>
                      </div> 
@@ -124,15 +124,15 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Sales Report</a>
+                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Sales Report</a>
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
                  
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-messages-tab"
-                    @click="loadVuecomponents()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
-                    aria-controls="custom-tabs-two-messages" aria-selected="false">VUE - COMPONENTS</a>
+                    @click="loadMonthlyreport()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
+                    aria-controls="custom-tabs-two-messages" aria-selected="false">Monthly Report</a>
                     <!--  v-if="vuedetailsaccessComponent > 0" -->
                   </li>
                  
@@ -274,66 +274,7 @@ th {
 
 
 <!-- Modal add menu -->
-<div class="modal fade" id="addnewMainmenumodal">
-        <div class="modal-dialog modal-dialog-top modal-lg">
-        <div  class="modal-content">
-            <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">ADD NEW RECORD</h4> 
-                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
-                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
-                 <form class="form-horizontal" @submit.prevent="editmode ? updateMainmenu():createMainmenu()"> 
 
-                    <div  class="modal-body">
-              
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Main Menu</label>
-                    <div class="col-sm-6">
-                  <input v-model="form.mainmenuname" type="text" name="mainmenuname"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('mainmenuname') }">
-                    <has-error :form="form" field="mainmenuname"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-                 
-               
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Icon Class</label>
-                    <div class="col-sm-6">
-                  <input v-model="form.iconclass" type="text" name="iconclass"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('iconclass') }">
-                    <has-error :form="form" field="iconclass"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-
-                    
-          
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Display Order</label>
-                    <div class="col-sm-6">
-                  <input v-model="form.dorder" type="text" name="dorder"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('dorder') }">
-                    <has-error :form="form" field="dorder"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-
-                          
-                 </div>
-                 
-                  <div  class="modal-footer">
-                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
-                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
-                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
-                        </div>
-                 </form>
-                       </div>
-                          </div>
-                </div>
-                
 
       <!-- End of Modal for -->
 <!--  -->
@@ -344,71 +285,93 @@ th {
                   <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                  
                  <div class="bethapa-table-header">
-                    SYSTEM SUB MENUS <button type="button" class="add-newm" @click="newSubmenumodal" >Add New </button>
-                     </div>
-      <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Menu</label>
-                    <div class="col-sm-6">
-                      
-
-
-                                  </div>
-                   
+                 
+                 
+                       <form @submit.prevent="savedatetoseesalesreportbydate()">
+                 
+                      <div class="form-group">
+                    <label for="exampleInputEmail1">DATE TO VIEW :</label>
+                    <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
+                     <has-error :form="form" field="startdate"></has-error>
+       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
+    
       
-                  </div>
+    <label for="exampleInputEmail1">Order by :</label>
+              
+                 <select name ="sortby" v-model="form.sortby" id ="sortby" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
+<option value="">  </option>
+<option v-for='data in orderlistfordatesalesreport' v-bind:value='data.sysname'> {{ data.sortname }}</option>
+
+</select>
+            <has-error :form="form" field="sortby"></has-error>
+
+                              
+             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportvie" class="btn btn-primary btn-sm">Saveit</button>         
+
+                                
+                     
        
+       
+                   
+          </div>
+
+
+        
+
+                </form>
+                </div>
+                 
+            
+    
+     <div v-if="selecteddatetotalsales < 1 ">
+       <h1> No Records found for this selection </h1>
+     </div>
+                   
+      <div v-if="selecteddatetotalsales > 0 ">
 
             
              <table class="table">
                   <thead>
                     <tr> 
-                     
+                     <th>#</th>
+                      <th>Date</th>
+                        <th>Branch</th>
+                        <th>Sales Amount</th>
+                          <th></th>
                       </tr>
                     
                   </thead>
                  
                   <tbody>
                     <tr>
-                       <tr v-for="submenuinfo in submenurecords.data" :key="submenuinfo.id">
-                                                  
-                    <td>{{submenuinfo.id}}</td>
-                    
-                    <td>
+                       <tr v-for="submenuinfo in salesdetailsrecords.data" :key="submenuinfo.id">
+                       <td width="3%">{{submenuinfo.dorder}}</td>                            
+                    <td width="10%">{{submenuinfo.datedone}}</td>
+                     <td width="10%">   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                     <td width="20%">{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount)}}</td>
+                    <td width="40%">
 
 
-  <div class="progress" style="height: 50px;">
+        
+ <div class="progress" style="height: 25px; font-size: 19px;">
     <div
-         class="progress-bar bg-primary"
+         class="progress-bar progress-bar-striped bg-info"
          role="progressbar"
-         v-bind:style="{ width: value +'%'}"
-         v-bind:aria-valuenow="submenuinfo.id"
+         v-bind:style="{ width: Math.round(((submenuinfo.daysalesamount)/selecteddatetotalsales)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
          aria-valuemin="0"
          aria-valuemax="100"
-         ></div>
-  </div>
+         > {{Math.round(((submenuinfo.daysalesamount)/selecteddatetotalsales)*100) }} % </div>
+ </div>
+
+
+<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
 
 
 
 
 
-
-
-
-<div class="progress" style="height: 20px;">
-  <div class="progress-bar bg-info" role="progressbar" style='width: 70%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-   
-</div>
-
-<div class="progress" style="height: 20px;">
-  <div class="progress-bar bg-danger" role="progressbar" style='width: 10%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  
-</div>
-
-<div class="progress" style="height: 20px;">
-  <div class="progress-bar bg-success" role="progressbar" style='width: 20%;' aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  
-</div>
 
 
                     </td>
@@ -422,11 +385,12 @@ th {
                     </tr>
                   </tfoot>
                 </table>
-
+                  </div>
+                  <!-- close of No records -->
 
     <div class="card-footer">
                 <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="submenurecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
+                   <pagination :data="salesdetailsrecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
                 </ul>
               </div>
                      
@@ -543,50 +507,233 @@ th {
                   <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
              
          <div class="bethapa-table-header">
-                     VUE-COMPONENT DETAILS  <button type="button" class="add-newm" @click="newVuecomponentmodal" >Add New </button>
-                     </div>
+   <form @submit.prevent="savethemonthlyreporttoview()">
+                 
+                      <div class="form-group">
+                    <label for="exampleInputEmail1">Branch :</label>
+                 
+                 
+
+         <select name ="branchname" v-model="form.branchname" id ="branchname" :class="{'is-invalid': form.errors.has('sortby')}">
+<option value="">  </option>
+<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
+
+</select>
+            <has-error :form="form" field="branchname"></has-error>
+
+
+       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
+    
+
+
+ <label for="exampleInputEmail1">Month :</label>
+                 
+                 
+
+         <select name ="monthname" v-model="form.monthname" id ="monthname"  :class="{'is-invalid': form.errors.has('monthname')}">
+<option value="">  </option>
+<option v-for='data in montheslist' v-bind:value='data.monthno'> {{ data.monthname }}</option>
+
+</select>
+            <has-error :form="form" field="monthname"></has-error>
+
+ <label for="exampleInputEmail1">Year :</label>
+                 
+                 
+
+         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
+<option value="">  </option>
+<option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
+
+</select>
+            <has-error :form="form" field="yearname"></has-error>
+
+
+      
+    <label for="exampleInputEmail1">Report Type :</label>
+              
+                 <select name ="reporttype" v-model="form.reporttype" id ="reporttype" v-on:change="myClickEventtosavemonthlyreport" :class="{'is-invalid': form.errors.has('reporttype')}">
+<option value="">  </option>
+<option v-for='data in monthreportslist' v-bind:value='data.sysname'> {{ data.reportname }}</option>
+
+</select>
+            <has-error :form="form" field="reporttype"></has-error>
+
+                              
+             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotoSales" class="btn btn-primary btn-sm">Saveit</button>         
+
+                                
+                     
+       
+       
+                   
+          </div>
+
+
+        
+
+                </form>                     </div>
 
           
-            
-           <table class="table table-bordered table-striped">
+             <!-- <div v-if="selecteddatetotalsales < 1 ">
+       <h1> No Records found for this selection </h1>
+     </div> -->
+        <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
+      <div v-if="selectedreporttype =='salesreport' ">
+ 
+  <div class="bethapa-reportheader-header" >Sales, Payout && Profit Report  </div>              
+             <table class="table">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Component NAME</th>
-
-                        <th>SYSTEM NAME</th>
-                       <th>Description</th>
-                         <th></th>
-                     
-                    </tr>
+                    <tr> 
+                     <th>#</th>
+                      <th>Date</th>
+                        <th>Branch</th>
+                        <th>Sales Amount</th>
+                         
+                            <th>MONTHLY DISPLAY</th>
+                      </tr>
+                    
                   </thead>
+                 
                   <tbody>
                     <tr>
-                       <tr v-for="vuereco in vuecomponentsrecords.data" :key="vuereco.id">
-                    <td>{{vuereco.id}}</td>
-                     <td>{{vuereco.componentname}}</td>
-                     <td>{{vuereco.sysname}}</td>
-                      <td>{{vuereco.description}}</td>
-                         <td>     
-                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editvuecomponent(vuereco)"> Edit  </button>
-                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletevuecomponent(vuereco.id)"> DEl </button>
-                      </td>
-                    </tr>
+                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
+                       <td width="3%">{{monthrecs.dorder}}</td>                            
+                    <td width="10%">{{monthrecs.datedone}}</td>
+                     <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
+                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                     
+                    <td width="40%">
+
+
+        
+ <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-info"
+         role="progressbar"
+         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
+         
+ </div>
+      
+ <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-danger"
+         role="progressbar"
+         v-bind:style="{ width: Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
+         
+ </div>
+
+       
+ <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-success"
+         role="progressbar"
+         v-bind:style="{ width: Math.round( ((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
+         
+ </div>
+
+<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+
+
+
+
+
+
+
+
+                    </td>
+                                        </tr>
               
                     
                   </tbody>
-                  
-                 <tfoot>
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+                  </div>
+                  <!-- close of No records -->
+       
+<div v-if="selectedreporttype =='pou' ">
+ 
+  <div class="bethapa-reportheader-header" >Payout Report  </div>              
+             <table class="table">
+                  <thead>
+                    <tr> 
+                     <th>#</th>
+                      <th>Date</th>
+                        <th>Branch</th>
+                        <th>Sales Amount</th>
+                         
+                            <th></th>
+                      </tr>
+                    
+                  </thead>
+                 
+                  <tbody>
+                    <tr>
+                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
+                       <td width="3%">{{monthrecs.dorder}}</td>                            
+                    <td width="10%">{{monthrecs.datedone}}</td>
+                     <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
+                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                     
+                    <td width="40%">
 
-                 </tfoot>
-                                   </table>
 
+        
+ <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-info"
+         role="progressbar"
+         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
+ </div>
+
+
+<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+
+
+
+
+
+
+
+
+                    </td>
+                                        </tr>
+              
+                    
+                  </tbody>
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+                  </div>
 
 
 
     <div class="card-footer">
                 <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="vuecomponentsrecords" @pagination-change-page="paginationResultvuecomponents1"></pagination>
+                   <pagination :data="monthlydatarecords" @pagination-change-page="paginationResultvuecomponents1"></pagination>
                 </ul>
               </div>
                      
@@ -860,6 +1007,8 @@ th {
          data(){
            
         return {
+
+           value: 60,
              country: 0,
 
                 countries: [],
@@ -870,6 +1019,12 @@ th {
           brancheslist: null,
           currencydetails:null,
          // accessusercoponent : null,
+         
+         selecteddatetotalsales:null,
+         salestotalmonthly:null,
+         payoutmonthly :null,
+         selectedreporttype:null,
+         //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
          dailyfishreportAccessComponent:'',
          submenuaccessComponent : '',
@@ -879,8 +1034,8 @@ th {
           myOptions: [], // or [{id: key, text: value}, {id: key, text: value}]
           editmode: false,
           mainmenurecords : {},
-          submenurecords : {},
-          vuecomponentsrecords : {},
+          salesdetailsrecords : {},
+          monthlydatarecords : {},
           componentfeaturesrecords :{},
           datarecordsSubmenusauthorised:{},
           dailycodesreportdata:{},
@@ -888,9 +1043,14 @@ th {
           datarecordsMainmenuauthorised:{},
           allowedrolecomponentfeaturesObject : {},
           brancheslist:{},
+         selectedreporttype:{},
+          montheslist:{},
+          yearslist:{},
+          monthreportslist:{},
           componentslist:{},
           submenulist:{},
           mainmenulist:{},
+           orderlistfordatesalesreport:{},
           formfeatures:{},
     //      allowedtoeditmainmenu:{},
       //    allowedtodeletemainmenu:{},
@@ -904,6 +1064,8 @@ th {
                 rolename:'',
                 type:'',
 actionaid : 'fishreportbydateandbranch',
+startdate : '2021-05-01',
+actionaidsalesreportbydate : 'salesreportbydate',
     ////
       shid:'',
       sysname:'',
@@ -947,6 +1109,14 @@ myClickEventroletoaddcomponent($event) { const elem = this.$refs.myBtnroledd
             elem.click()
         },
 
+        
+
+myClickEventtosavemonthlyreport($event) { const elem = this.$refs.theButtontotoSales
+            elem.click()
+        },
+myClickEventtosavesalesreportbydate($event) { const elem = this.$refs.theButtontosabemonthlyreportvie
+            elem.click()
+        },
 myClickEventforsubmenus($event) { const elem = this.$refs.myBtnsubmenus
             elem.click()
         },
@@ -1020,7 +1190,7 @@ paginationResultscomponentfeatures(page = 1) {
 paginationResultsSubmenus(page = 1) {
                         axios.get('api/submenus?page=' + page)
                           .then(response => {
-                            this.submenurecords = response.data;
+                            this.salesdetailsrecords = response.data;
                           });
                       },
 
@@ -1029,7 +1199,7 @@ paginationResultsSubmenus(page = 1) {
    paginationResultvuecomponents1(page = 1) {
                         axios.get('api/vuecomponents?page=' + page)
                           .then(response => {
-                            this.vuecomponentsrecords = response.data;
+                            this.monthlydatarecords = response.data;
                           });
                       },
 ////////////////////////////////////////////////////////
@@ -1147,11 +1317,17 @@ if (result.isConfirmed) {
 
             },
 
-///////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////
-loadVuecomponents(){
-       axios.get("api/vuecomponents").then(({ data }) => (this.vuecomponentsrecords = data));
+////////////////////////////////
+loadMonthlyreport(){
+       axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+       axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
+       axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
+       axios.get('/api/monthreportslist').then(function (response) { this.monthreportslist = response.data;}.bind(this));
+        axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+         axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
+         axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
+         
+        
        },
 
      newVuecomponentmodal(){
@@ -1180,7 +1356,7 @@ $('#addnewvuecomponentmodal').modal('show');
 
          
     $('#addnewvuecomponentmodal').modal('hide');
-  axios.get("api/vuecomponents").then(({ data }) => (this.vuecomponentsrecords = data));
+   axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
   Toast.fire({
   icon: 'success',
   title: 'Record added successfully'
@@ -1207,7 +1383,7 @@ this.form.put('api/vuecomponents/'+this.form.id)
       )
       this.$Progress.finish();
     // Fire.$emit('AfterAction');
-    axios.get("api/vuecomponents").then(({ data }) => (this.vuecomponentsrecords = data));
+     axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
 
   })
 
@@ -1236,7 +1412,7 @@ deletevuecomponent(id){
 
 /// send request ti
 if (result.isConfirmed) {
-  this.form.delete('api/vuecomponents/'+id).then(()=>{
+  this.form.delete('api/monthrlreporyrecords/'+id).then(()=>{
   
                         Swal.fire(
                           'Deleted!',
@@ -1244,7 +1420,7 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
- axios.get("api/vuecomponents").then(({ data }) => (this.vuecomponentsrecords = data));
+  axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
 
   }).catch(()=>{
      Swal.fire({  
@@ -1293,14 +1469,18 @@ if (result.isConfirmed) {
 
   /// Main submenu
   loadSubmenus(){
-       axios.get("api/submenus").then(({ data }) => (this.submenurecords = data));
+       axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
        this.getRoles();
      
-      axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
+     axios.get("api/orderlistfordatesalesreport").then(({ data }) => (this.orderlistfordatesalesreport = data));
+     axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
      axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
      axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
-
+     axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+     
+   
+     
 
   },
 
@@ -1331,7 +1511,7 @@ $('#addnewsubmenuModal').modal('show');
          
     $('#addnewsubmenuModal').modal('hide');
   //  Fire.$emit('AfterAction');
-   axios.get("api/submenus").then(({ data }) => (this.submenurecords = data));
+   axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
 
   Toast.fire({
   icon: 'success',
@@ -1359,7 +1539,7 @@ this.form.put('api/submenus/'+this.form.id)
       )
       this.$Progress.finish();
     // Fire.$emit('AfterAction');
-    axios.get("api/submenus").then(({ data }) => (this.submenurecords = data));
+    axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
 
   })
 
@@ -1396,7 +1576,9 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
- axios.get("api/submenus").then(({ data }) => (this.submenurecords = data));
+ axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
+
+
 
   }).catch(()=>{
      Swal.fire({  
@@ -1425,7 +1607,9 @@ if (result.isConfirmed) {
   /// Main menus
   loadDailyrecordreport(){
        axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
-       
+      
+            
+           
     axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
      axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
@@ -1451,6 +1635,65 @@ axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = d
         this.form.fill(mainmenurecords);
 $('#addnewMainmenumodal').modal('show');
             },
+
+
+     savethemonthlyreporttoview(){
+
+                                this.$Progress.start();
+                                this.form.post('api/monthlyreportstoview')
+                                .then(()=>{
+
+axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+  axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+//  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+                              //  Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+}, 
+
+         savedatetoseesalesreportbydate(){
+
+                                this.$Progress.start();
+                                this.form.post('api/saleareportsview')
+                                .then(()=>{
+
+axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
+axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+//  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+                              //  Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+}, 
+
+
              savenewRecordtoview(){
 
                                 this.$Progress.start();

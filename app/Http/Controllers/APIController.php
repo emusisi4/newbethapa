@@ -32,6 +32,10 @@ use App\User;
 use App\Currentmachinecode;
 use App\Branchanduser;
 use App\ExpenseWalet;
+use App\Sortlistreport;
+use App\Mymonth;
+use App\Myyear;
+use App\Generalreport;
 class APIController extends Controller
 
 {
@@ -368,6 +372,44 @@ public function mybranch()
  }
 
 
+ public function yearslist()
+     {
+         $userid =  auth('api')->user()->id;
+         $userbranch =  auth('api')->user()->branch;
+         $userrole =  auth('api')->user()->type;
+        /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+       
+        $data = Myyear::orderBy('id', 'Asc')
+        //->where('sysname', '!=', $component)
+        ->get();
+                return response()->json($data);
+   }
+   
+   public function monthreportslist()
+   {
+       $userid =  auth('api')->user()->id;
+       $userbranch =  auth('api')->user()->branch;
+       $userrole =  auth('api')->user()->type;
+      /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+     
+      $data = Generalreport::orderBy('id', 'Asc')
+      //->where('sysname', '!=', $component)
+      ->get();
+              return response()->json($data);
+ }
+   public function montheslist()
+   {
+       $userid =  auth('api')->user()->id;
+       $userbranch =  auth('api')->user()->branch;
+       $userrole =  auth('api')->user()->type;
+      /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+     
+      $data = Mymonth::orderBy('id', 'Asc')
+      //->where('sysname', '!=', $component)
+      ->get();
+              return response()->json($data);
+ }
+
 
 
      public function branchDetails()
@@ -405,6 +447,19 @@ $data = Thecomponent::latest('id')
      
 $data = Submheader::latest('id')
 ->where('del', 0)
+->get();
+        return response()->json($data);
+    }
+
+
+    
+    public function orderlistfordatesalesreport()
+    {
+     $misory1 = "datesov";
+     $misory2 = "salessov";
+$data = Sortlistreport::latest('id')
+->where('sover', 1) 
+//->where('sover', $misory2)
 ->get();
         return response()->json($data);
     }
@@ -454,8 +509,97 @@ $data = Formcomponent::latest('id')
 
 ///////////////////////////////////////////////////////////
 
+public function selectedreporttype()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
 
+     
+  $currentdate = date('Y-m-d');
+  // $detoinact  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  
+  $repotytype  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('reporttype');
+  // $totalsales = \DB::table('dailyreportcodes')
+   
+  //  ->where('datedone', '=', $detoinact)
+  // //  ->where('transferdate', '=', $currentdate)
+  // //  ->where('status', '=', 1)
+  //  ->sum('daysalesamount');
+    return $repotytype;
+  
+ 
+}
 
+public function payoutmonthly()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('monthmade', '=', $monthtoview)
+   ->where('yearmade', '=', $yearview)
+   ->where('branch', '=', $branchtoview)
+   ->sum('daypayoutamount');
+    return $totalsales;
+  
+ 
+}
+public function salestotalmonthly()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('monthmade', '=', $monthtoview)
+   ->where('yearmade', '=', $yearview)
+   ->where('branch', '=', $branchtoview)
+   ->sum('daysalesamount');
+    return $totalsales;
+  
+ 
+}
+
+public function selecteddatetotalsales()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $detoinact  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('datedone', '=', $detoinact)
+  //  ->where('transferdate', '=', $currentdate)
+  //  ->where('status', '=', 1)
+   ->sum('daysalesamount');
+    return $totalsales;
+  
+ 
+}
 
 public function todayscashintotal()
 {

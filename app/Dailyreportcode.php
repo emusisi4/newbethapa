@@ -14,9 +14,9 @@ class Dailyreportcode extends Authenticatable
    
     protected $fillable = [
         'datedone','branch','openningcode','closingcode','salescode', 
-        'payoutcode', 'profitcode','ucret',
+        'payoutcode', 'profitcode','ucret','yearmade','monthmade',
         'floatcode','totalcredits','totalcollection','machineno','previoussalesfigure',
-        'previouspayoutfigure','resetstatus','currentpayoutfigure','currentsalesfigure','dorder'
+        'previouspayoutfigure','resetstatus','currentpayoutfigure','currentsalesfigure','dorder','daysalesamount','daypayoutamount'
     ];
     public function branchnameDailycodes(){
         // creating a relationship between the students model 

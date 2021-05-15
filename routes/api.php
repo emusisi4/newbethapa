@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+*/ 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -34,8 +34,8 @@ Route::apiResources(['roletobalance' => 'API\RoletoaddcomponentsController']);
 
 Route::apiResources(['branchtoworkon' => 'API\BranchtoworkonController']);
 Route::apiResources(['authorisedbranchproducts' => 'API\AuthorisedbranchproductsController']);
-
-
+Route::apiResources(['saleareportsview' => 'API\SalesreporttoviewController']);
+Route::apiResources(['monthlyreportstoview' => 'API\MonthlyreportsController']);
 
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
@@ -49,6 +49,14 @@ Route::apiResources(['authorisedcomponents' => 'API\AuthorisedcomponentsControll
 Route::apiResources(['saveaccesstovuecomponent' => 'API\GiveaccesstovuecomponentController']);
 Route::get('getlistofcomponents', 'APIController@getcomponentslist');
 Route::get('branchDetails', 'APIController@branchDetails');
+
+
+Route::get('montheslist', 'APIController@montheslist');
+Route::get('yearslist', 'APIController@yearslist');
+Route::get('monthreportslist', 'APIController@monthreportslist');
+
+
+
 Route::get('bettingproducts', 'APIController@bettingproducts');
 Route::get('branchmachineslist', 'APIController@branchmachineslist');
 
@@ -60,6 +68,8 @@ Route::apiResources(['saveroleformcomponent' => 'API\RoleandformcomponentControl
 Route::apiResources(['authorisedsubmenus' => 'API\AuthorisedsubmenuController']);
 Route::apiResources(['savesubmenuaccess' => 'API\GiveaccesstosubmenuController']);
 Route::apiResources(['savemainmenuaccess' => 'API\GiveaccesstomainmenuController']);
+
+Route::get('orderlistfordatesalesreport', 'APIController@orderlistfordatesalesreport');
 Route::get('getMainmenues', 'APIController@getMainmenues');
 Route::get('getSubmenues', 'APIController@getSubmenues');
 Route::apiResources(['cashoutfromoffice' => 'API\CashCreditController']);
@@ -69,6 +79,8 @@ Route::get('contactscomponentaccess', 'APIController@acccesscontactscomponentacc
 
 Route::apiResources(['mainmenucomponents' => 'API\MainmenucomponentController']);
 Route::apiResources(['submenus' => 'API\SubmenusController']);
+Route::apiResources(['salesrecs' => 'API\FishreporttoviewController']);
+
 Route::apiResources(['vuecomponents' => 'API\VuecomponentsController']);
 Route::apiResources(['componentfeatures' => 'API\ComponentfeaturesController']);
 Route::apiResources(['shopcashoutdetails' => 'API\ShopcasoutdetailsController']);
@@ -93,10 +105,11 @@ Route::get('branchesccessSettings', 'APIController@branchesccessSettings');
 Route::get('useraccountbalancesSettings', 'APIController@useraccountbalancesSettings');
 Route::get('branchraccountbalancesSettings', 'APIController@branchraccountbalancesSettings');
 
+Route::get('selecteddatetotalsales', 'APIController@selecteddatetotalsales'); 
+Route::get('payoutmonthly', 'APIController@payoutmonthly'); 
+Route::get('salestotalmonthly', 'APIController@salestotalmonthly'); 
 
-
-
-
+Route::get('selectedreporttype', 'APIController@selectedreporttype'); 
 
 
 
@@ -161,6 +174,8 @@ Route::apiResources(['maycashoutdetails' => 'API\UsercashoutdetailsController'])
 Route::apiResources(['expensesreportbybranch' => 'API\ExpensereportstoviewController']);
 Route::apiResources(['dailyfishrep' => 'API\FishreporttoviewController']);
 Route::apiResources(['dailycodesreportdata' => 'API\DaillyfishcodesreportController']);
+
+Route::apiResources(['monthrlreporyrecords' => 'API\MonthlyreportsController']);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('getaddnewexpensecategory', 'APIController@getaddnewexpensecategory');
 Route::get('geteditexpensecategory', 'APIController@geteditexpensecategory');

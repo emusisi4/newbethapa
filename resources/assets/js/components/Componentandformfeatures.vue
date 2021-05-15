@@ -6,7 +6,7 @@
 
 
 <!-- general component access -->
- <!-- <div  v-if="generalcomponentaccessComponentfeatures > 0 "> -->
+<div  v-if="generalcomponentaccessComponentfeatures > 0 "> 
 
  <div>
 
@@ -730,7 +730,7 @@
 
           <!-- end of the body -->
 </div> 
-
+</div>
 <!-- closure of allowed -->
 
 

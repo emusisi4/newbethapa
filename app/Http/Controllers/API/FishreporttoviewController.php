@@ -16,6 +16,7 @@ use App\Branchtocollect;
 use App\Incomereporttoview;
 use App\Expensereporttoview;
 use App\Fishreportselection;
+use App\Dailyreportcode;
 
 class FishreporttoviewController extends Controller
 {
@@ -34,25 +35,37 @@ class FishreporttoviewController extends Controller
      //   if($userrole = 1)
 
 
-     if($userrole == '101')
+     //if($userrole == '101')
+     // {
+      //FishreporttoviewController
+      // $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
+      $datetoview = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)
+      //->where('ucret', '=', $userid)
+      ->value('startdate');
+      $sortby = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)
+      //->where('ucret', '=', $userid)
+      ->value('sortname');
+      //   return   Dailyreportcode::with(['branchName','expenseName'])->latest('id')
+      if($sortby == 'datesort')
       {
-      
-         return   Madeexpense::with(['branchName','expenseName'])->latest('id')
-      // return   Madeexpense::latest('id')
-        ->where('del', 0)
-        ->where('branch', $userbranch)
-        ->where('explevel', 1)
-       ->paginate(13);
+      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
+       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
+       //->where('del', 0)
+       ->where('datedone', $datetoview)
+      //  ->where('explevel', 1)
+       ->paginate(35);
       }
-      if($userrole != '101')
+      if($sortby == 'salessort')
       {
-      
-         return   Madeexpense::with(['branchName','expenseName'])->latest('id')
-      // return   Madeexpense::latest('id')
-        ->where('del', 0)
-       // ->where('branch', $userbranch)
-       ->paginate(13);
+    //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
+      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('daysalesamount', 'DESC')
+       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
+       // ->where('del', 0)
+      //  ->where('branch', $userbranch)
+      ->where('datedone', $datetoview)
+       ->paginate(40);
       }
+     
 
 
        // return Student::all();

@@ -311,6 +311,8 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
       'ucret'   => $userid,
       'totalcollection' => $totalcashout,
       'totalcredits'=> $totalcashin,
+      'daysalesamount' => $todayssaes*500,
+      'daypayoutamount' => $todayspayout*500,
       'monthmade'    => $monthmade,
       'yearmade'     => $yearmade,
     
@@ -337,6 +339,8 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
       //'payoutamount'    =>    ($machineonepayout - $machineonepayout)*500,
       'monthmade'    => $monthmade,
       'yearmade'    => $yearmade,
+      'daysalesamount' => $todayssaes*500,
+      'daypayoutamount' => $todayspayout*500,
       
       
       'ucret' => $userid,
