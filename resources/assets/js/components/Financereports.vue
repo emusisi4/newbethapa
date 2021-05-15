@@ -619,7 +619,7 @@ th {
          
  </div>
       
- <div class="progress" style="height: 25px; font-size: 19px;">
+ <!-- <div class="progress" style="height: 25px; font-size: 19px;">
     <div
          class="progress-bar progress-bar-striped bg-danger"
          role="progressbar"
@@ -629,10 +629,10 @@ th {
          aria-valuemax="100"
          >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
          
- </div>
+ </div> -->
 
        
- <div class="progress" style="height: 25px; font-size: 19px;">
+ <!-- <div class="progress" style="height: 25px; font-size: 19px;">
     <div
          class="progress-bar progress-bar-striped bg-success"
          role="progressbar"
@@ -642,7 +642,7 @@ th {
          aria-valuemax="100"
          >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
          
- </div>
+ </div> -->
 
 <!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
