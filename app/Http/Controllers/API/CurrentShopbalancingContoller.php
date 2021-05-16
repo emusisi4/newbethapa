@@ -31,7 +31,7 @@ class CurrentShopbalancingContoller extends Controller
 
       if($userrole == '101')
       {
-      return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->latest('id')
+      return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->orderBy('datedone', 'Desc')
       
       // return   Shopbalancingrecord::latest('id')
        //  return   Branchpayout::latest('id')
@@ -44,7 +44,7 @@ class CurrentShopbalancingContoller extends Controller
       {
       
       
-      return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->latest('id')
+      return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->orderBy('datedone', 'Desc')
       
       // return   Shopbalancingrecord::latest('id')
        //  return   Branchpayout::latest('id')
@@ -56,7 +56,7 @@ class CurrentShopbalancingContoller extends Controller
     {
     
     
-    return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->latest('id')
+    return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->orderBy('datedone', 'Desc')
     
     // return   Shopbalancingrecord::latest('id')
      //  return   Branchpayout::latest('id')
