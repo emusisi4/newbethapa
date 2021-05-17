@@ -90,12 +90,7 @@ class CashCreditController extends Controller
       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         //
@@ -118,7 +113,9 @@ class CashCreditController extends Controller
      //$id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
      //$hid = $id1+1;
 
-  
+     $dateinact = $request['transferdate'];
+     $yearmade = date('Y', strtotime($dateinact));
+     $monthmade = date('m', strtotime($dateinact));
      
   //       $dats = $id;
        return Couttransfer::Create([
@@ -127,31 +124,21 @@ class CashCreditController extends Controller
       'description' => $request['description'],
       'amount' => $request['amount'],
       'transferdate' => $request['transferdate'],
-      
+      'monthmade' =>  $monthmade,
+      'yearmade' =>  $yearmade,
  
       'ucret' => $userid,
     
   ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function show($id)
     {
         //
     }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $id)
     {
         //

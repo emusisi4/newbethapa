@@ -85,12 +85,7 @@ class MadeexpensesConroller extends Controller
       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         //
@@ -112,6 +107,9 @@ class MadeexpensesConroller extends Controller
 
 
      $userid =  auth('api')->user()->id;
+     $dateinact = $request['datemade'];
+     $yearmade = date('Y', strtotime($dateinact));
+     $monthmade = date('m', strtotime($dateinact));
      //$id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
      //$hid = $id1+1;
      $exp = $request['expense'];
@@ -129,29 +127,20 @@ class MadeexpensesConroller extends Controller
       'branch' => $request['branch'],
       'category' => $expcat,
       'exptype' => $exptyo,
+      'yearmade' => $yearmade,
+      'monthmade' => $monthmade,
       'ucret' => $userid,
     
   ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
     }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //

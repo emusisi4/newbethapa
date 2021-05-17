@@ -13,6 +13,7 @@ use App\Dailyreportcode;
 use App\Shopbalancingrecord;
 use App\Salesdetail;
 use App\Currentmachinecode;
+use App\Mlyrpt;
 
 class CurrentShopbalancingContoller extends Controller
 {
@@ -118,6 +119,9 @@ if($doesthebranchhavefish > 0 && $doesthebranchhavesoccer < 1 && $doesthebranchh
 
   /// checking if the machine was reset
   $machineresetstatus = \DB::table('machineresets')->where('branch', $inpbranch)->where('machine', '101')->orderBy('id', 'Desc')->limit(1)->value('resetdate');
+ 
+ 
+ 
   if( $machineresetstatus  != $dateinq)
 {
 
@@ -317,6 +321,115 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
       'yearmade'     => $yearmade,
     
     ]);
+
+//// checking if the branch exists in the monthlyreport view
+// //$branchinmonthlyreport = \DB::table('mlyrpts')->where('branch', $branchforaction)->where('yeardone', $yearmade)->where('monthdone', $monthmade)->count();
+// //if($branchinmonthlyreport > 0)
+// {
+// /// update query
+// $brancchssjh = $request['branchnametobalance'];
+
+// // extracting the new sales figure for the  month
+// $newsalesfigure = \DB::table('dailyreportcodes')
+// ->where('monthmade', '=', $monthmade)
+// ->where('yearmade', '=', $yearmade)
+// ->where('branch', '=', $brancchssjh)
+// ->sum('daysalesamount');
+// /// new payout figure
+// $newspayoutfigure = \DB::table('dailyreportcodes')
+// ->where('monthmade', '=', $monthmade)
+// ->where('yearmade', '=', $yearmade)
+// ->where('branch', '=', $brancchssjh)
+// ->sum('daypayoutamount');
+
+// /// new collections figure
+// $newcollectionsfigure = \DB::table('cintransfers')
+// ->where('monthmade', '=', $monthmade)
+// ->where('yearmade', '=', $yearmade)
+// ->where('branchto', '=', $brancchssjh)
+// ->where('status', '=', 1)
+// ->sum('amount');
+// /// new credits figure
+// $newcreditsfigure = \DB::table('couttransfers')
+// ->where('monthmade', '=', $monthmade)
+// ->where('yearmade', '=', $yearmade)
+// ->where('branchto', '=', $brancchssjh)
+// ->where('status', '=', 1)
+// ->sum('amount');
+// /// new expenses figure
+// $newexpensesfigure = \DB::table('madeexpenses')
+// ->where('monthmade', '=', $monthmade)
+// ->where('yearmade', '=', $yearmade)
+// ->where('branchto', '=', $brancchssjh)
+// ->where('status', '=', 1)
+// ->sum('amount');
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// }
+
+//if($branchinmonthlyreport < 1)
+{
+  // //$branchinmonthlyreport = \DB::table('mlyrpts')->where('branch', $branchforaction)->where('yeardone', $yearmade)->where('monthdone', $monthmade)->count();
+
+  $brancchssjh = $request['branchnametobalance'];
+  DB::table('mlyrpts')->where('branch', $brancchssjh)->where('yeardone', $yearmade)->where('monthdone', $monthmade)->delete();
+  // extracting the new sales figure for the  month
+$newsalesfigure = \DB::table('dailyreportcodes')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branch', '=', $brancchssjh)
+->sum('daysalesamount');
+/// new payout figure
+$newspayoutfigure = \DB::table('dailyreportcodes')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branch', '=', $brancchssjh)
+->sum('daypayoutamount');
+
+/// new collections figure
+$newcollectionsfigure = \DB::table('cintransfers')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branchto', '=', $brancchssjh)
+->where('status', '=', 1)
+->sum('amount');
+/// new credits figure
+$newcreditsfigure = \DB::table('couttransfers')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branchto', '=', $brancchssjh)
+->where('status', '=', 1)
+->sum('amount');
+/// new expenses figure
+$newexpensesfigure = \DB::table('madeexpenses')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branch', '=', $brancchssjh)
+->where('approvalstate', '=', 1)
+->sum('amount');
+  // insertion query
+  Mlyrpt::Create([
+
+    'branch'       => $brancchssjh,
+ 
+    'dorder'  =>    $dorder,
+    'ucret'   => $userid,
+    'sales' => $newsalesfigure,
+    'payout'=> $newspayoutfigure,
+    'collections' => $newcollectionsfigure,
+    'credits' => $newcreditsfigure,
+    'expenses' => $newexpensesfigure,
+    'profit' => $newsalesfigure-$newspayoutfigure,
+    'ntrevenue'  => $newsalesfigure-$newspayoutfigure-$newexpensesfigure,
+    'monthdone'    => $monthmade,
+    'yeardone'     => $yearmade,
+  
+  ]);
+
+
+}
+
+
     ///// Updating the collection and credits 
 
 

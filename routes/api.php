@@ -37,6 +37,7 @@ Route::apiResources(['authorisedbranchproducts' => 'API\Authorisedbranchproducts
 Route::apiResources(['saleareportsview' => 'API\SalesreporttoviewController']);
 Route::apiResources(['monthlyreportstoview' => 'API\MonthlyreportsController']);
 
+Route::apiResources(['monthlyreportstoviewallbranches' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
 Route::apiResources(['authorisedbranchmachines' => 'API\AuthorisedbranchandmachineController']);
@@ -53,9 +54,9 @@ Route::get('branchDetails', 'APIController@branchDetails');
 
 Route::get('montheslist', 'APIController@montheslist');
 Route::get('yearslist', 'APIController@yearslist');
+Route::get('monthreportslist2', 'APIController@monthreportslist2');
+
 Route::get('monthreportslist', 'APIController@monthreportslist');
-
-
 
 Route::get('bettingproducts', 'APIController@bettingproducts');
 Route::get('branchmachineslist', 'APIController@branchmachineslist');
@@ -175,6 +176,7 @@ Route::apiResources(['expensesreportbybranch' => 'API\ExpensereportstoviewContro
 Route::apiResources(['dailyfishrep' => 'API\FishreporttoviewController']);
 Route::apiResources(['dailycodesreportdata' => 'API\DaillyfishcodesreportController']);
 
+Route::apiResources(['allbranchesmreports' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['monthrlreporyrecords' => 'API\MonthlyreportsController']);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('getaddnewexpensecategory', 'APIController@getaddnewexpensecategory');

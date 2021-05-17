@@ -17,7 +17,7 @@ class Couttransfer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'branchto', 'description', 'branchfrom','ucret','amount','transferdate','status',
+        'branchto', 'description', 'branchfrom','ucret','amount','transferdate','status','yearmade','monthmade'
     ];
     
 

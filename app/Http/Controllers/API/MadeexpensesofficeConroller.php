@@ -113,10 +113,12 @@ class MadeexpensesofficeConroller extends Controller
   $exp = $request['expense'];
   $expcat = DB::table('expenses')->where('expenseno', $exp )->value('expensecategory');
   $exptyo = \DB::table('expenses')->where('expenseno', $exp)->value('expensetype');
-
+  $dateinact = $request['datemade'];
+     $yearmade = date('Y', strtotime($dateinact));
+     $monthmade = date('m', strtotime($dateinact));
        return Madeexpense::Create([
       'expense' => $request['expense'],
-     //'expenseno' => $hid,
+      'approvalstate' => 1,
       'description' => $request['description'],
       'amount' => $request['amount'],
       'datemade' => $request['datemade'],
@@ -125,6 +127,8 @@ class MadeexpensesofficeConroller extends Controller
       'explevel' => 2,
       'category' => $expcat,
       'exptype' => $exptyo,
+      'yearmade' => $yearmade,
+      'monthmade' => $monthmade,
       'ucret' => $userid,
     
   ]);

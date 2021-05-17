@@ -12,7 +12,7 @@ class Madeexpense extends Authenticatable
 
 
     protected $fillable = [
-        'expense','explevel','walletexpense','category','exptype', 'amount', 'datemade','ucret','branch','description','approvalstate',
+        'expense','explevel','walletexpense','category','exptype', 'amount', 'datemade','ucret','branch','description','approvalstate','monthmade','yearmade'
     ];
     
 

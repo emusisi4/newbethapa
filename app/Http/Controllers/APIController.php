@@ -385,6 +385,18 @@ public function mybranch()
                 return response()->json($data);
    }
    
+   public function monthreportslist2()
+   {
+       $userid =  auth('api')->user()->id;
+       $userbranch =  auth('api')->user()->branch;
+       $userrole =  auth('api')->user()->type;
+      /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+     
+      $data = Sortlistreport::orderBy('id', 'Asc')
+      ->where('sover', '=', 2)
+      ->get();
+              return response()->json($data);
+ }
    public function monthreportslist()
    {
        $userid =  auth('api')->user()->id;

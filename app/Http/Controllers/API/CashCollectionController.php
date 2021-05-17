@@ -78,6 +78,10 @@ class CashCollectionController extends Controller
        // 'expensetype'   => 'sometimes |min:0'
      ]);
 
+     $dateinact = $request['transferdate'];
+     $yearmade = date('Y', strtotime($dateinact));
+     $monthmade = date('m', strtotime($dateinact));
+
 
      $userid =  auth('api')->user()->id;
      $userbranch =  auth('api')->user()->branch;
@@ -93,6 +97,8 @@ class CashCollectionController extends Controller
       'description' => $request['description'],
       'amount' => $request['amount'],
       'transferdate' => $request['transferdate'],
+      'monthmade' =>  $monthmade,
+      'yearmade' =>  $yearmade,
       
  
       'ucret' => $userid,
@@ -100,12 +106,8 @@ class CashCollectionController extends Controller
   ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
+    
     public function show($id)
     {
         //

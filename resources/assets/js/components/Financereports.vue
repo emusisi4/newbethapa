@@ -132,14 +132,14 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-messages-tab"
                     @click="loadMonthlyreport()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
-                    aria-controls="custom-tabs-two-messages" aria-selected="false">Monthly Report</a>
+                    aria-controls="custom-tabs-two-messages" aria-selected="false">Branch Monthly Sales Report</a>
                     <!--  v-if="vuedetailsaccessComponent > 0" -->
                   </li>
                  
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
-                     href="#custom-tabs-two-settings" role="tab" @click="loadComponentfeatures()" 
-                     aria-controls="custom-tabs-two-settings" aria-selected="false">FORM / COMPONENT FEATURES </a>
+                     href="#custom-tabs-two-settings" role="tab" @click="loadmonthlyperformancereport()" 
+                     aria-controls="custom-tabs-two-settings" aria-selected="false">MONTHLY PERFORMANCE REPORT </a>
                      <!-- v-if="formfeaturesaccessComponent > 0 " -->
                   </li>
 
@@ -743,80 +743,6 @@ th {
  <!-- tab one end -->
 
 
-<!-- Modal add menu -->
-<div class="modal fade" id="addnewvuecomponentmodal">
-        <div class="modal-dialog modal-dialog-top modal-lg">
-        <div  class="modal-content">
-            <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">ADD NEW RECORD</h4> 
-                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
-                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
-                 <form class="form-horizontal" @submit.prevent="editmode ? updatevuecomponent():createvuecomponent()"> 
-
-                    <div  class="modal-body">
-              
-                
-                
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Comp. Name</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.componentname" type="text" name="componentname"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('componentname') }">
-                    <has-error :form="form" field="componentname"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-                
-                
-                
-                
-                
-                
-                
-                
-              
-              
-               
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">System Name</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.sysname" type="text" name="sysname"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('sysname') }">
-                    <has-error :form="form" field="sysname"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-
-              
-                    <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
-                    <div class="col-sm-6">
-                <textarea v-model="form.description" type="text" name="description"
-                class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-              <has-error :form="form" field="description"></has-error>
-                                                 </div>
-                   
-      
-                  </div>
-                          
-                 </div>
-                 
-                  <div  class="modal-footer">
-                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
-                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
-                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
-                        </div>
-                 </form>
-                       </div>
-                          </div>
-              
-
-
-                
-              
-                  </div>
 
                   
 
@@ -825,45 +751,166 @@ th {
 
                   <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
                     
-              <div class="bethapa-table-header">
-                     COMPONENT FEATURES  <button type="button" class="add-newm" @click="newComponentfeaturesmodal" >Add New </button>
-                     </div>
+                    <div class="bethapa-table-header">
+   <form @submit.prevent="savethemonthlyreportforallbranches()">
+                 
+                      <div class="form-group">
+              
+
+       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
+    
+
+
+ <label for="exampleInputEmail1">Month :</label>
+                 
+                 
+
+         <select name ="monthname" v-model="form.monthname" id ="monthname"  :class="{'is-invalid': form.errors.has('monthname')}">
+<option value="">  </option>
+<option v-for='data in montheslist' v-bind:value='data.monthno'> {{ data.monthname }}</option>
+
+</select>
+            <has-error :form="form" field="monthname"></has-error>
+
+ <label for="exampleInputEmail1">Year :</label>
+                 
+                 
+
+         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
+<option value="">  </option>
+<option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
+
+</select>
+            <has-error :form="form" field="yearname"></has-error>
+
+
+      
+    <label for="exampleInputEmail1">Sort by</label>
+              
+                 <select name ="sortreportby" v-model="form.sortreportby" id ="sortreportby" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortreportby')}">
+<option value="">  </option>
+<option v-for='data in monthreportslist2' v-bind:value='data.sysname'> {{ data.sortname }}</option>
+
+</select>
+            <has-error :form="form" field="sortreportby"></has-error>
+
+                              
+             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotosalesreportmonthly" class="btn btn-primary btn-sm">Saveit</button>         
+
+                                
+                     
+       
+       
+                   
+          </div>
+
+
+        
+
+                </form>                     </div>
 
           
-            
-           <table class="table table-bordered table-striped">
+             <!-- <div v-if="selecteddatetotalsales < 1 ">
+       <h1> No Records found for this selection </h1>
+     </div> -->
+        <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
+      <!-- <div v-if="selectedreporttype =='salesreport' "> -->
+        <div>
+ 
+  <div class="bethapa-reportheader-header" >ALL COMPANY BRANCHES MONTHLY REPORT -  </div>              
+             <table class="table">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Component NAME</th>
-
-                        <th>SYSTEM NAME</th>
-                       <th>Description</th>
-                         <th></th>
+                    <tr> 
+                                      
+                        <th>BRANCH</th>
+                        <th>TOTAL SALES</th>
+                        <th>TOTAL PAYOUT</th>
+                        <th>GGR</th>
+                        <th> COLLECTIONS</th>
+                        <th> CREDITS</th>
                      
-                    </tr>
+                        <th> EXPENSES</th>
+                        <th>NET PROFIT</th>
+                          
+                      </tr>
+                    
                   </thead>
+                 
                   <tbody>
                     <tr>
-                       <tr v-for="vuereco in componentfeaturesrecords.data" :key="vuereco.id">
-                    <td>{{vuereco.id}}</td>
-                     <td>{{vuereco.featurename}}</td>
-                     <td>{{vuereco.sysname}}</td>
-                      <td>{{vuereco.description}}</td>
-                         <td>     
-                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editcomponentfeature(vuereco)"> Edit  </button>
-                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteomponentfeature(vuereco.id)"> DEl </button>
-                      </td>
-                    </tr>
+                       <tr v-for="mrhdghh in allbranchesmreports.data" :key="mrhdghh.id">
+                                             
+                    
+                     <td>   <template v-if="mrhdghh.branchname_dailycodes">	{{mrhdghh.branchname_dailycodes.branchname}}</template></td>  
+                     <td>{{currencydetails}} {{formatPrice(mrhdghh.sales)}}</td>
+                     <td>{{currencydetails}} {{formatPrice(mrhdghh.payout)}}</td>
+                      <td>{{currencydetails}} {{formatPrice(mrhdghh.profit)}}</td>
+                      <td>{{currencydetails}} {{formatPrice(mrhdghh.collections)}}</td>
+                      <td>{{currencydetails}} {{formatPrice(mrhdghh.credits)}}</td>
+                      <td>{{currencydetails}} {{formatPrice(mrhdghh.expenses)}}</td>
+ <td>{{currencydetails}} {{formatPrice(mrhdghh.ntrevenue)}}</td>
+                    <!-- <td>
+
+
+        
+ <!-- <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-info"
+         role="progressbar"
+         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
+         
+ </div> -->
+      
+ <!-- <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-danger"
+         role="progressbar"
+         v-bind:style="{ width: Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
+         
+ </div> -->
+
+       
+ <!-- <div class="progress" style="height: 25px; font-size: 19px;">
+    <div
+         class="progress-bar progress-bar-striped bg-success"
+         role="progressbar"
+         v-bind:style="{ width: Math.round( ((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
+         v-bind:aria-valuenow="value"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
+         
+ </div> -->
+
+<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+
+
+
+
+
+
+
+<!-- 
+                    </td> -->
+                                        </tr>
               
                     
                   </tbody>
-                  
-                 <tfoot>
-
-                 </tfoot>
-                                   </table>
-
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+      </div>
 
 
 
@@ -1036,6 +1083,7 @@ th {
           mainmenurecords : {},
           salesdetailsrecords : {},
           monthlydatarecords : {},
+          allbranchesmreports:{},
           componentfeaturesrecords :{},
           datarecordsSubmenusauthorised:{},
           dailycodesreportdata:{},
@@ -1047,6 +1095,7 @@ th {
           montheslist:{},
           yearslist:{},
           monthreportslist:{},
+          monthreportslist2:{},
           componentslist:{},
           submenulist:{},
           mainmenulist:{},
@@ -1110,6 +1159,10 @@ myClickEventroletoaddcomponent($event) { const elem = this.$refs.myBtnroledd
         },
 
         
+
+myClickEventtosavemonthlyreportallbranches($event) { const elem = this.$refs.theButtontotosalesreportmonthly
+            elem.click()
+        },
 
 myClickEventtosavemonthlyreport($event) { const elem = this.$refs.theButtontotoSales
             elem.click()
@@ -1204,8 +1257,14 @@ paginationResultsSubmenus(page = 1) {
                       },
 ////////////////////////////////////////////////////////
 
-loadComponentfeatures(){
-       axios.get("api/componentfeatures").then(({ data }) => (this.componentfeaturesrecords = data));
+loadmonthlyperformancereport(){
+  axios.get('/api/monthreportslist2').then(function (response) { this.monthreportslist2 = response.data;}.bind(this));
+    axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
+     axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
+       axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
+       
+       
+      
        },
 
      newComponentfeaturesmodal(){
@@ -1319,6 +1378,8 @@ if (result.isConfirmed) {
 
 ////////////////////////////////
 loadMonthlyreport(){
+  
+   
        axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
        axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
@@ -1637,6 +1698,33 @@ $('#addnewMainmenumodal').modal('show');
             },
 
 
+   savethemonthlyreportforallbranches(){
+
+                                this.$Progress.start();
+                                this.form.post('api/monthlyreportstoviewallbranches')
+                                .then(()=>{
+
+axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
+  axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+//  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+                              //  Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+}, 
      savethemonthlyreporttoview(){
 
                                 this.$Progress.start();
