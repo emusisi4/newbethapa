@@ -105,10 +105,20 @@ Route::get('branchesccessSettings', 'APIController@branchesccessSettings');
 
 Route::get('useraccountbalancesSettings', 'APIController@useraccountbalancesSettings');
 Route::get('branchraccountbalancesSettings', 'APIController@branchraccountbalancesSettings');
-
+Route::get('selectedmonthlyreport', 'APIController@selectedmonthlyreport'); 
 Route::get('selecteddatetotalsales', 'APIController@selecteddatetotalsales'); 
 Route::get('payoutmonthly', 'APIController@payoutmonthly'); 
 Route::get('salestotalmonthly', 'APIController@salestotalmonthly'); 
+
+
+
+Route::get('mothlyreportmonth', 'APIController@mothlyreportmonth'); 
+Route::get('mothlyreportyear', 'APIController@mothlyreportyear'); 
+
+
+
+
+
 
 Route::get('selectedreporttype', 'APIController@selectedreporttype'); 
 

@@ -810,14 +810,26 @@ th {
                 </form>                     </div>
 
           
-             <!-- <div v-if="selecteddatetotalsales < 1 ">
+             <!-- <div v-if="selectedmonthlyreport < 1 ">
        <h1> No Records found for this selection </h1>
      </div> -->
         <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
       <!-- <div v-if="selectedreporttype =='salesreport' "> -->
         <div>
- 
-  <div class="bethapa-reportheader-header" >ALL COMPANY BRANCHES MONTHLY REPORT -  </div>              
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '01'" > BRANCHES MONTHLY REPORT : January - {{mothlyreportyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '02'" > BRANCHES MONTHLY REPORT : Febuary - {{mothlyreportyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '03'" > BRANCHES MONTHLY REPORT : March - {{mothlyreportyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '04'" > BRANCHES MONTHLY REPORT : April - {{mothlyreportyear}} </div>   
+
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '05'" > BRANCHES MONTHLY REPORT : May - {{mothlyreportyear}} </div>    
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '06'" > BRANCHES MONTHLY REPORT : June - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '07'" > BRANCHES MONTHLY REPORT : July - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '08'" > BRANCHES MONTHLY REPORT : August - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '09'" > BRANCHES MONTHLY REPORT : September - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '10'" > BRANCHES MONTHLY REPORT : October - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '11'" > BRANCHES MONTHLY REPORT : November - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '12'" > BRANCHES MONTHLY REPORT : December - {{mothlyreportyear}} </div>   
+           
              <table class="table">
                   <thead>
                     <tr> 
@@ -825,7 +837,7 @@ th {
                         <th>BRANCH</th>
                         <th>TOTAL SALES</th>
                         <th>TOTAL PAYOUT</th>
-                        <th>GGR</th>
+                        <th>GROSS GAMMING REVENUE</th>
                         <th> COLLECTIONS</th>
                         <th> CREDITS</th>
                      
@@ -1068,7 +1080,10 @@ th {
          // accessusercoponent : null,
          
          selecteddatetotalsales:null,
+         selectedmonthlyreport : null,
          salestotalmonthly:null,
+         mothlyreportyear:null,
+          mothlyreportmonth:null,
          payoutmonthly :null,
          selectedreporttype:null,
          //selecteddatetotalpayout:null,
@@ -1262,8 +1277,8 @@ loadmonthlyperformancereport(){
     axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
      axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
-       
-       
+       axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
+       axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
       
        },
 
@@ -1706,6 +1721,9 @@ $('#addnewMainmenumodal').modal('show');
 
 axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+   axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
+       axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
+      
 //  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
                               //  Fire.$emit('AfterAction');
 
