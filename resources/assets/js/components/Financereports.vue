@@ -336,7 +336,13 @@ th {
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales Amount</th>
+                        <th>Sales</th>
+
+                         <th>Payout</th>
+                           <th>Profit</th>
+                              <th>Collections</th>
+                                 <th>Credits</th>
+                                    <th>Net Collections</th>
                           <th></th>
                       </tr>
                     
@@ -345,10 +351,16 @@ th {
                   <tbody>
                     <tr>
                        <tr v-for="submenuinfo in salesdetailsrecords.data" :key="submenuinfo.id">
-                       <td width="3%">{{submenuinfo.dorder}}</td>                            
-                    <td width="10%">{{submenuinfo.datedone}}</td>
-                     <td width="10%">   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount)}}</td>
+                       <td>{{submenuinfo.dorder}}</td>                            
+                    <td>{{submenuinfo.datedone}}</td>
+                     <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                     <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount)}}</td>
+                        <td>{{currencydetails}} {{formatPrice(submenuinfo.daypayoutamount)}}</td>
+                         <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount - submenuinfo.daypayoutamount)}}</td>
+                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection)}}</td>
+                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcredits)}}</td>
+                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection - submenuinfo.totalcredits)}}</td>
+                        
                     <td width="40%">
 
 
