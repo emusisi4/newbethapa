@@ -638,6 +638,130 @@ public function selectedmonthlyreport()
   
  
 }
+
+
+
+
+public function totalmonthlyprofitselectedreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
+  $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('monthmade', '=', $monthto)
+   ->where('yearmade', '=', $yearto)
+  //  ->where('status', '=', 1)
+   ->sum('profitcode');
+    return $totalsales;
+  
+ 
+}
+
+
+public function totalmonthlycollectionsselectedreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
+ $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+  ->where('monthmade', '=', $monthto)
+  ->where('yearmade', '=', $yearto)
+   ->sum('totalcollection');
+    return $totalsales;
+  
+ 
+}
+
+public function totalmonthlysalesselectedreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+ $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
+ $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+ $totalsales = \DB::table('dailyreportcodes')
+  
+   ->where('monthmade', '=', $monthto)
+   ->where('yearmade', '=', $yearto)
+ //  ->where('status', '=', 1)
+  ->sum('daysalesamount');
+    return $totalsales;
+  
+ 
+}
+
+public function totalmonthlypayoutselectedreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
+  $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+    ->where('monthmade', '=', $monthto)
+    ->where('yearmade', '=', $yearto)
+  //  ->where('status', '=', 1)
+   ->sum('daypayoutamount');
+     return $totalsales;
+   
+  
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public function selecteddatetotalsales()
 {
 /// Getting the Logged in User details

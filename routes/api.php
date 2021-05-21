@@ -111,6 +111,11 @@ Route::get('payoutmonthly', 'APIController@payoutmonthly');
 Route::get('salestotalmonthly', 'APIController@salestotalmonthly'); 
 
 
+Route::get('totalmonthlycollectionsselectedreport', 'APIController@totalmonthlycollectionsselectedreport'); 
+Route::get('totalmonthlyprofitselectedreport', 'APIController@totalmonthlyprofitselectedreport'); 
+Route::get('totalmonthlypayoutselectedreport', 'APIController@totalmonthlypayoutselectedreport'); 
+Route::get('totalmonthlysalesselectedreport', 'APIController@totalmonthlysalesselectedreport'); 
+
 
 Route::get('mothlyreportmonth', 'APIController@mothlyreportmonth'); 
 Route::get('mothlyreportyear', 'APIController@mothlyreportyear'); 

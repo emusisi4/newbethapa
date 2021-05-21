@@ -1,4 +1,4 @@
-<style lang="scss" scoped>
+<style scoped>
 tr:nth-child(even) {
   background-color: #96af9c;
   font-size: 20px;
@@ -8,10 +8,69 @@ tr:nth-child(odd) {
  font-size: 20px;
  
 }
+.sss{
+
+    font-weight: 900;
+    font-size: 29px;
+    color: white;
+
+}
+.info-payots {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #dc3545;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-collections {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #33a2b8;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-profit {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #3f8a30;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-salesdetails {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #6c757d;;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
 th {
   background-color: #8c9765;
   font-size: 23px;
 }
+
 </style>
 
 <template>
@@ -26,7 +85,7 @@ th {
 
 
    <div class="bethapa-component-header" >FISH REPORTS </div>    
-  <div class="row">
+  <!-- <div class="row">
             <div class="col-sm-2 col-2">
                 <div class="small-box bg-secondary">
                     <div class="inner"><h4><strong> Sales </strong></h4> 
@@ -87,7 +146,7 @@ th {
 
 
 
-                         <div class="col-lg-3 col-3">
+                         <!-- <div class="col-lg-3 col-3">
                          <div class="small-box bg-success">
                              <div class="inner"><h5><b>Net Collections </b><sup style="font-size: 20px;"></sup></h5>
                               <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance+todayscashintotal - todayscashouttotal-todaysexpensestotal-todayspayouttotal)}}</b></h5>
@@ -96,10 +155,10 @@ th {
                              </div> 
                              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
                              </div>
-                             </div>
+                             </div> -->
 
-
-      </div>
+<!-- 
+      </div> -->
     
     
  <div>
@@ -841,7 +900,64 @@ th {
   <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '10'" > BRANCHES MONTHLY REPORT : October - {{mothlyreportyear}} </div>   
   <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '11'" > BRANCHES MONTHLY REPORT : November - {{mothlyreportyear}} </div>   
   <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '12'" > BRANCHES MONTHLY REPORT : December - {{mothlyreportyear}} </div>   
+  <div>
+<div class="row">
+          <div class="col-md-3 col-sm-3 col-3">
+            <div class="info-salesdetails">
+          
+
+              <div class="info-box-content">
+                <span class="sss"><strong>SALES : {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
            
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+             <div class="col-md-3 col-sm-6 col-12"> 
+            <div class="info-payots">
+          
+
+              <div class="info-box-content">
+                
+            <span class="sss"><strong>PAYOUT : {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+         <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-profit">
+          
+
+              <div class="info-box-contentmycontent">
+                
+                  
+            <span class="sss"><strong>GGR : {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
+              </div>
+            
+            </div>
+  
+          </div>
+
+            <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-collections">
+          
+
+              <div class="info-box-contentmycontent">
+              <span class="sss"><strong>COLLECTIONS : {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
+           
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          
+</div>
+        </div>
+         
              <table class="table">
                   <thead>
                     <tr> 
@@ -1094,6 +1210,11 @@ th {
          selecteddatetotalsales:null,
          selectedmonthlyreport : null,
          salestotalmonthly:null,
+         totalmonthlysalesselectedreport:null,
+         totalmonthlycollectionsselectedreport:null,
+totalmonthlyprofitselectedreport:null,
+totalmonthlypayoutselectedreport:null,
+
          mothlyreportyear:null,
           mothlyreportmonth:null,
          payoutmonthly :null,
@@ -1291,6 +1412,12 @@ loadmonthlyperformancereport(){
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
        axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
        axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
+           axios.get("api/totalmonthlysalesselectedreport").then(({ data }) => (this.totalmonthlysalesselectedreport = data));
+        axios.get("api/totalmonthlypayoutselectedreport").then(({ data }) => (this.totalmonthlypayoutselectedreport = data));
+         axios.get("api/totalmonthlyprofitselectedreport").then(({ data }) => (this.totalmonthlyprofitselectedreport = data));
+       
+ axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
+
       
        },
 
@@ -1414,8 +1541,12 @@ loadMonthlyreport(){
         axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
          axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
          axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
-         
-        
+
+
+
+
+
+      
        },
 
      newVuecomponentmodal(){
