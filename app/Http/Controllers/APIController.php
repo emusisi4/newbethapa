@@ -617,6 +617,157 @@ public function collectionsmonthly()
   
  
 }
+
+
+
+
+
+public function dailytotalsales()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('datedone', '=', $dateinquestion)
+  //  ->where('yearmade', '=', $yearview)
+  //  ->where('branch', '=', $branchtoview)
+   ->sum('daysalesamount');
+    return $totalsales;
+  
+ 
+}
+public function dailytotalpayout()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('datedone', '=', $dateinquestion)
+  //  ->where('yearmade', '=', $yearview)
+  //  ->where('branch', '=', $branchtoview)
+   ->sum('daypayoutamount');
+    return $totalsales;
+  
+ 
+}
+public function dailycollection()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('datedone', '=', $dateinquestion)
+  //  ->where('yearmade', '=', $yearview)
+  //  ->where('branch', '=', $branchtoview)
+   ->sum('totalcollection');
+    return $totalsales;
+  
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public function salestotalmonthly()
 {
 /// Getting the Logged in User details

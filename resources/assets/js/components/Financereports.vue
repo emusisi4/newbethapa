@@ -183,7 +183,7 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Sales Report</a>
+                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Report</a>
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
@@ -191,7 +191,7 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-messages-tab"
                     @click="loadMonthlyreport()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
-                    aria-controls="custom-tabs-two-messages" aria-selected="false">Branch Monthly Sales Report</a>
+                    aria-controls="custom-tabs-two-messages" aria-selected="false">Branch Monthly Report</a>
                     <!--  v-if="vuedetailsaccessComponent > 0" -->
                   </li>
                  
@@ -381,7 +381,96 @@ th {
                 </div>
                  
             
-    
+       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For:  </div> 
+ <div class="row">
+
+
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>       
+          
+      
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-danger btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalpayout) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>
+
+
+
+  <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
+           
+</button>
+                           </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          
+</div>
+        
+               
      <div v-if="selecteddatetotalsales < 1 ">
        <h1> No Records found for this selection </h1>
      </div>
@@ -1354,8 +1443,9 @@ totalmonthlypayoutbybranch:null,
 
 
 
-
-
+dailytotalsales:null,
+dailytotalpayout:null,
+dailycollection :null,
 
 
 
@@ -1368,6 +1458,7 @@ totalmonthlypayoutbybranch:null,
           mothlyreportmonth:null,
          payoutmonthly :null,
          selectedreporttype:null,
+         seleceteddatefordailyreport:null,
          //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
          dailyfishreportAccessComponent:'',
@@ -1848,6 +1939,10 @@ if (result.isConfirmed) {
      axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
      axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
      
+     ////
+        axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+         axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+           axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
    
      
 
@@ -2044,7 +2139,7 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
 
 axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
-   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+  
          axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
          axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
            axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
@@ -2076,7 +2171,9 @@ axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecord
 
 axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
 axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
-//  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+ axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+         axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+           axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
                               //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
