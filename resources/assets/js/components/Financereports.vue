@@ -661,7 +661,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly) }}</strong></span>
            
 </button>
                            </div>
@@ -677,7 +677,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(payoutmonthly) }}</strong></span>
            
 </button>
                            </div>
@@ -691,10 +691,10 @@ th {
   <div class="col-md-3 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS GAMMING REVENUE</b></button>
+<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-warning btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly-payoutmonthly ) }}</strong></span>
            
 </button>
                            </div>
@@ -729,7 +729,7 @@ th {
           
 <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(collectionsmonthly ) }}</strong></span>
            
 </button>
                            </div>
@@ -1330,10 +1330,39 @@ th {
          selecteddatetotalsales:null,
          selectedmonthlyreport : null,
          salestotalmonthly:null,
+         collectionsmonthly:null,
          totalmonthlysalesselectedreport:null,
          totalmonthlycollectionsselectedreport:null,
 totalmonthlyprofitselectedreport:null,
 totalmonthlypayoutselectedreport:null,
+
+
+
+
+totalmonthlysalesbybranch:null,
+totalmonthlycollectionbybranch:null,
+totalmonthlyprofitbybranch:null,
+totalmonthlypayoutbybranch:null,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          mothlyreportyear:null,
           mothlyreportmonth:null,
@@ -1661,6 +1690,7 @@ loadMonthlyreport(){
         axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
          axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
          axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
+           axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
 
 
 
@@ -2014,6 +2044,10 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
 
 axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
+         axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
+         axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
+           axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
 //  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
                               //  Fire.$emit('AfterAction');
 

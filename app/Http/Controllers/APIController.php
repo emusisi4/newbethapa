@@ -593,6 +593,30 @@ public function mothlyreportmonth()
   $monthtoview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
   return $monthtoview;
 }
+
+public function collectionsmonthly()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('monthmade', '=', $monthtoview)
+   ->where('yearmade', '=', $yearview)
+   ->where('branch', '=', $branchtoview)
+   ->sum('totalcollection');
+    return $totalsales;
+  
+ 
+}
 public function salestotalmonthly()
 {
 /// Getting the Logged in User details
