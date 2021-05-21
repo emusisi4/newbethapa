@@ -580,6 +580,21 @@ public function mothlyreportyear()
   
   return $yearview;
 }
+
+public function seleceteddatefordailyreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+ 
+  return $yearview;
+}
+
 public function mothlyreportmonth()
 {
 /// Getting the Logged in User details

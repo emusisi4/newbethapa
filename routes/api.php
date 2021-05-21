@@ -126,7 +126,7 @@ Route::get('mothlyreportmonth', 'APIController@mothlyreportmonth');
 Route::get('mothlyreportyear', 'APIController@mothlyreportyear'); 
 
 
-
+Route::get('seleceteddatefordailyreport', 'APIController@seleceteddatefordailyreport'); 
 
 
 

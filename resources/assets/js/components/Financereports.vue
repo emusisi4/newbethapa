@@ -381,7 +381,7 @@ th {
                 </div>
                  
             
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For:  </div> 
+       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For: <i> {{ seleceteddatefordailyreport|myDate }}</i></div> 
  <div class="row">
 
 
@@ -1478,6 +1478,7 @@ dailycollection :null,
           allowedrolecomponentsObject :{},
           datarecordsMainmenuauthorised:{},
           allowedrolecomponentfeaturesObject : {},
+          seleceteddatefordailyreport:{},
           brancheslist:{},
          selectedreporttype:{},
           montheslist:{},
@@ -1944,7 +1945,8 @@ if (result.isConfirmed) {
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
    
-     
+     axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+
 
   },
 
@@ -2174,6 +2176,8 @@ axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetot
  axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+           
                               //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
