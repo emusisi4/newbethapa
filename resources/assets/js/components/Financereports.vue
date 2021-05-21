@@ -651,8 +651,96 @@ th {
      </div> -->
         <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
       <div v-if="selectedreporttype =='salesreport' ">
- 
-  <div class="bethapa-reportheader-header" >Sales, Payout && Profit Report  </div>              
+        <div class="bethapa-reportheader-header" >Sales, Payout && Profit Report  </div> 
+ <div class="row">
+
+
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>       
+          
+      
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-danger btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>
+
+
+
+  <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS GAMMING REVENUE</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-warning btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
+           
+</button>
+                           </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          
+</div>
+        
+               
              <table class="table">
                   <thead>
                     <tr> 
@@ -902,54 +990,86 @@ th {
   <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '12'" > BRANCHES MONTHLY REPORT : December - {{mothlyreportyear}} </div>   
   <div>
 <div class="row">
-          <div class="col-md-3 col-sm-3 col-3">
-            <div class="info-salesdetails">
-          
 
-              <div class="info-box-content">
-                <span class="sss"><strong>SALES : {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
-           
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-             <div class="col-md-3 col-sm-6 col-12"> 
-            <div class="info-payots">
-          
 
-              <div class="info-box-content">
-                
-            <span class="sss"><strong>PAYOUT : {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-         <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-profit">
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
           
-
+<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
               <div class="info-box-contentmycontent">
-                
-                  
-            <span class="sss"><strong>GGR : {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
-              </div>
-            
+                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
+           
+</button>
+                           </div>
+             
             </div>
-  
+            
+          </div>       
+          
+      
+      <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-danger btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
           </div>
+
+
+
+  <div class="col-md-3 col-sm-6 col-12">
+            <div class="">
+          
+<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS GAMMING REVENUE</b></button>
+              <div class="info-box-contentmycontent">
+                <button type="button" class="btn btn-block btn-warning btn-flat"> 
+                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
+           
+</button>
+                           </div>
+             
+            </div>
+            
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-collections">
+            <div class="">
           
-
+<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
-              <span class="sss"><strong>COLLECTIONS : {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
            
-              </div>
+</button>
+                           </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
