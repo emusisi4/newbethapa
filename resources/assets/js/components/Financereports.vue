@@ -381,7 +381,7 @@ th {
                 </div>
                  
             
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For: <i> {{ seleceteddatefordailyreport|myDate }}</i></div> 
+       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For: <i> {{ seleceteddatefordailyreport|myDate2 }}</i></div> 
  <div class="row">
 
 
