@@ -581,6 +581,22 @@ public function mothlyreportyear()
   return $yearview;
 }
 
+public function selectedbranchreportmonth()
+{
+/// Getting the Logged in User details
+$userid =  auth('api')->user()->id;
+$userbranch =  auth('api')->user()->branch;
+$userrole =  auth('api')->user()->type;
+
+    
+ $currentdate = date('Y-m-d');
+ $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+ $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+ $branchtov  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+
+ return $monthtoview;
+}
+
 public function seleceteddatefordailyreport()
 {
 /// Getting the Logged in User details
@@ -592,6 +608,32 @@ public function seleceteddatefordailyreport()
   $currentdate = date('Y-m-d');
   $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
  
+  return $yearview;
+}
+
+public function branchandmonthreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+  // $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  return $monthtoview;
+}
+
+public function branchandyearreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+ // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $yearview;
 }
 

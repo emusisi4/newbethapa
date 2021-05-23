@@ -381,7 +381,7 @@ th {
                 </div>
                  
             
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT For: <i> {{ seleceteddatefordailyreport|myDate2 }}</i></div> 
+       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT : <i> {{ seleceteddatefordailyreport|myDate2 }}</i></div> 
  <div class="row">
 
 
@@ -740,7 +740,20 @@ th {
      </div> -->
         <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
       <div v-if="selectedreporttype =='salesreport' ">
-        <div class="bethapa-reportheader-header" >Sales, Payout && Profit Report  </div> 
+        
+        <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '01'" > BRANCHES MONTHLY REPORT : January - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '02'" > BRANCHES MONTHLY REPORT : Febuary - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '03'" > BRANCHES MONTHLY REPORT : March - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '04'" > BRANCHES MONTHLY REPORT : April - {{branchandyearreport}} </div>   
+
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '05'" > BRANCHES MONTHLY REPORT : May - {{branchandyearreport}} </div>    
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '06'" > BRANCHES MONTHLY REPORT : June - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '07'" > BRANCHES MONTHLY REPORT : July - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '08'" > BRANCHES MONTHLY REPORT : August - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '09'" > BRANCHES MONTHLY REPORT : September - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '10'" > BRANCHES MONTHLY REPORT : October - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '11'" > BRANCHES MONTHLY REPORT : November - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '12'" > BRANCHES MONTHLY REPORT : December - {{branchandyearreport}} </div>   
  <div class="row">
 
 
@@ -1456,9 +1469,12 @@ dailycollection :null,
 
          mothlyreportyear:null,
           mothlyreportmonth:null,
+          branchandmonthreport:null,
+          branchandyearreport:null,
          payoutmonthly :null,
          selectedreporttype:null,
          seleceteddatefordailyreport:null,
+         selectedbranchreportmonth:null,
          //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
          dailyfishreportAccessComponent:'',
@@ -1479,6 +1495,7 @@ dailycollection :null,
           datarecordsMainmenuauthorised:{},
           allowedrolecomponentfeaturesObject : {},
           seleceteddatefordailyreport:{},
+          selectedbranchreportmonth:{},
           brancheslist:{},
          selectedreporttype:{},
           montheslist:{},
@@ -1652,12 +1669,16 @@ loadmonthlyperformancereport(){
      axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
        axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
+       axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
+       axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+     
+     
        axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
            axios.get("api/totalmonthlysalesselectedreport").then(({ data }) => (this.totalmonthlysalesselectedreport = data));
         axios.get("api/totalmonthlypayoutselectedreport").then(({ data }) => (this.totalmonthlypayoutselectedreport = data));
          axios.get("api/totalmonthlyprofitselectedreport").then(({ data }) => (this.totalmonthlyprofitselectedreport = data));
        
- axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
+         axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
 
       
        },
@@ -1784,7 +1805,9 @@ loadMonthlyreport(){
          axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
            axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
 
-
+axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
+       axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+     
 
 
 
@@ -1945,6 +1968,8 @@ if (result.isConfirmed) {
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
    
+   axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
+
      axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
 
 
@@ -2141,7 +2166,8 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
 
 axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
-  
+   axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+    axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
          axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
          axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
            axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));

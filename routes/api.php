@@ -121,11 +121,15 @@ Route::get('totalmonthlyprofitselectedreport', 'APIController@totalmonthlyprofit
 Route::get('totalmonthlypayoutselectedreport', 'APIController@totalmonthlypayoutselectedreport'); 
 Route::get('totalmonthlysalesselectedreport', 'APIController@totalmonthlysalesselectedreport'); 
 
+// axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
+// axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+Route::get('branchandmonthreport', 'APIController@branchandmonthreport'); 
+Route::get('branchandyearreport', 'APIController@branchandyearreport'); 
 
 Route::get('mothlyreportmonth', 'APIController@mothlyreportmonth'); 
 Route::get('mothlyreportyear', 'APIController@mothlyreportyear'); 
 
-
+Route::get('selectedbranchreportmonth', 'APIController@selectedbranchreportmonth'); 
 Route::get('seleceteddatefordailyreport', 'APIController@seleceteddatefordailyreport'); 
 
 
