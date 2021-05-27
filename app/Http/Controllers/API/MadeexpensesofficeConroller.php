@@ -11,7 +11,7 @@ use App\Submheader;
 use App\Expense;
 use App\Expensescategory;
 use App\Madeexpense;
-
+use App\Expmothlyexpensereport;
 class MadeexpensesofficeConroller extends Controller
 {
     /**
@@ -116,7 +116,7 @@ class MadeexpensesofficeConroller extends Controller
   $dateinact = $request['datemade'];
      $yearmade = date('Y', strtotime($dateinact));
      $monthmade = date('m', strtotime($dateinact));
-       return Madeexpense::Create([
+       Madeexpense::Create([
       'expense' => $request['expense'],
       'approvalstate' => 1,
       'description' => $request['description'],
@@ -132,6 +132,30 @@ class MadeexpensesofficeConroller extends Controller
       'ucret' => $userid,
     
   ]);
+
+  /// updating the Monthly Expenses 
+  $brancchssjh = $request['branch'];
+  DB::table('expmothlyexpensereports')->where('branch', $brancchssjh)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
+  // extracting the new sales figure for the  month
+$newexpensesamount = \DB::table('madeexpenses')
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('branch', '=', $brancchssjh)
+->sum('amount');
+
+ // insertion query
+ Expmothlyexpensereport::Create([
+
+  'branch'       => $brancchssjh,
+
+  'ucret'   => $userid,
+ 
+  'amount'=> $newexpensesamount,
+ 
+  'monthname'    => $monthmade,
+  'yearname'     => $yearmade,
+
+]);
     }
 
     

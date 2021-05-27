@@ -81,7 +81,8 @@ let routes = [
 { path: '/fishmanagement', component: require('./components/Fishcodessetting.vue') },
 { path: '/fishsalesreport', component: require('./components/Dailyfishsalesreport.vue') },
 { path: '/financereports', component: require('./components/Financereports.vue') },
-
+{ path: '/companydetails', component: require('./components/Companydetails.vue') },
+{ path: '/expensesreports', component: require('./components/Expensesreports.vue') },
 ////////
 { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
 { path: '/cashtransactions', component: require('./components/Cashtransactions.vue')},

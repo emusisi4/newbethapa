@@ -1205,7 +1205,7 @@
 <div class ="bethapa-table-header">Fish Hunting Details {{fishmachinestotal}} </div>
 
  
- <div v-if=" fishmachinestotal == 1  ">
+ <div v-if=" fishmachinestotal = '1'  ">
  <div class ="bethapa-table-miniheader">Machine one</div>
  <div class="form-group row">
 

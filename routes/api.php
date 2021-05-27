@@ -37,6 +37,7 @@ Route::apiResources(['authorisedbranchproducts' => 'API\Authorisedbranchproducts
 Route::apiResources(['saleareportsview' => 'API\SalesreporttoviewController']);
 Route::apiResources(['monthlyreportstoview' => 'API\MonthlyreportsController']);
 
+Route::apiResources(['monthlyexpensesreportforallbra' => 'API\ExpensesreporttoviewdetailController']);
 Route::apiResources(['monthlyreportstoviewallbranches' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
@@ -81,7 +82,7 @@ Route::get('contactscomponentaccess', 'APIController@acccesscontactscomponentacc
 Route::apiResources(['mainmenucomponents' => 'API\MainmenucomponentController']);
 Route::apiResources(['submenus' => 'API\SubmenusController']);
 Route::apiResources(['salesrecs' => 'API\FishreporttoviewController']);
-
+Route::apiResources(['currencydetailsrecords' => 'API\CompanycurrencyController']);
 Route::apiResources(['vuecomponents' => 'API\VuecomponentsController']);
 Route::apiResources(['componentfeatures' => 'API\ComponentfeaturesController']);
 Route::apiResources(['shopcashoutdetails' => 'API\ShopcasoutdetailsController']);
@@ -120,6 +121,10 @@ Route::get('totalmonthlycollectionsselectedreport', 'APIController@totalmonthlyc
 Route::get('totalmonthlyprofitselectedreport', 'APIController@totalmonthlyprofitselectedreport'); 
 Route::get('totalmonthlypayoutselectedreport', 'APIController@totalmonthlypayoutselectedreport'); 
 Route::get('totalmonthlysalesselectedreport', 'APIController@totalmonthlysalesselectedreport'); 
+Route::get('expensefrominvestmentmonth', 'APIController@expensefrominvestmentmonth'); 
+Route::get('expensefromcollectionmonth', 'APIController@expensefromcollectionmonth'); 
+
+
 
 // axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
 // axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));

@@ -31,7 +31,7 @@ use App\Expensescategory;
 use App\User;
 use App\Currentmachinecode;
 use App\Branchanduser;
-use App\ExpenseWalet;
+use App\Expensewalet;
 use App\Sortlistreport;
 use App\Mymonth;
 use App\Myyear;
@@ -874,6 +874,96 @@ public function selectedmonthlyreport()
 
 
 
+
+
+
+
+
+
+public function expensefromcollectionmonth()
+{
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+ $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  $monthname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $yearname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $walletname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('walletname');
+  $categoryname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('categoryname');
+  $typename  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('typename');
+
+  $totalsales = \DB::table('madeexpenses')
+ ->where('monthmade', '=', $monthname)
+ ->where('yearmade', '=', $yearname)
+->where('walletexpense', '=', 1)
+->where('approvalstate', '=', 1)
+   ->sum('amount');
+    return $totalsales;
+}
+public function expensefrominvestmentmonth()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+  $branch  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  $monthname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $yearname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $walletname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('walletname');
+
+  $categoryname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('categoryname');
+  $typename  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('typename');
+
+  $totalsales = \DB::table('madeexpenses')
+  ->where('monthmade', '=', $monthname)
+  ->where('yearmade', '=', $yearname)
+ ->where('approvalstate', '=', 1)
+ ->where('walletexpense', '=', 2)
+    ->sum('amount');
+    return $totalsales;
+  
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public function totalmonthlyprofitselectedreport()
 {
 /// Getting the Logged in User details
@@ -1522,7 +1612,7 @@ $data = Expense::latest('id')
 public function getWallets()
 {
  
-$data = ExpenseWalet::latest('id')
+$data = Expensewalet::latest('id')
 //->where('del', 0)
 ->get();
     return response()->json($data);
