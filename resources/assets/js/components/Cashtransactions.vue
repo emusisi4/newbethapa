@@ -1205,7 +1205,7 @@
 <div class ="bethapa-table-header">Fish Hunting Details {{fishmachinestotal}} </div>
 
  
- <div v-if=" fishmachinestotal = '1'  ">
+ <div v-if=" fishmachinestotal == 1">
  <div class ="bethapa-table-miniheader">Machine one</div>
  <div class="form-group row">
 
@@ -3440,6 +3440,7 @@ this.form.post('api/branchtobalance');
           axios.get("api/getdaycashinbranch").then(({ data }) => (this.totaldayscashin = data));
 axios.get("api/machineoneopenningcode").then(({ data }) => (this.machineoneopenningcode = data));
 axios.get("api/fishgameproduct").then(({ data }) => (this.fishgameproduct = data));
+ axios.get("api/fishmachinestotal").then(({ data }) => (this.fishmachinestotal = data));
 axios.get("api/virtualgameproduct").then(({ data }) => (this.virtualgameproduct = data));
         axios.get("api/soccergameproduct").then(({ data }) => (this.soccergameproduct = data));
 
