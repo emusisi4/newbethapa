@@ -19,7 +19,7 @@ class Sortlistreportaccess extends Authenticatable
 
    
     protected $fillable = [
-        'startdate', 'enddate', 'reporttype', 'sortname', 'ucret', 
+        'startdate', 'enddate','branch', 'reporttype', 'sortname', 'ucret', 
         
        
     ];

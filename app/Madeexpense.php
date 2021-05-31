@@ -24,6 +24,10 @@ class Madeexpense extends Authenticatable
       
         return $this->belongsTo(Branch::class, 'branch'); 
     }
+    public function branchnameDailycodes(){
+        // creating a relationship between the students model 
+        return $this->belongsTo(Branch::class, 'branch'); 
+    }
     public function ExpenseTypeconnect(){
      
         return $this->belongsTo(ExpenseType::class, 'expensetype'); 

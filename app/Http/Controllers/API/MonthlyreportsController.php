@@ -35,23 +35,20 @@ class MonthlyreportsController extends Controller
         $userbranch =  auth('api')->user()->branch;
         $userrole =  auth('api')->user()->type;
 
-        $reporttype = \DB::table('monthlyreporttoviews')->where('ucret', '=', $userid)->value('reporttype');
+     //   $reporttype = \DB::table('monthlyreporttoviews')->where('ucret', '=', $userid)->value('reporttype');
         $monthtodisplay = \DB::table('monthlyreporttoviews')->where('ucret', '=', $userid)->value('monthname');
         $yeartodisplay = \DB::table('monthlyreporttoviews')->where('ucret', '=', $userid)->value('yearname');
         $branch = \DB::table('monthlyreporttoviews')->where('ucret', '=', $userid)->value('branchname');
         
-    // if($reporttype == 'salesreport')
-      {
-        
+  
       //   return   Dailyreportcode::with(['branchName','expenseName'])->latest('id')
       return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderby('datedone', 'Asc')
-       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
+      
         ->where('monthmade', $monthtodisplay)
         ->where('branch', $branch)
         ->where('yearmade', $yeartodisplay)
         ->paginate(35);
-      }
-     
+    
     
 
       
@@ -69,7 +66,7 @@ class MonthlyreportsController extends Controller
         'monthname'   => 'required',
         'yearname'   => 'required',
      
-         'reporttype'   => 'required'
+       //  'reporttype'   => 'required'
      ]);
 
 
@@ -85,7 +82,7 @@ class MonthlyreportsController extends Controller
        'monthname' => $request['monthname'],
       'yearname' => $request['yearname'],
       'branchname' => $request['branchname'],
-      'reporttype' => $request['reporttype'],
+   //   'reporttype' => $request['reporttype'],
  
       'ucret' => $userid,
      
@@ -104,69 +101,6 @@ class MonthlyreportsController extends Controller
 
     }
 ///////////////////////////////////////////////////////////////////////
-
-
-public function savebranchtobalance(Request $request)
-    {
-        //
-       // return ['message' => 'i have data'];
-
-
-
-       $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191'
-     //'amount'   => 'sometimes |min:0'
-     ]);
-
-
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-
-  $datepaid = date('Y-m-d');
-     
-  //       $dats = $id;
-       return Branchtobalance::Create([
-      'branchnametobalance' => $request['branchnametobalance'],
-     
- 
-      'ucret' => $userid,
-    
-  ]);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

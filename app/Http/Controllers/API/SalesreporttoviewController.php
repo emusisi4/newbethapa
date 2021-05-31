@@ -94,7 +94,8 @@ class SalesreporttoviewController extends Controller
        $this->validate($request,[
    //    'branchnametobalance'   => 'required | String |max:191',
         'startdate'   => 'required',
-         'sortby'   => 'required'
+        'enddate'   => 'required'
+     //    'sortby'   => 'required'
      ]);
 
 
@@ -117,7 +118,8 @@ class SalesreporttoviewController extends Controller
       'startdate' => $request['startdate'],
       'reporttype' => $request['actionaidsalesreportbydate'],
       'sortname' => $request['sortby'],
- 
+      'enddate' => $request['enddate'],
+ 'branch'=> $request['branchname'],
       'ucret' => $userid,
      
     

@@ -13,7 +13,7 @@ class Monthlyreporttoviewallbranch extends Authenticatable
    
     protected $fillable = [
      
-      'monthmade', 'yearmade', 'reporttype', 'ucret', 
+      'monthmade', 'yearmade', 'reporttype', 'ucret', 'branch'
        
     ];
     

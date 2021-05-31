@@ -104,7 +104,7 @@ Vue.filter('firstletterCapital', function(text){
     return moment(created).format("MMM Do YY");
   });
   Vue.filter('myDate2', function(created){
-    return moment(created).format("Do - MMM - YYYY  ");
+    return moment(created).format("Do MMM YYYY  ");
   });
   Vue.filter('round', function(value, decimals) {
     if(!value) {

@@ -183,7 +183,7 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Report</a>
+                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Expenses Report - Detaild</a>
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
@@ -349,20 +349,25 @@ th {
                        <form @submit.prevent="savedatetoseesalesreportbydate()">
                  
                       <div class="form-group">
-                    <label for="exampleInputEmail1">DATE TO VIEW :</label>
+                    <label for="exampleInputEmail1">Start  :</label>
                     <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
                      <has-error :form="form" field="startdate"></has-error>
        <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
     
+         <label for="exampleInputEmail1">End date  :</label>
+                    <input v-model="form.enddate" type="date" name="enddate"   :class="{ 'is-invalid': form.errors.has('enddate') }">
+                     <has-error :form="form" field="enddate"></has-error>
       
-    <label for="exampleInputEmail1">Order by :</label>
-              
-                 <select name ="sortby" v-model="form.sortby" id ="sortby" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="">  </option>
-<option v-for='data in orderlistfordatesalesreport' v-bind:value='data.sysname'> {{ data.sortname }}</option>
+     <label>Branch</label>
+                    <select name ="branchname" v-model="form.branchname" id ="branchname" class="form-control-sm" v-on:change="myClickEventtosavesalesreportbydate"  :class="{'is-invalid': form.errors.has('branchname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
 
-</select>
-            <has-error :form="form" field="sortby"></has-error>
+                    </select>
+                    
+
+                                <has-error :form="form" field="branchname"></has-error>
+  
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportvie" class="btn btn-primary btn-sm">Saveit</button>         
@@ -379,19 +384,32 @@ th {
 
                 </form>
                 </div>
-                 
+                  
             
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT : <i> {{ seleceteddatefordailyreport|myDate2 }}</i></div> 
+       <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
  <div class="row">
 
 
-      <div class="col-md-3 col-sm-6 col-12">
+     
+
+
+
+  
+
+
+
+
+
+
+
+
+ <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b> Capital Contribution</b></button> -->
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales) }}</strong></span>
+                    <span class="sss"><strong> Capital dd: {{currencydetails}} {{formatPrice(rangeexpensesinvestment) }}</strong></span>
            
 </button>
                            </div>
@@ -399,15 +417,15 @@ th {
             </div>
             
           </div>       
-          
+        
       
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button> -->
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalpayout) }}</strong></span>
+                    <span class="sss"><strong> Collections :{{currencydetails}} {{formatPrice(branchmonthexpensefromcollectionmonth) }}</strong></span>
            
 </button>
                            </div>
@@ -418,13 +436,13 @@ th {
 
 
 
-  <div class="col-md-3 col-sm-6 col-12">
+  <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>TOTAL EXPENSES</b></button> -->
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-info btn-flat"> 
+                    <span class="sss"><strong> Total Expenses : {{currencydetails}} {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth ) }}</strong></span>
            
 </button>
                            </div>
@@ -433,108 +451,65 @@ th {
             
           </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
-           
-</button>
-                           </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
 </div>
         
                
-     <div v-if="selecteddatetotalsales < 1 ">
+     <!-- <div v-if="selecteddatetotalsales < 1 ">
        <h1> No Records found for this selection </h1>
-     </div>
+     </div> -->
                    
-      <div v-if="selecteddatetotalsales > 0 ">
+      <!-- <div v-if="selecteddatetotalsales > 0 "> -->
 
-            
-             <table class="table">
+            <div>
+             <table style="width:100%"  >
                   <thead>
                     <tr> 
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales</th>
+                        <th>Expense</th>
 
-                         <th>Payout</th>
-                           <th>Profit</th>
-                              <th>Collections</th>
-                                 <th>Credits</th>
-                                    <th>Net Collections</th>
-                          <th></th>
+                         <th>Description</th>
+                           <th>Amount</th>
+                              <th>Expense Wallet</th>
+                              
+                          
                       </tr>
                     
                   </thead>
                  
                   <tbody>
                     <tr>
-                       <tr v-for="submenuinfo in salesdetailsrecords.data" :key="submenuinfo.id">
-                       <td>{{submenuinfo.dorder}}</td>                            
-                    <td>{{submenuinfo.datedone}}</td>
+                       <tr v-for="submenuinfo in dailyexpensesrecords.data" :key="submenuinfo.id">
+                       <td>{{submenuinfo.id}}</td>                            
+                    <td>{{submenuinfo.datemade}}</td>
                      <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount)}}</td>
-                        <td>{{currencydetails}} {{formatPrice(submenuinfo.daypayoutamount)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount - submenuinfo.daypayoutamount)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcredits)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection - submenuinfo.totalcredits)}}</td>
+                    
+                     
+                      <td>    <template v-if="submenuinfo.expense_name">	{{submenuinfo.expense_name.expensename}}</template></td>
+                                 
+                    
+                     <td>{{(submenuinfo.description)}}</td>
+                        <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                       
+                       <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Collections </span></span>
+                              </div>
+                               <div v-if="((submenuinfo.walletexpense)) == 2">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Investment </span></span>
+                              </div>
+                              
+                               
+                              
+                               </td>
+                       
                         
-                    <td width="40%">
-
-
-        
- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-info"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((submenuinfo.daysalesamount)/selecteddatetotalsales)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         > {{Math.round(((submenuinfo.daysalesamount)/selecteddatetotalsales)*100) }} % </div>
- </div>
-
-
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
-
-
-
-
-
-
-
-
-                    </td>
+                        
+                 
                                         </tr>
               
                     
@@ -550,7 +525,7 @@ th {
 
     <div class="card-footer">
                 <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="salesdetailsrecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
+                   <pagination :data="dailyexpensesrecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
                 </ul>
               </div>
                      
@@ -674,7 +649,7 @@ th {
                  
                  
 
-         <select name ="branchname" v-model="form.branchname" id ="branchname" :class="{'is-invalid': form.errors.has('sortby')}">
+         <select name ="branchname" v-model="form.branchname" id ="branchname" :class="{'is-invalid': form.errors.has('branchname')}">
 <option value="">  </option>
 <option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
 
@@ -682,7 +657,7 @@ th {
             <has-error :form="form" field="branchname"></has-error>
 
 
-       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
+       <input value="branchmonthlyexpensesrpt" type="hidden" readonly="" name="actionaidformonthlyreportvexp">
     
 
 
@@ -701,7 +676,7 @@ th {
                  
                  
 
-         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
+         <select name ="yearname" v-model="form.yearname" id ="yearname" v-on:change="myClickEventtosavemonthlyreport" :class="{'is-invalid': form.errors.has('yearname')}">
 <option value="">  </option>
 <option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
 
@@ -710,14 +685,14 @@ th {
 
 
       
-    <label for="exampleInputEmail1">Report Type :</label>
+    <!-- <label for="exampleInputEmail1">Report Type :</label>
               
                  <select name ="reporttype" v-model="form.reporttype" id ="reporttype" v-on:change="myClickEventtosavemonthlyreport" :class="{'is-invalid': form.errors.has('reporttype')}">
 <option value="">  </option>
 <option v-for='data in monthreportslist' v-bind:value='data.sysname'> {{ data.reportname }}</option>
 
 </select>
-            <has-error :form="form" field="reporttype"></has-error>
+            <has-error :form="form" field="reporttype"></has-error> -->
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotoSales" class="btn btn-primary btn-sm">Saveit</button>         
@@ -740,30 +715,31 @@ th {
      </div> -->
         <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
       <div v-if="selectedreporttype =='salesreport' ">
-        
-        <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '01'" > EXPENSES MONTHLY REPORT : January - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '02'" > EXPENSES MONTHLY REPORT  : Febuary - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '03'" > EXPENSES MONTHLY REPORT  : March - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '04'" > EXPENSES MONTHLY REPORT  : April - {{branchandyearreport}} </div>   
+          
+        <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '01'" > BRANCH EXPENSES - MONTHLY REPORT : January - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '02'" > BRANCH EXPENSES - MONTHLY REPORT  : Febuary - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '03'" > BRANCH EXPENSES - MONTHLY REPORT : March - {{branchandyearreport}} </div>   
+ <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '04'" > BRANCH EXPENSES - MONTHLY REPORT: April - {{branchandyearreport}} </div>   
 
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '05'" > EXPENSES MONTHLY REPORT  : May - {{branchandyearreport}} </div>    
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '06'" > EXPENSES MONTHLY REPORT  : June - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '07'" > EXPENSES MONTHLY REPORT  : July - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '08'" > EXPENSES MONTHLY REPORT  : August - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '09'" > EXPENSES MONTHLY REPORT  : September - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '10'" > EXPENSES MONTHLY REPORT  : October - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '11'" > EXPENSES MONTHLY REPORT  : November - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '12'" > EXPENSES MONTHLY REPORT  : December - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '05'" >BRANCH EXPENSES - MONTHLY REPORT  : May - {{branchandyearreport}} </div>    
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '06'" > BRANCH EXPENSES - MONTHLY REPORT : June - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '07'" > BRANCH EXPENSES - MONTHLY REPORT : July - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '08'" > BRANCH EXPENSES - MONTHLY REPORT : August - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '09'" > BRANCH EXPENSES - MONTHLY REPORT : September - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '10'" > BRANCH EXPENSES - MONTHLY REPORT : October - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '11'" > BRANCH EXPENSES - MONTHLY REPORT : November - {{branchandyearreport}} </div>   
+  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '12'" > BRANCH EXPENSES - MONTHLY REPORT : December - {{branchandyearreport}} </div>   
  <div class="row">
 
 
-      <div class="col-md-3 col-sm-6 col-12">
+    
+      <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>INVESTMENT</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b> Capital Contribution</b></button> -->
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly) }}</strong></span>
+                    <span class="sss"><strong> Capital : {{currencydetails}} {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</strong></span>
            
 </button>
                            </div>
@@ -771,15 +747,15 @@ th {
             </div>
             
           </div>       
-          
+        
       
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button> -->
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(payoutmonthly) }}</strong></span>
+                    <span class="sss"><strong> Collections :{{currencydetails}} {{formatPrice(branchmonthexpensefromcollectionmonth) }}</strong></span>
            
 </button>
                            </div>
@@ -790,13 +766,13 @@ th {
 
 
 
-  <div class="col-md-3 col-sm-6 col-12">
+  <div class="col-md-4 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
+<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>TOTAL EXPENSES</b></button> -->
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly-payoutmonthly ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-info btn-flat"> 
+                    <span class="sss"><strong> Total Expenses : {{currencydetails}} {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth ) }}</strong></span>
            
 </button>
                            </div>
@@ -805,41 +781,6 @@ th {
             
           </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(collectionsmonthly ) }}</strong></span>
-           
-</button>
-                           </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
 </div>
         
                
@@ -849,72 +790,37 @@ th {
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales Amount</th>
+                        <th>Amount</th>
                          
-                            <th>MONTHLY DISPLAY</th>
+                            <th>Description</th>
+                            <th>Expense Wallet </th>
                       </tr>
                     
                   </thead>
                  
                   <tbody>
                     <tr>
-                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
-                       <td width="3%">{{monthrecs.dorder}}</td>                            
-                    <td width="10%">{{monthrecs.datedone}}</td>
-                     <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                       <tr v-for="monthrecs in monthlybranchexpensesdatarecs.data" :key="monthrecs.id">
+                       <td>{{monthrecs.id}}</td>                            
+                    <td >{{monthrecs.datemade}}</td>
+                     <td>   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
+                     <td >{{currencydetails}} {{formatPrice(monthrecs.amount)}}</td>
                      
-                    <td width="40%">
-
-
-        
- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-info"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
-         
- </div>
-      
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-danger"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
-         
- </div> -->
-
-       
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-success"
-         role="progressbar"
-         v-bind:style="{ width: Math.round( ((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
-         
- </div> -->
-
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
-
-
-
-
-
-
-
-
-                    </td>
+                    <td>   {{monthrecs.description}}</td>
+                   
+                   
+                      <td> <div v-if="((monthrecs.walletexpense))== 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Collection </span></span>
+                              </div>
+                              <div v-if="((monthrecs.walletexpense))== 2">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Capital </span></span>
+                              </div>
+                              
+                              </td>
                                         </tr>
               
                     
@@ -946,11 +852,11 @@ th {
                  
                   <tbody>
                     <tr>
-                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
+                       <tr v-for="monthrecs in monthlybranchexpensesdatarecs.data" :key="monthrecs.id">
                        <td width="3%">{{monthrecs.dorder}}</td>                            
                     <td width="10%">{{monthrecs.datedone}}</td>
                      <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.amount)}}</td>
                      
                     <td width="40%">
 
@@ -994,7 +900,7 @@ th {
 
     <div class="card-footer">
                 <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="monthlydatarecords" @pagination-change-page="paginationResultvuecomponents1"></pagination>
+                   <pagination :data="monthlybranchexpensesdatarecs" @pagination-change-page="paginationResultvuecomponents1"></pagination>
                 </ul>
               </div>
                      
@@ -1017,10 +923,8 @@ th {
                  
                       <div class="form-group">
               
-
-       <input value="monthlyexpensereportsummary" type="hidden" readonly="" name="actionaid">
-    
-
+ <input value="monthlyexpensereportsummary" type="hidden" readonly="" name="actionaidformonthlyreportvexp">
+      
 
  <label for="exampleInputEmail1">Month :</label>
                  
@@ -1037,7 +941,7 @@ th {
                  
                  
 
-         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
+         <select name ="yearname" v-model="form.yearname" id ="yearname" v-on:change="myClickEventtosavemonthlyreportallbranches"  :class="{'is-invalid': form.errors.has('yearname')}">
 <option value="">  </option>
 <option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
 
@@ -1046,14 +950,14 @@ th {
 
 
       
-    <label for="exampleInputEmail1">Sort by</label>
+    <!-- <label for="exampleInputEmail1">Sort by</label>
               
                  <select name ="sortreportby" v-model="form.sortreportby" id ="sortreportby" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortreportby')}">
 <option value="">  </option>
-<option v-for='data in monthreportslist2' v-bind:value='data.sysname'> {{ data.sortname }}</option>
+<option v-for='data in monthlyexpenseorderby' v-bind:value='data.sysname'> {{ data.sortname }}</option>
 
 </select>
-            <has-error :form="form" field="sortreportby"></has-error>
+            <has-error :form="form" field="sortreportby"></has-error> -->
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotosalesreportmonthly" class="btn btn-primary btn-sm">Saveit</button>         
@@ -1077,19 +981,20 @@ th {
         <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
       <!-- <div v-if="selectedreporttype =='salesreport' "> -->
         <div>
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '01'" > EXPENSES MONTHLY REPORT  : January - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '02'" > EXPENSES MONTHLY REPORT  : Febuary - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '03'" > EXPENSES MONTHLY REPORT  : March - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '04'" > EXPENSES MONTHLY REPORT  : April - {{mothlyreportyear}} </div>   
+       
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '01'" > EXPENSES MONTHLY REPORT  : January - {{mothlyreportmonthallbrnchyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '02'" > EXPENSES MONTHLY REPORT  : Febuary - {{mothlyreportmonthallbrnchyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '03'" > EXPENSES MONTHLY REPORT  : March - {{mothlyreportmonthallbrnchyear}} </div>   
+ <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '04'" > EXPENSES MONTHLY REPORT  : April - {{mothlyreportmonthallbrnchyear}} </div>   
 
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '05'" > EXPENSES MONTHLY REPORT  : May - {{mothlyreportyear}} </div>    
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '06'" > EXPENSES MONTHLY REPORT  : June - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '07'" > EXPENSES MONTHLY REPORT  : July - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '08'" > EXPENSES MONTHLY REPORT  : August - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '09'" > EXPENSES MONTHLY REPORT  : September - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '10'" > EXPENSES MONTHLY REPORT  : October - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '11'" > EXPENSES MONTHLY REPORT  : November - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '12'" > EXPENSES MONTHLY REPORT  : December - {{mothlyreportyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '05'" > EXPENSES MONTHLY REPORT  : May - {{mothlyreportmonthallbrnchyear}} </div>    
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '06'" > EXPENSES MONTHLY REPORT  : June - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '07'" > EXPENSES MONTHLY REPORT  : July - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '08'" > EXPENSES MONTHLY REPORT  : August - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '09'" > EXPENSES MONTHLY REPORT  : September - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '10'" > EXPENSES MONTHLY REPORT  : October - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '11'" > EXPENSES MONTHLY REPORT  : November - {{mothlyreportmonthallbrnchyear}} </div>   
+  <div class="bethapa-reportheader-header" v-if="mothlyreportmonthallbrnchmonth == '12'" > EXPENSES MONTHLY REPORT  : December - {{mothlyreportmonthallbrnchyear}} </div>   
   <div>
 <div class="row">
 
@@ -1100,7 +1005,7 @@ th {
 <!-- <button type="button" class="btn btn-block btn-info btn-flat"><b> Capital Contribution</b></button> -->
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> Capital Contribution : {{currencydetails}} {{formatPrice(expensefrominvestmentmonth) }}</strong></span>
+                    <span class="sss"><strong> Capital xx: {{currencydetails}} {{formatPrice(expensefrominvestmentmonth) }}</strong></span>
            
 </button>
                            </div>
@@ -1184,11 +1089,11 @@ th {
                  
                   <tbody>
                     <tr>
-                       <tr v-for="mrhdghh in allbranchesmreports.data" :key="mrhdghh.id">
+                       <tr v-for="mrhdghh in allbranchesexpenserept.data" :key="mrhdghh.id">
                                              
                     
                      <td>   <template v-if="mrhdghh.branchname_dailycodes">	{{mrhdghh.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{currencydetails}} {{formatPrice(mrhdghh.sales)}}</td>
+                     <td>{{currencydetails}} {{formatPrice(mrhdghh.amount)}}</td>
                  
  <td>{{(mrhdghh.updated_at )}}</td>
                     <!-- <td>
@@ -1414,6 +1319,10 @@ th {
          salestotalmonthly:null,
          collectionsmonthly:null,
          expensefrominvestmentmonth:null,
+           branchmonthexpensefrominvestmentmonth:null,
+           rangeexpensesinvestment:null,
+           rangeexpensescollections:null,
+          branchmonthexpensefromcollectionmonth:null,
          totalmonthlycollectionsselectedreport:null,
 totalmonthlyprofitselectedreport:null,
 expensefromcollectionmonth:null,
@@ -1449,11 +1358,15 @@ dailycollection :null,
 
          mothlyreportyear:null,
           mothlyreportmonth:null,
+          mothlyreportmonthallbrnchmonth:null,
+          mothlyreportmonthallbrnchyear:null,
           branchandmonthreport:null,
           branchandyearreport:null,
          payoutmonthly :null,
          selectedreporttype:null,
          seleceteddatefordailyreport:null,
+         selecteddailyexpensesreport:null,
+         selecteddailyexpensesreport2:null,
          selectedbranchreportmonth:null,
          //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
@@ -1465,9 +1378,9 @@ dailycollection :null,
           myOptions: [], // or [{id: key, text: value}, {id: key, text: value}]
           editmode: false,
           mainmenurecords : {},
-          salesdetailsrecords : {},
-          monthlydatarecords : {},
-          allbranchesmreports:{},
+          dailyexpensesrecords : {},
+          monthlybranchexpensesdatarecs : {},
+          allbranchesexpenserept:{},
           componentfeaturesrecords :{},
           datarecordsSubmenusauthorised:{},
           dailycodesreportdata:{},
@@ -1475,13 +1388,15 @@ dailycollection :null,
           datarecordsMainmenuauthorised:{},
           allowedrolecomponentfeaturesObject : {},
           seleceteddatefordailyreport:{},
+          selecteddailyexpensesreport:{},
+          selecteddailyexpensesreport2:{},
           selectedbranchreportmonth:{},
           brancheslist:{},
          selectedreporttype:{},
           montheslist:{},
           yearslist:{},
           monthreportslist:{},
-          monthreportslist2:{},
+          monthlyexpenseorderby:{},
           componentslist:{},
           submenulist:{},
           mainmenulist:{},
@@ -1498,9 +1413,15 @@ dailycollection :null,
                 email:'',
                 rolename:'',
                 type:'',
-actionaid : 'fishreportbydateandbranch',
+actionaidformonthlyreportvexp:'monthlyexpensereportsummary',
+actionforbranchmonthlyexpenses:'branchmonthlyexpensesrpt',
+
+    
+
+
+
+
 startdate : '2021-05-01',
-actionaidsalesreportbydate : 'salesreportbydate',
     ////
       shid:'',
       sysname:'',
@@ -1629,7 +1550,7 @@ paginationResultscomponentfeatures(page = 1) {
 paginationResultsSubmenus(page = 1) {
                         axios.get('api/submenus?page=' + page)
                           .then(response => {
-                            this.salesdetailsrecords = response.data;
+                            this.dailyexpensesrecords = response.data;
                           });
                       },
 
@@ -1638,26 +1559,32 @@ paginationResultsSubmenus(page = 1) {
    paginationResultvuecomponents1(page = 1) {
                         axios.get('api/vuecomponents?page=' + page)
                           .then(response => {
-                            this.monthlydatarecords = response.data;
+                            this.monthlybranchexpensesdatarecs = response.data;
                           });
                       },
 ////////////////////////////////////////////////////////
 
 loadmonthlyperformancereport(){
-  axios.get('/api/monthreportslist2').then(function (response) { this.monthreportslist2 = response.data;}.bind(this));
-    axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
+  axios.get('/api/monthlyexpenseorderby').then(function (response) { this.monthlyexpenseorderby = response.data;}.bind(this));
+    axios.get("api/allbranchesexpenserept").then(({ data }) => (this.allbranchesexpenserept = data));
      axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
        axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
+
+       axios.get("api/mothlyreportmonthallbrnchmonth").then(({ data }) => (this.mothlyreportmonthallbrnchmonth = data));
+       axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyreportmonthallbrnchyear = data));
+
+
        axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
        axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
-     
+     axios.get("api/mothlyreportmonthallbrnchmonth").then(({ data }) => (this.mothlyreportmonthallbrnchmonth = data));
+       axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyreportmonthallbrnchyear = data));
      
        axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
            axios.get("api/expensefrominvestmentmonth").then(({ data }) => (this.expensefrominvestmentmonth = data));
         axios.get("api/expensefromcollectionmonth").then(({ data }) => (this.expensefromcollectionmonth = data));
-         
-
+        
+      
       
        },
 
@@ -1774,7 +1701,7 @@ if (result.isConfirmed) {
 loadMonthlyreport(){
   
    
-       axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+       axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
        axios.get('/api/montheslist').then(function (response) { this.montheslist = response.data;}.bind(this));
        axios.get('/api/yearslist').then(function (response) { this.yearslist = response.data;}.bind(this));
        axios.get('/api/monthreportslist').then(function (response) { this.monthreportslist = response.data;}.bind(this));
@@ -1784,12 +1711,13 @@ loadMonthlyreport(){
            axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
 
 axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
-       axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
      
+ axios.get("api/branchmonthexpensefrominvestmentmonth").then(({ data }) => (this.branchmonthexpensefrominvestmentmonth = data));     
+ axios.get("api/branchmonthexpensefromcollectionmonth").then(({ data }) => (this.branchmonthexpensefromcollectionmonth = data)); 
+ 
 
 
-
-      
        },
 
      newVuecomponentmodal(){
@@ -1818,7 +1746,7 @@ $('#addnewvuecomponentmodal').modal('show');
 
          
     $('#addnewvuecomponentmodal').modal('hide');
-   axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+   axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
   Toast.fire({
   icon: 'success',
   title: 'Record added successfully'
@@ -1845,7 +1773,7 @@ this.form.put('api/vuecomponents/'+this.form.id)
       )
       this.$Progress.finish();
     // Fire.$emit('AfterAction');
-     axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+     axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
 
   })
 
@@ -1874,7 +1802,7 @@ deletevuecomponent(id){
 
 /// send request ti
 if (result.isConfirmed) {
-  this.form.delete('api/monthrlreporyrecords/'+id).then(()=>{
+  this.form.delete('api/monthlybranchexpensedetails/'+id).then(()=>{
   
                         Swal.fire(
                           'Deleted!',
@@ -1882,7 +1810,7 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
-  axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+  axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
 
   }).catch(()=>{
      Swal.fire({  
@@ -1931,15 +1859,18 @@ if (result.isConfirmed) {
 
   /// Main submenu
   loadSubmenus(){
-       axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
-       this.getRoles();
-     
+      axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+      axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+      axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+          
      axios.get("api/orderlistfordatesalesreport").then(({ data }) => (this.orderlistfordatesalesreport = data));
      axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
      axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
-     axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
-     axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+     axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+  axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+    //  axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
+    //  axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
      
      ////
         axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
@@ -1948,8 +1879,8 @@ if (result.isConfirmed) {
    
    axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
 
-     axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
-
+ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+ 
 
   },
 
@@ -1980,7 +1911,7 @@ $('#addnewsubmenuModal').modal('show');
          
     $('#addnewsubmenuModal').modal('hide');
   //  Fire.$emit('AfterAction');
-   axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
+   axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
 
   Toast.fire({
   icon: 'success',
@@ -2008,7 +1939,7 @@ this.form.put('api/submenus/'+this.form.id)
       )
       this.$Progress.finish();
     // Fire.$emit('AfterAction');
-    axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
+    axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
 
   })
 
@@ -2045,7 +1976,7 @@ if (result.isConfirmed) {
                           'success'
                         )
                    
- axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
+ axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
 
 
 
@@ -2111,8 +2042,11 @@ $('#addnewMainmenumodal').modal('show');
                                 this.$Progress.start();
                                 this.form.post('api/monthlyexpensesreportforallbra')
                                 .then(()=>{
-
-// axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
+axios.get("api/allbranchesexpenserept").then(({ data }) => (this.allbranchesexpenserept = data));
+      axios.get("api/expensefrominvestmentmonth").then(({ data }) => (this.expensefrominvestmentmonth = data));
+        axios.get("api/expensefromcollectionmonth").then(({ data }) => (this.expensefromcollectionmonth = data));
+axios.get("api/mothlyreportmonthallbrnchmonth").then(({ data }) => (this.mothlyreportmonthallbrnchmonth = data));
+axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyreportmonthallbrnchyear = data));// axios.get("api/allbranchesexpenserept").then(({ data }) => (this.allbranchesexpenserept = data));
 //   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
 //    axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
 //        axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
@@ -2139,16 +2073,32 @@ $('#addnewMainmenumodal').modal('show');
      savethemonthlyreporttoview(){
 
                                 this.$Progress.start();
-                                this.form.post('api/monthlyreportstoview')
+                                this.form.post('api/monthlyexpensesreportforallbra')
                                 .then(()=>{
 
-                                    axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecords = data));
+                                    axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
                                     axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
                                     axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
                                     axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
                                     axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
                                     axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
                                     axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
+                                    axios.get("api/expensefrominvestmentmonth").then(({ data }) => (this.expensefrominvestmentmonth = data));
+                                    axios.get("api/expensefromcollectionmonth").then(({ data }) => (this.expensefromcollectionmonth = data));
+ 
+ axios.get("api/branchmonthexpensefrominvestmentmonth").then(({ data }) => (this.branchmonthexpensefrominvestmentmonth = data));     
+ axios.get("api/branchmonthexpensefromcollectionmonth").then(({ data }) => (this.branchmonthexpensefromcollectionmonth = data)); 
+
+////////////////////////////////////////////////////////
+   
+     
+// axios.get("api/allbranchesexpenserept").then(({ data }) => (this.allbranchesexpenserept = data));
+      
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                    
 //  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
                               //  Fire.$emit('AfterAction');
 
@@ -2172,10 +2122,14 @@ $('#addnewMainmenumodal').modal('show');
          savedatetoseesalesreportbydate(){
 
                                 this.$Progress.start();
-                                this.form.post('api/saleareportsview')
+                               this.form.post('api/monthlyexpensesreportforallbra')
                                 .then(()=>{
+  axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+       axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+  axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+  axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
 
-axios.get("api/salesrecs").then(({ data }) => (this.salesdetailsrecords = data));
 axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
  axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));

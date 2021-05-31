@@ -39,31 +39,33 @@ class FishreporttoviewController extends Controller
      // {
       //FishreporttoviewController
       // $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-      $datetoview = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)
-      //->where('ucret', '=', $userid)
-      ->value('startdate');
-      $sortby = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)
-      //->where('ucret', '=', $userid)
-      ->value('sortname');
-      //   return   Dailyreportcode::with(['branchName','expenseName'])->latest('id')
-      if($sortby == 'datesort')
+      $startdate = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('startdate');
+      $enddate = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('enddate');
+      $sortby = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('sortname');
+      $branch = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('branch');
       {
-      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
-       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
-       //->where('del', 0)
-       ->where('datedone', $datetoview)
-      //  ->where('explevel', 1)
-       ->paginate(35);
-      }
-      if($sortby == 'salessort')
-      {
+        if($branch != '900')
+        {
     //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
       return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('daysalesamount', 'DESC')
-       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
+       
+       // ->where('del', 0)
+      ->where('branch', $branch)
+
+      ->whereBetween('datedone', [$startdate, $enddate])
+       ->paginate(40);
+        }
+        if($branch = '900')
+        {
+    //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
+      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('daysalesamount', 'DESC')
+       
        // ->where('del', 0)
       //  ->where('branch', $userbranch)
-      ->where('datedone', $datetoview)
+
+      ->whereBetween('datedone', [$startdate, $enddate])
        ->paginate(40);
+        }
       }
      
 
@@ -151,6 +153,7 @@ if($reptov == "salesdetailsbybranch")
     'branch' => $request['branchnametobalance'],
     'startdate' => $request['startdate'],
     'reporttype' => $request['actionaid'],
+    
     'enddate' => $request['enddate'],
 
     'ucret' => $userid,

@@ -385,6 +385,18 @@ public function mybranch()
                 return response()->json($data);
    }
    
+   public function monthlyexpenseorderby()
+   {
+       $userid =  auth('api')->user()->id;
+       $userbranch =  auth('api')->user()->branch;
+       $userrole =  auth('api')->user()->type;
+      /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+     
+      $data = Sortlistreport::orderBy('id', 'Asc')
+      ->where('sover', '=', 3)
+      ->get();
+              return response()->json($data);
+ }
    public function monthreportslist2()
    {
        $userid =  auth('api')->user()->id;
@@ -597,6 +609,48 @@ $userrole =  auth('api')->user()->type;
  return $monthtoview;
 }
 
+public function selecteddailyexpensesreport2()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+ 
+  return $yearview;
+}
+public function selecteddailyexpensesreport()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+ 
+  return $yearview;
+}
+
+
+public function seleceteddatefordailyreportenddate()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+ 
+  return $yearview;
+}
+
 public function seleceteddatefordailyreport()
 {
 /// Getting the Logged in User details
@@ -619,7 +673,7 @@ public function branchandmonthreport()
  $userrole =  auth('api')->user()->type;
 
   // $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
-  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $monthtoview;
 }
 
@@ -632,11 +686,37 @@ public function branchandyearreport()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $yearview  = DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $yearview;
 }
 
+public function mothlyreportyearexpenses()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  return $yearview;
+}
+public function mothlyreportmonthexpenses()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  return $monthtoview;
+}
 public function mothlyreportmonth()
 {
 /// Getting the Logged in User details
@@ -648,6 +728,33 @@ public function mothlyreportmonth()
   $currentdate = date('Y-m-d');
   $yearview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
   $monthtoview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
+  return $monthtoview;
+}
+public function mothlyreportmonthallbrnchyear()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  return $yearview;
+}
+
+public function mothlyreportmonthallbrnchmonth()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $yearview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $monthtoview;
 }
 
@@ -688,18 +795,29 @@ public function dailytotalsales()
 
      
   $currentdate = date('Y-m-d');
-  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
-  $totalsales = \DB::table('dailyreportcodes')
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
    
-   ->where('datedone', '=', $dateinquestion)
-  //  ->where('yearmade', '=', $yearview)
-  //  ->where('branch', '=', $branchtoview)
-   ->sum('daysalesamount');
-    return $totalsales;
-  
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('daysalesamount');
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('daysalesamount');
+        return $totalsales;
+      
+  }
  
 }
 public function dailytotalpayout()
@@ -711,18 +829,28 @@ public function dailytotalpayout()
 
      
   $currentdate = date('Y-m-d');
-  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
   $totalsales = \DB::table('dailyreportcodes')
    
-   ->where('datedone', '=', $dateinquestion)
-  //  ->where('yearmade', '=', $yearview)
-  //  ->where('branch', '=', $branchtoview)
+//  ->where('datedone', '=', $dateinquestion)
+   ->whereBetween('datedone', [$startdate, $enddate])
    ->sum('daypayoutamount');
     return $totalsales;
-  
+  }
+///////////////$branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+  ->where('branch', '=', $branch)
+   ->whereBetween('datedone', [$startdate, $enddate])
+   ->sum('daypayoutamount');
+    return $totalsales;
+  }
  
 }
 public function dailycollection()
@@ -734,15 +862,15 @@ public function dailycollection()
 
      
   $currentdate = date('Y-m-d');
-  $dateinquestion  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
   // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
   // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   $totalsales = \DB::table('dailyreportcodes')
    
-   ->where('datedone', '=', $dateinquestion)
-  //  ->where('yearmade', '=', $yearview)
-  //  ->where('branch', '=', $branchtoview)
+//  ->where('datedone', '=', $dateinquestion)
+   ->whereBetween('datedone', [$startdate, $enddate])
    ->sum('totalcollection');
     return $totalsales;
   
@@ -874,6 +1002,38 @@ public function selectedmonthlyreport()
 
 
 
+public function expensefrominvestmentmonth()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+  $branch  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  $monthname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $yearname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $walletname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('walletname');
+
+  $categoryname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('categoryname');
+  $typename  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('typename');
+
+  $totalsales = \DB::table('madeexpenses')
+  ->where('monthmade', '=', $monthname)
+  ->where('yearmade', '=', $yearname)
+  //->where('branch', '=', $branch)
+ ->where('approvalstate', '=', 1)
+ ->where('walletexpense', '=', 2)
+    ->sum('amount');
+    return $totalsales;
+  
+ 
+}
+
 
 
 
@@ -904,7 +1064,8 @@ public function expensefromcollectionmonth()
    ->sum('amount');
     return $totalsales;
 }
-public function expensefrominvestmentmonth()
+
+public function branchmonthexpensefrominvestmentmonth()
 {
 /// Getting the Logged in User details
  $userid =  auth('api')->user()->id;
@@ -927,6 +1088,7 @@ public function expensefrominvestmentmonth()
   $totalsales = \DB::table('madeexpenses')
   ->where('monthmade', '=', $monthname)
   ->where('yearmade', '=', $yearname)
+  ->where('branch', '=', $branch)
  ->where('approvalstate', '=', 1)
  ->where('walletexpense', '=', 2)
     ->sum('amount');
@@ -936,9 +1098,85 @@ public function expensefrominvestmentmonth()
 }
 
 
+public function branchmonthexpensefromcollectionmonth()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+  $branch  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  $monthname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $yearname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $walletname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('walletname');
+
+  $categoryname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('categoryname');
+  $typename  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('typename');
+
+  $totalsales = \DB::table('madeexpenses')
+  ->where('monthmade', '=', $monthname)
+  ->where('yearmade', '=', $yearname)
+  ->where('branch', '=', $branch)
+ ->where('approvalstate', '=', 1)
+ ->where('walletexpense', '=', 1)
+    ->sum('amount');
+    return $totalsales;
+  
+ 
+}
 
 
 
+public function rangeexpensesinvestment()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+  $branch  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  $monthname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $yearname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $walletname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('walletname');
+
+  $categoryname  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('categoryname');
+  $typename  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('typename');
+if($branch == "900")
+{
+  $totalsales = \DB::table('madeexpenses')
+  //->where('monthmade', '=', $monthname)
+ // ->where('yearmade', '=', $yearname)
+ // ->where('branch', '=', $branch)
+ //->whereBetween('datemade', [$startdat, $enddate])
+ //->where('approvalstate', '=', 1)
+// ->where('walletexpense', '=', 1)
+    ->sum('amount');
+    return $totalsales;
+}
+if($branch != "900")
+{
+  $totalsales = \DB::table('madeexpenses')
+  ->where('monthmade', '=', $monthname)
+  ->where('yearmade', '=', $yearname)
+  ->where('branch', '=', $branch)
+ ->where('approvalstate', '=', 1)
+ ->where('walletexpense', '=', 1)
+    ->sum('amount');
+    return $totalsales;
+}
+  
+ 
+}
 
 
 
@@ -1018,13 +1256,28 @@ public function totalmonthlysalesselectedreport()
      
  $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
  $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
- $totalsales = \DB::table('dailyreportcodes')
+ $branch  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+
+ if($branch == "900")
+ 
+{ $totalsales = \DB::table('dailyreportcodes')
   
    ->where('monthmade', '=', $monthto)
    ->where('yearmade', '=', $yearto)
  //  ->where('status', '=', 1)
   ->sum('daysalesamount');
     return $totalsales;
+  }
+  if($branch != "900")
+ 
+{ $totalsales = \DB::table('dailyreportcodes')
+  
+   ->where('monthmade', '=', $monthto)
+   ->where('yearmade', '=', $yearto)
+   ->where('branch', '=', $branch)
+  ->sum('daysalesamount');
+    return $totalsales;
+  }
   
  
 }
@@ -1040,6 +1293,12 @@ public function totalmonthlypayoutselectedreport()
   $currentdate = date('Y-m-d');
   $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
   $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+  $branch  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+
+  if($branch == "900")
+  
+ {
+  
   $totalsales = \DB::table('dailyreportcodes')
    
     ->where('monthmade', '=', $monthto)
@@ -1047,9 +1306,18 @@ public function totalmonthlypayoutselectedreport()
   //  ->where('status', '=', 1)
    ->sum('daypayoutamount');
      return $totalsales;
-   
-  
+ }
+ if($branch != "900")
  
+ {
+  $totalsales = \DB::table('dailyreportcodes')
+   
+  ->where('monthmade', '=', $monthto)
+  ->where('yearmade', '=', $yearto)
+  ->where('branch', '=', $branch)
+ ->sum('daypayoutamount');
+   return $totalsales;
+ } 
 }
 
 
@@ -1093,11 +1361,12 @@ public function selecteddatetotalsales()
 
      
   $currentdate = date('Y-m-d');
-  $detoinact  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
-  
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
   $totalsales = \DB::table('dailyreportcodes')
    
-   ->where('datedone', '=', $detoinact)
+  //  ->where('datedone', '=', $detoinact)
+   ->whereBetween('datedone', [$startdate, $enddate])
   //  ->where('transferdate', '=', $currentdate)
   //  ->where('status', '=', 1)
    ->sum('daysalesamount');
@@ -3002,9 +3271,7 @@ public function fishmachinestotal()
   $userrole =  auth('api')->user()->type;
   $udefinedrole =  auth('api')->user()->mmaderole;
 
-//$data = DB::table('users')->count();
-// $fishmachinestotal = "mainmenusettingscomponent";
-// $actonaddnew = 'addnew';
+
 $branchto = \DB::table('branchtobalances')->where('ucret', '=', $userid)->value('branchnametobalance');
  $wordCount = \DB::table('branchesandmachines')
    ->where('branchname', '=', $branchto)

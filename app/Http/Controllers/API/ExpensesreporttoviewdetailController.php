@@ -97,86 +97,116 @@ class ExpensesreporttoviewdetailController extends Controller
        $userid =  auth('api')->user()->id;
        $userbranch =  auth('api')->user()->branch;
        $userrole =  auth('api')->user()->type;
-       $reptov = $request['actionaid'];
-       if($reptov  = "monthlyexpensereportsummary")
+       $reptov1 = $request['actionaidformonthlyreportvexp'];
+      //  $reptov2 = $request['actionforbranchmonthlyexpenses'];
+       
+      // if($reptov1  = "branchmonthlyexpensesrpt")
        {
           $this->validate($request,[
-      
-        'monthname'   => 'required',
-         'yearname'   => 'required'
+      //   'branchname' => 'required',
+       // 'monthname'   => 'required',
+       //  'yearname'   => 'required'
      ]);
      DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->delete();
      Expensesreporttoviewdetail::Create([
-      
-      'sortby' => $request['sortreportby'],
+      //id, startdate, enddate, branch, monthname, yearname, walletname, categoryname, typename, ucret, created_at, updated_at, sortby
+      // 'sortby' => $reptov1,
       'monthname' => $request['monthname'],
-      'yearname' => $request['yearname'],
- 
+     'yearname' => $request['yearname'],
+      'branch' => $request['branchname'],
+      'startdate' => $request['startdate'],
+      'enddate' => $request['enddate'],
+      'walletname' => $request['walletname'],
+      'categoryname' => $request['categoryname'],
+      'typename' => $request['typename'],
+
       'ucret' => $userid,
      
     
   ]);
        }
+
+
+
+//      if($reptov1  == "monthlyexpensereportsummary")
+//        {
+//            $this->validate($request,[
+      
+//     'monthname'   => 'required',
+//     'yearname'   => 'required'
+//     ]);
+//    DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->delete();
+//     Expensesreporttoviewdetail::Create([
+      
+   
+//      'monthname' => $request['monthname'],
+//      'yearname' => $request['yearname'],
+ 
+//      'ucret' => $userid,
+     
+    
+//  ]);
+//        }
       
 
 
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-   $reptov = $request['actionaid'];
-  // DB::table('expensereporttoviews')->where('ucret', $userid)->where('reporttype',$reptov)->delete();
-  DB::table('expensereporttoviews')->where('ucret', $userid)->delete();
-  $datepaid = date('Y-m-d');
+//      $userid =  auth('api')->user()->id;
+//    //  $userbranch =  auth('api')->user()->branch;
+//    //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
+//    //  $hid = $id1+1;
+//    $reptov = $request['actionaid'];
+//   // DB::table('expensereporttoviews')->where('ucret', $userid)->where('reporttype',$reptov)->delete();
+//   DB::table('expensereporttoviews')->where('ucret', $userid)->delete();
+//   $datepaid = date('Y-m-d');
      
-  //       $dats = $id;
+//   //       $dats = $id;
 
 
 
 
-  if($reptov == "expreportbybranch")
-  {
-       return Expensereporttoview::Create([
-      'branch' => $request['branchnametobalance'],
-      'startdate' => $request['startdate'],
-      'reporttype' => $request['actionaid'],
-      'enddate' => $request['enddate'],
+//   if($reptov == "expreportbybranch")
+//   {
+//        return Expensereporttoview::Create([
+//       'branch' => $request['branchnametobalance'],
+//       'startdate' => $request['startdate'],
+//       'reporttype' => $request['actionaid'],
+//       'enddate' => $request['enddate'],
  
-      'ucret' => $userid,
+//       'ucret' => $userid,
      
     
-  ]);
-}///
+//   ]);
+// }///
 
 
-if($reptov == "salesdetailsbybranch")
-{
-     return Expensereporttoview::Create([
-    'branch' => $request['branchnametobalance'],
-    'startdate' => $request['startdate'],
-    'reporttype' => $request['actionaid'],
-    'enddate' => $request['enddate'],
+// if($reptov == "salesdetailsbybranch")
+// {
+//      return Expensereporttoview::Create([
+//     'branch' => $request['branchnametobalance'],
+//     'startdate' => $request['startdate'],
+//     'reporttype' => $request['actionaid'],
+//     'enddate' => $request['enddate'],
 
-    'ucret' => $userid,
+//     'ucret' => $userid,
    
   
-]);
-}///
+// ]);
+// }///
 
 
-if($reptov == "expreportbywallet")
-{
-     return Expensereporttoview::Create([
-    'branch' => $request['branchnametobalance'],
-    'startdate' => $request['startdate'],
-    'reporttype' => $request['actionaid'],
-    'enddate' => $request['enddate'],
+// if($reptov == "expreportbywallet")
+// {
+//      return Expensereporttoview::Create([
+//     'branch' => $request['branchnametobalance'],
+//     'startdate' => $request['startdate'],
+//     'reporttype' => $request['actionaid'],
+//     'enddate' => $request['enddate'],
 
-    'ucret' => $userid,
+//     'ucret' => $userid,
    
   
-]);
-}///
+// ]);
+// }///
 
 
 
@@ -190,35 +220,6 @@ if($reptov == "expreportbywallet")
 ///////////////////////////////////////////////////////////////////////
 
 
-public function savebranchtobalance(Request $request)
-    {
-        //
-       // return ['message' => 'i have data'];
-
-
-
-       $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191'
-     //'amount'   => 'sometimes |min:0'
-     ]);
-
-
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-
-  $datepaid = date('Y-m-d');
-     
-  //       $dats = $id;
-       return Branchtobalance::Create([
-      'branchnametobalance' => $request['branchnametobalance'],
-     
- 
-      'ucret' => $userid,
-    
-  ]);
-    }
 
 
 
@@ -242,24 +243,6 @@ public function savebranchtobalance(Request $request)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //

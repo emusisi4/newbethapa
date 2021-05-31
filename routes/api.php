@@ -57,6 +57,7 @@ Route::get('montheslist', 'APIController@montheslist');
 Route::get('yearslist', 'APIController@yearslist');
 Route::get('monthreportslist2', 'APIController@monthreportslist2');
 
+Route::get('monthlyexpenseorderby', 'APIController@monthlyexpenseorderby');
 Route::get('monthreportslist', 'APIController@monthreportslist');
 
 Route::get('bettingproducts', 'APIController@bettingproducts');
@@ -81,6 +82,7 @@ Route::get('contactscomponentaccess', 'APIController@acccesscontactscomponentacc
 
 Route::apiResources(['mainmenucomponents' => 'API\MainmenucomponentController']);
 Route::apiResources(['submenus' => 'API\SubmenusController']);
+Route::apiResources(['dailyexpensesrecords' => 'API\ExpensereportsdailyController']);
 Route::apiResources(['salesrecs' => 'API\FishreporttoviewController']);
 Route::apiResources(['currencydetailsrecords' => 'API\CompanycurrencyController']);
 Route::apiResources(['vuecomponents' => 'API\VuecomponentsController']);
@@ -124,21 +126,32 @@ Route::get('totalmonthlysalesselectedreport', 'APIController@totalmonthlysalesse
 Route::get('expensefrominvestmentmonth', 'APIController@expensefrominvestmentmonth'); 
 Route::get('expensefromcollectionmonth', 'APIController@expensefromcollectionmonth'); 
 
+//
+Route::get('branchmonthexpensefrominvestmentmonth', 'APIController@branchmonthexpensefrominvestmentmonth'); 
+Route::get('branchmonthexpensefromcollectionmonth', 'APIController@branchmonthexpensefromcollectionmonth'); 
+
+Route::get('rangeexpensesinvestment', 'APIController@rangeexpensesinvestment'); 
+Route::get('rangeexpensescollection', 'APIController@rangeexpensescollection'); 
 
 
 // axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
 // axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
 Route::get('branchandmonthreport', 'APIController@branchandmonthreport'); 
 Route::get('branchandyearreport', 'APIController@branchandyearreport'); 
-
+Route::get('mothlyreportyearexpenses', 'APIController@mothlyreportyearexpenses'); 
+Route::get('mothlyreportmonthexpenses', 'APIController@mothlyreportmonthexpenses'); 
 Route::get('mothlyreportmonth', 'APIController@mothlyreportmonth'); 
 Route::get('mothlyreportyear', 'APIController@mothlyreportyear'); 
 
 Route::get('selectedbranchreportmonth', 'APIController@selectedbranchreportmonth'); 
 Route::get('seleceteddatefordailyreport', 'APIController@seleceteddatefordailyreport'); 
 
+Route::get('seleceteddatefordailyreportenddate', 'APIController@seleceteddatefordailyreportenddate'); 
+Route::get('mothlyreportmonthallbrnchmonth', 'APIController@mothlyreportmonthallbrnchmonth'); 
+Route::get('mothlyreportmonthallbrnchyear', 'APIController@mothlyreportmonthallbrnchyear'); 
+Route::get('selecteddailyexpensesreport', 'APIController@selecteddailyexpensesreport'); 
 
-
+Route::get('selecteddailyexpensesreport2', 'APIController@selecteddailyexpensesreport2'); 
 Route::get('selectedreporttype', 'APIController@selectedreporttype'); 
 
 
@@ -204,7 +217,8 @@ Route::apiResources(['maycashoutdetails' => 'API\UsercashoutdetailsController'])
 Route::apiResources(['expensesreportbybranch' => 'API\ExpensereportstoviewController']);
 Route::apiResources(['dailyfishrep' => 'API\FishreporttoviewController']);
 Route::apiResources(['dailycodesreportdata' => 'API\DaillyfishcodesreportController']);
-
+Route::apiResources(['monthlybranchexpensedetails' => 'API\MonthlyrexpesesreportabchbController']);
+Route::apiResources(['allbranchesexpenserept' => 'API\MonthlyrexpesesreportallbController']);
 Route::apiResources(['allbranchesmreports' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['monthrlreporyrecords' => 'API\MonthlyreportsController']);
 /////////////////////////////////////////////////////////////////////////////////////////////////////

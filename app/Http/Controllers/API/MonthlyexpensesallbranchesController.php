@@ -49,7 +49,7 @@ class MonthlyexpensesallbranchesController extends Controller
       //   return   Dailyreportcode::with(['branchName','expenseName'])->latest('id')
     //   return   Mlyrpt::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderby('id', 'Asc')
     // return   Mlyrpt::orderby('id', 'Asc')
-      return   Mlyrpt::with(['branchnameDailycodes'])->orderby('id', 'Asc')
+      return   Mlyrpt::with(['branchnameDailycodes'])->orderby('amount', 'Desc')
        //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
     ->where('yeardone', $yeartodisplay)
     ->where('monthdone', $monthtodisplay)
@@ -88,7 +88,7 @@ class MonthlyexpensesallbranchesController extends Controller
        return Expensesreporttoviewdetail::Create([
        
       'startdate' => $request['monthname'],
-      'enddate' => $request['yearname'],
+      'enddate' => $request['enddate'],
       'branch' => $request['branchname'],
       'monthname' => $request['monthname'],
  

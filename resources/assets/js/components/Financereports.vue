@@ -183,13 +183,13 @@ th {
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Report</a>
+                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Sales Report</a>
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
                  
                   <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab"
+                    <a class="nav-link" id="custom-tabs-two-messages-tab" v-if="dailyfishreportAccessComponent > 0"
                     @click="loadMonthlyreport()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
                     aria-controls="custom-tabs-two-messages" aria-selected="false">Branch Monthly Report</a>
                     <!--  v-if="vuedetailsaccessComponent > 0" -->
@@ -266,15 +266,15 @@ th {
                       <th > Branch </th>
                       <th > Machine </th>
                       <th > Openning </th>
-                      <th >Sales </th>
-                      <th > Payout </th>
-                      <th > Closing </th>
-                      <th > Profit </th>
+                      <th >Sales ({{currencydetails}} )</th>
+                      <th > Payout ({{currencydetails}} )</th>
+                      <th > Closing ({{currencydetails}} )</th>
+                      <th > Profit ({{currencydetails}} ) </th>
                         
-                      <th > Income </th>
-                      <th > Collection </th>
-                      <th > Credits </th>
-                      <th > Net Collection </th>
+                      <th > Income ({{currencydetails}} )</th>
+                      <th > Collection ({{currencydetails}} )</th>
+                      <th > Credits ({{currencydetails}} )</th>
+                      <th > Net Collection ({{currencydetails}} )</th>
                     
                     </tr>
                   </thead>
@@ -299,13 +299,13 @@ th {
                                     <td> {{((mydataObjectinfo.closingcode))}} </td>
                                     <td> {{((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode))}}  </td>
                                     
-                                   <td> {{currencydetails}} {{formatPrice((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode)*500)}}  </td>
+                                   <td> {{formatPrice((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode)*500)}}  </td>
 
 
-                                    <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcollection))}} </td>
-                                      <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcredits))}} </td>
-                                       <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcollection)-(mydataObjectinfo.totalcredits))}} </td>
-                                       <!-- <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.amount))}} </td> -->
+                                    <td> {{formatPrice((mydataObjectinfo.totalcollection))}} </td>
+                                      <td>{{formatPrice((mydataObjectinfo.totalcredits))}} </td>
+                                       <td>{{formatPrice((mydataObjectinfo.totalcollection)-(mydataObjectinfo.totalcredits))}} </td>
+                                       <!-- <td>{{formatPrice((mydataObjectinfo.amount))}} </td> -->
                                   
                                     
                                     
@@ -349,20 +349,34 @@ th {
                        <form @submit.prevent="savedatetoseesalesreportbydate()">
                  
                       <div class="form-group">
-                    <label for="exampleInputEmail1">DATE TO VIEW :</label>
+                    <label for="exampleInputEmail1">From :</label>
                     <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
                      <has-error :form="form" field="startdate"></has-error>
        <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
-    
-      
-    <label for="exampleInputEmail1">Order by :</label>
+      <label for="exampleInputEmail1">To :</label>
+                    <input v-model="form.enddate" type="date" name="enddate"  :class="{ 'is-invalid': form.errors.has('enddate') }">
+                     <has-error :form="form" field="enddate"></has-error>
+        <label for="exampleInputEmail1">Branch :</label>
+                 
+                 
+
+         <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
+<option value="900"> All </option>
+<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
+
+</select>
+            <has-error :form="form" field="branchname"></has-error>
+
+
+
+    <!-- <label for="exampleInputEmail1">Order by :</label>
               
                  <select name ="sortby" v-model="form.sortby" id ="sortby" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
 <option value="">  </option>
 <option v-for='data in orderlistfordatesalesreport' v-bind:value='data.sysname'> {{ data.sortname }}</option>
 
 </select>
-            <has-error :form="form" field="sortby"></has-error>
+            <has-error :form="form" field="sortby"></has-error> -->
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportvie" class="btn btn-primary btn-sm">Saveit</button>         
@@ -381,7 +395,7 @@ th {
                 </div>
                  
             
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT : <i> {{ seleceteddatefordailyreport|myDate2 }}</i></div> 
+       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT : <i> From {{ seleceteddatefordailyreport|myDate2 }} To : {{ seleceteddatefordailyreportenddate|myDate2 }}</i></div> 
  <div class="row">
 
 
@@ -391,7 +405,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}}  {{formatPrice(dailytotalsales) }}</strong></span>
            
 </button>
                            </div>
@@ -407,7 +421,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalpayout) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailytotalpayout) }}</strong></span>
            
 </button>
                            </div>
@@ -424,7 +438,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>
+                    <span class="sss"><strong>   {{currencydetails}}   {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>
            
 </button>
                            </div>
@@ -459,7 +473,7 @@ th {
           
 <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
            
 </button>
                            </div>
@@ -471,26 +485,26 @@ th {
 </div>
         
                
-     <div v-if="selecteddatetotalsales < 1 ">
+     <!-- <div v-if="selecteddatetotalsales < 1 ">
        <h1> No Records found for this selection </h1>
-     </div>
+     </div> -->
                    
-      <div v-if="selecteddatetotalsales > 0 ">
-
+      <!-- <div v-if="selecteddatetotalsales > 0 "> -->
+<div>
             
-             <table class="table">
+              <table style="width:100%"  >
                   <thead>
                     <tr> 
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales</th>
+                        <th>Sales ({{currencydetails}} )</th>
 
-                         <th>Payout</th>
-                           <th>Profit</th>
-                              <th>Collections</th>
-                                 <th>Credits</th>
-                                    <th>Net Collections</th>
+                         <th>Payout ({{currencydetails}} )</th>
+                           <th>Profit ({{currencydetails}} )</th>
+                              <th>Collections ({{currencydetails}} )</th>
+                                 <th>Credits ({{currencydetails}} )</th>
+                                    <th>Net Collections ({{currencydetails}} )</th>
                           <th></th>
                       </tr>
                     
@@ -502,14 +516,14 @@ th {
                        <td>{{submenuinfo.dorder}}</td>                            
                     <td>{{submenuinfo.datedone}}</td>
                      <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount)}}</td>
-                        <td>{{currencydetails}} {{formatPrice(submenuinfo.daypayoutamount)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.daysalesamount - submenuinfo.daypayoutamount)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcredits)}}</td>
-                         <td>{{currencydetails}} {{formatPrice(submenuinfo.totalcollection - submenuinfo.totalcredits)}}</td>
+                     <td>{{formatPrice(submenuinfo.daysalesamount)}}</td>
+                        <td>{{formatPrice(submenuinfo.daypayoutamount)}}</td>
+                         <td>{{formatPrice(submenuinfo.daysalesamount - submenuinfo.daypayoutamount)}}</td>
+                         <td>{{formatPrice(submenuinfo.totalcollection)}}</td>
+                         <td>{{formatPrice(submenuinfo.totalcredits)}}</td>
+                         <td>{{formatPrice(submenuinfo.totalcollection - submenuinfo.totalcredits)}}</td>
                         
-                    <td width="40%">
+                    <td width="20%">
 
 
         
@@ -525,7 +539,7 @@ th {
  </div>
 
 
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
 
 
@@ -701,7 +715,7 @@ th {
                  
                  
 
-         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
+         <select name ="yearname" v-model="form.yearname" id ="yearname"  v-on:change="myClickEventtosavemonthlyreport"  :class="{'is-invalid': form.errors.has('yearname')}">
 <option value="">  </option>
 <option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
 
@@ -710,14 +724,14 @@ th {
 
 
       
-    <label for="exampleInputEmail1">Report Type :</label>
+    <!-- <label for="exampleInputEmail1">Report Type :</label>
               
                  <select name ="reporttype" v-model="form.reporttype" id ="reporttype" v-on:change="myClickEventtosavemonthlyreport" :class="{'is-invalid': form.errors.has('reporttype')}">
 <option value="">  </option>
 <option v-for='data in monthreportslist' v-bind:value='data.sysname'> {{ data.reportname }}</option>
 
 </select>
-            <has-error :form="form" field="reporttype"></has-error>
+            <has-error :form="form" field="reporttype"></has-error> -->
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotoSales" class="btn btn-primary btn-sm">Saveit</button>         
@@ -763,7 +777,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(salestotalmonthly) }}</strong></span>
            
 </button>
                            </div>
@@ -779,7 +793,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(payoutmonthly) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(payoutmonthly) }}</strong></span>
            
 </button>
                            </div>
@@ -796,7 +810,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(salestotalmonthly-payoutmonthly ) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(salestotalmonthly-payoutmonthly ) }}</strong></span>
            
 </button>
                            </div>
@@ -831,7 +845,7 @@ th {
           
 <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(collectionsmonthly ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(collectionsmonthly ) }}</strong></span>
            
 </button>
                            </div>
@@ -849,9 +863,9 @@ th {
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales Amount</th>
+                        <th>Sales Amount ( {{currencydetails}} )</th>
                          
-                            <th>MONTHLY DISPLAY</th>
+                            <th></th>
                       </tr>
                     
                   </thead>
@@ -862,7 +876,7 @@ th {
                        <td width="3%">{{monthrecs.dorder}}</td>                            
                     <td width="10%">{{monthrecs.datedone}}</td>
                      <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                     <td width="20%">{{formatPrice(monthrecs.daysalesamount)}}</td>
                      
                     <td width="40%">
 
@@ -905,7 +919,7 @@ th {
          
  </div> -->
 
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
 
 
@@ -937,7 +951,7 @@ th {
                      <th>#</th>
                       <th>Date</th>
                         <th>Branch</th>
-                        <th>Sales Amount</th>
+                        <th>Sales ( {{currencydetails}} )</th>
                          
                             <th></th>
                       </tr>
@@ -950,7 +964,7 @@ th {
                        <td width="3%">{{monthrecs.dorder}}</td>                            
                     <td width="10%">{{monthrecs.datedone}}</td>
                      <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{currencydetails}} {{formatPrice(monthrecs.daysalesamount)}}</td>
+                     <td width="20%">{{formatPrice(monthrecs.daysalesamount)}}</td>
                      
                     <td width="40%">
 
@@ -968,7 +982,7 @@ th {
  </div>
 
 
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
 
 
@@ -1033,7 +1047,7 @@ th {
 </select>
             <has-error :form="form" field="monthname"></has-error>
 
- <label for="exampleInputEmail1">Year :</label>
+ <label for="exampleInputEmail1">Year  :</label>
                  
                  
 
@@ -1044,8 +1058,17 @@ th {
 </select>
             <has-error :form="form" field="yearname"></has-error>
 
+  <label for="exampleInputEmail1">Branch :</label>
+                 
+                 
 
-      
+         <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortby')}">
+<option value="900"> All </option>
+<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
+
+</select>
+            <has-error :form="form" field="branchname"></has-error>
+<!--       
     <label for="exampleInputEmail1">Sort by</label>
               
                  <select name ="sortreportby" v-model="form.sortreportby" id ="sortreportby" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortreportby')}">
@@ -1053,7 +1076,7 @@ th {
 <option v-for='data in monthreportslist2' v-bind:value='data.sysname'> {{ data.sortname }}</option>
 
 </select>
-            <has-error :form="form" field="sortreportby"></has-error>
+            <has-error :form="form" field="sortreportby"></has-error> -->
 
                               
              <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotosalesreportmonthly" class="btn btn-primary btn-sm">Saveit</button>         
@@ -1100,7 +1123,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
+                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
            
 </button>
                            </div>
@@ -1116,7 +1139,7 @@ th {
 <button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
+                    <span class="sss"><strong>   {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
            
 </button>
                            </div>
@@ -1130,10 +1153,10 @@ th {
   <div class="col-md-3 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS GAMMING REVENUE</b></button>
+<button type="button" class="btn btn-block btn-info btn-flat"><b>GGR</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-warning btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
+                    <span class="sss"><strong> {{currencydetails}}  {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
            
 </button>
                            </div>
@@ -1168,7 +1191,7 @@ th {
           
 <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong> {{currencydetails}} {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
+                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}}  {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
            
 </button>
                            </div>
@@ -1185,14 +1208,14 @@ th {
                     <tr> 
                                       
                         <th>BRANCH</th>
-                        <th>TOTAL SALES</th>
-                        <th>TOTAL PAYOUT</th>
-                        <th>GROSS GAMMING REVENUE</th>
-                        <th> COLLECTIONS</th>
-                        <th> CREDITS</th>
+                        <th>TOTAL SALES ( {{currencydetails}} )</th>
+                        <th>TOTAL PAYOUT ( {{currencydetails}} )</th>
+                        <th>GGR ( {{currencydetails}} )</th>
+                        <th> COLLECTIONS ( {{currencydetails}} )</th>
+                        <th> CREDITS ( {{currencydetails}} )</th>
                      
-                        <th> EXPENSES</th>
-                        <th>NET PROFIT</th>
+                        <th> EXPENSES ( {{currencydetails}} )</th>
+                        <th>NET PROFIT ( {{currencydetails}} )</th>
                           
                       </tr>
                     
@@ -1204,13 +1227,13 @@ th {
                                              
                     
                      <td>   <template v-if="mrhdghh.branchname_dailycodes">	{{mrhdghh.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{currencydetails}} {{formatPrice(mrhdghh.sales)}}</td>
-                     <td>{{currencydetails}} {{formatPrice(mrhdghh.payout)}}</td>
-                      <td>{{currencydetails}} {{formatPrice(mrhdghh.profit)}}</td>
-                      <td>{{currencydetails}} {{formatPrice(mrhdghh.collections)}}</td>
-                      <td>{{currencydetails}} {{formatPrice(mrhdghh.credits)}}</td>
-                      <td>{{currencydetails}} {{formatPrice(mrhdghh.expenses)}}</td>
- <td>{{currencydetails}} {{formatPrice(mrhdghh.ntrevenue)}}</td>
+                     <td>{{formatPrice(mrhdghh.sales)}}</td>
+                     <td>{{formatPrice(mrhdghh.payout)}}</td>
+                      <td>{{formatPrice(mrhdghh.profit)}}</td>
+                      <td>{{formatPrice(mrhdghh.collections)}}</td>
+                      <td>{{formatPrice(mrhdghh.credits)}}</td>
+                      <td>{{formatPrice(mrhdghh.expenses)}}</td>
+ <td>{{formatPrice(mrhdghh.ntrevenue)}}</td>
                     <!-- <td>
 
 
@@ -1252,7 +1275,7 @@ th {
          
  </div> -->
 
-<!-- {{currencydetails}} {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
+<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
 
 
 
@@ -1474,6 +1497,7 @@ dailycollection :null,
          payoutmonthly :null,
          selectedreporttype:null,
          seleceteddatefordailyreport:null,
+         seleceteddatefordailyreportenddate:null,
          selectedbranchreportmonth:null,
          //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
@@ -1495,6 +1519,7 @@ dailycollection :null,
           datarecordsMainmenuauthorised:{},
           allowedrolecomponentfeaturesObject : {},
           seleceteddatefordailyreport:{},
+          seleceteddatefordailyreportenddate:{},
           selectedbranchreportmonth:{},
           brancheslist:{},
          selectedreporttype:{},
@@ -1970,8 +1995,9 @@ if (result.isConfirmed) {
    
    axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
 
+axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
      axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
-
+axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
 
   },
 
@@ -2138,7 +2164,11 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
    axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
        axios.get("api/mothlyreportyear").then(({ data }) => (this.mothlyreportyear = data));
-      
+        axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
+       axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
+          axios.get("api/totalmonthlysalesselectedreport").then(({ data }) => (this.totalmonthlysalesselectedreport = data));
+        axios.get("api/totalmonthlypayoutselectedreport").then(({ data }) => (this.totalmonthlypayoutselectedreport = data));
+         axios.get("api/totalmonthlyprofitselectedreport").then(({ data }) => (this.totalmonthlyprofitselectedreport = data));
 //  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
                               //  Fire.$emit('AfterAction');
 
@@ -2203,7 +2233,7 @@ axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetot
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
 axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
-           
+ axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));          
                               //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');

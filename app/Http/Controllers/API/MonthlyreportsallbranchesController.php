@@ -40,20 +40,32 @@ class MonthlyreportsallbranchesController extends Controller
         $reporttype = \DB::table('monthlyreporttoviewallbranches')->where('ucret', '=', $userid)->value('reporttype');
         $monthtodisplay = \DB::table('monthlyreporttoviewallbranches')->where('ucret', '=', $userid)->value('monthmade');
         $yeartodisplay = \DB::table('monthlyreporttoviewallbranches')->where('ucret', '=', $userid)->value('yearmade');
+        $branch = \DB::table('monthlyreporttoviewallbranches')->where('ucret', '=', $userid)->value('branch');
        // $branch = \DB::table('monthlyreporttoviewallbranches')->where('ucret', '=', $userid)->value('branchname');
         
     // if($reporttype == 'salesreport')
       {
         
-      //   return   Dailyreportcode::with(['branchName','expenseName'])->latest('id')
-    //   return   Mlyrpt::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderby('id', 'Asc')
-    // return   Mlyrpt::orderby('id', 'Asc')
+      
+    if($branch == "900")
+    {
       return   Mlyrpt::with(['branchnameDailycodes'])->orderby('id', 'Asc')
-       //return   Dailyreportcode::orderBy('daysalesamount', 'Desc')
-    ->where('yeardone', $yeartodisplay)
-    ->where('monthdone', $monthtodisplay)
-     //   ->where('yearmade', $yeartodisplay)
-        ->paginate(35);
+     
+   ->where('yeardone', $yeartodisplay)
+   ->where('monthdone', $monthtodisplay)
+    //   ->where('yearmade', $yeartodisplay)
+       ->paginate(35);
+    }
+    if($branch != "900")
+    {
+      return   Mlyrpt::with(['branchnameDailycodes'])->orderby('id', 'Asc')
+    
+   ->where('yeardone', $yeartodisplay)
+   ->where('monthdone', $monthtodisplay)
+   ->where('branch', $branch)
+       ->paginate(35);
+    }
+  
       }
      
     
@@ -73,7 +85,7 @@ class MonthlyreportsallbranchesController extends Controller
         'monthname'   => 'required',
         'yearname'   => 'required',
      
-         'sortreportby'   => 'required'
+         //'sortreportby'   => 'required'
      ]);
 
 
@@ -88,8 +100,8 @@ class MonthlyreportsallbranchesController extends Controller
       
        'monthmade' => $request['monthname'],
       'yearmade' => $request['yearname'],
-    //   'branchname' => $request['branchname'],
-      'reporttype' => $request['sortreportby'],
+      'branch' => $request['branchname'],
+   //   'reporttype' => $request['sortreportby'],
  
       'ucret' => $userid,
      
@@ -110,61 +122,6 @@ class MonthlyreportsallbranchesController extends Controller
 ///////////////////////////////////////////////////////////////////////
 
 
-public function savebranchtobalance(Request $request)
-    {
-        //
-       // return ['message' => 'i have data'];
-
-
-
-       $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191'
-     //'amount'   => 'sometimes |min:0'
-     ]);
-
-
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-
-  $datepaid = date('Y-m-d');
-     
-  //       $dats = $id;
-       return Branchtobalance::Create([
-      'branchnametobalance' => $request['branchnametobalance'],
-     
- 
-      'ucret' => $userid,
-    
-  ]);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -177,17 +134,6 @@ public function savebranchtobalance(Request $request)
     public function show($id)
     {
         //
-    }
-    public function Branchtotalsd()
-    {
-        //getSinglebranchpayoutdaily
-        $ed = '0';
-      //  return Branchpayout::where('del',0)->sum('amount');
-      return   Branchpayout::latest('id')
-      //  return   Branchpayout::latest('id')
-         ->where('del', 0);
-     //  ->paginate(13);
- 
     }
    
   

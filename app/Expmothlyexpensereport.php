@@ -10,34 +10,20 @@ class Expmothlyexpensereport extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-
+   
     protected $fillable = [
-        
-        'monthname','yearname','amount','branch','ucret'
+       
+      'monthname', 'yearname', 'amount', 'ucret', 'branch'
+       
     ];
     
 
-    public function expenseName(){
-        
-        return $this->belongsTo(Expense::class, 'expense'); 
-    }
-    public function branchName(){
-      
-        return $this->belongsTo(Branch::class, 'branch'); 
-    }
-    public function ExpenseTypeconnect(){
-     
-        return $this->belongsTo(ExpenseType::class, 'expensetype'); 
-    }
-    public function expenseCategory(){
-      
-        return $this->belongsTo(Expensescategory::class, 'expensecategory'); 
-    }
 
-
-
-   
     protected $hidden = [
       //  'hid', 'id',
     ];
+    public function branchnameDailycodes(){
+        // creating a relationship between the students model 
+        return $this->belongsTo(Branch::class, 'branch'); 
+    }
 }
