@@ -471,7 +471,7 @@ th {
             <div class="col-md-3 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONSfff</b></button>
+<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
            

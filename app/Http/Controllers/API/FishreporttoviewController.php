@@ -47,7 +47,7 @@ class FishreporttoviewController extends Controller
         if($branch != '900')
         {
     //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
-      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('daysalesamount', 'DESC')
+      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
        
        // ->where('del', 0)
       ->where('branch', $branch)
@@ -58,7 +58,7 @@ class FishreporttoviewController extends Controller
         if($branch = '900')
         {
     //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
-      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('daysalesamount', 'DESC')
+      return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
        
        // ->where('del', 0)
       //  ->where('branch', $userbranch)
