@@ -771,6 +771,8 @@ public function collectionsmonthly()
   $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
   // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  if($branchtoview != "900")
+  {
   $totalsales = \DB::table('dailyreportcodes')
    
    ->where('monthmade', '=', $monthtoview)
@@ -778,7 +780,17 @@ public function collectionsmonthly()
    ->where('branch', '=', $branchtoview)
    ->sum('totalcollection');
     return $totalsales;
-  
+  }
+  if($branchtoview == "900")
+  {
+  $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('monthmade', '=', $monthtoview)
+   ->where('yearmade', '=', $yearview)
+  // ->where('branch', '=', $branchtoview)
+   ->sum('totalcollection');
+    return $totalsales;
+  }
  
 }
 
@@ -1236,13 +1248,26 @@ public function totalmonthlycollectionsselectedreport()
   $currentdate = date('Y-m-d');
   $monthto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthmade');
  $yearto  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearmade');
+ $branch  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+if($branch == "900")
+ {
   $totalsales = \DB::table('dailyreportcodes')
    
   ->where('monthmade', '=', $monthto)
   ->where('yearmade', '=', $yearto)
    ->sum('totalcollection');
     return $totalsales;
-  
+ } 
+ if($branch != "900")
+ {
+  $totalsales = \DB::table('dailyreportcodes')
+   
+  ->where('monthmade', '=', $monthto)
+  ->where('yearmade', '=', $yearto)
+  ->where('branch', '=', $branch)
+   ->sum('totalcollection');
+    return $totalsales;
+ } 
  
 }
 
