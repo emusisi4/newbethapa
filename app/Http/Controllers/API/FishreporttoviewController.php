@@ -39,12 +39,13 @@ class FishreporttoviewController extends Controller
      // {
       //FishreporttoviewController
       // $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
+      
       $startdate = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('startdate');
       $enddate = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('enddate');
       $sortby = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('sortname');
       $branch = \DB::table('sortlistreportaccesses')->where('ucret', '=', $userid)->value('branch');
       {
-        if($branch != '900')
+        if($branch != "900")
         {
     //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
       return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
@@ -53,9 +54,9 @@ class FishreporttoviewController extends Controller
       ->where('branch', $branch)
 
       ->whereBetween('datedone', [$startdate, $enddate])
-       ->paginate(40);
+       ->paginate(100);
         }
-        if($branch = '900')
+        if($branch == "900")
         {
     //  return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('dorder', 'Asc')
       return   Dailyreportcode::with(['branchnameDailycodes', 'machinenameDailycodes'])->orderBy('datedone', 'DESC')
@@ -112,7 +113,7 @@ class FishreporttoviewController extends Controller
 
 
        $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191',
+        //'branchnametobalance'   => 'required | String |max:191',
         'startdate'   => 'required',
          'enddate'   => 'required'
      ]);
@@ -189,35 +190,6 @@ if($reptov == "expreportbywallet")
 ///////////////////////////////////////////////////////////////////////
 
 
-public function savebranchtobalance(Request $request)
-    {
-        //
-       // return ['message' => 'i have data'];
-
-
-
-       $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191'
-     //'amount'   => 'sometimes |min:0'
-     ]);
-
-
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-
-  $datepaid = date('Y-m-d');
-     
-  //       $dats = $id;
-       return Branchtobalance::Create([
-      'branchnametobalance' => $request['branchnametobalance'],
-     
- 
-      'ucret' => $userid,
-    
-  ]);
-    }
 
 
 
@@ -239,49 +211,12 @@ public function savebranchtobalance(Request $request)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
-    public function Branchtotalsd()
-    {
-        //getSinglebranchpayoutdaily
-        $ed = '0';
-      //  return Branchpayout::where('del',0)->sum('amount');
-      return   Branchpayout::latest('id')
-      //  return   Branchpayout::latest('id')
-         ->where('del', 0);
-     //  ->paginate(13);
- 
-    }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //
@@ -299,15 +234,7 @@ public function savebranchtobalance(Request $request)
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
-    
-    
+   
     
     
      public function destroy($id)

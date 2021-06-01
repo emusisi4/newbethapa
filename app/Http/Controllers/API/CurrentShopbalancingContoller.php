@@ -15,6 +15,8 @@ use App\Salesdetail;
 use App\Currentmachinecode;
 use App\Mlyrpt;
 
+  use App\Daysummarry;
+
 class CurrentShopbalancingContoller extends Controller
 {
     
@@ -407,6 +409,8 @@ $newexpensesfigure = \DB::table('madeexpenses')
 ->where('branch', '=', $brancchssjh)
 ->where('approvalstate', '=', 1)
 ->sum('amount');
+
+
   // insertion query
   Mlyrpt::Create([
 
@@ -428,6 +432,32 @@ $newexpensesfigure = \DB::table('madeexpenses')
 
 
 }
+
+///// working the dailysummary
+$datedonessd = $request['datedone'];
+// sales summary
+$newsalesasummaryfortheday = \DB::table('dailyreportcodes')
+->where('datedone', '=', $datedonessd)
+->sum('daysalesamount');
+$newpayoutsummaryfortheday = \DB::table('dailyreportcodes')
+->where('datedone', '=', $datedonessd)
+->sum('daypayoutamount');
+//////////////////////////////////////////////////////////////////////////////
+DB::table('daysummarries')->where('datedone', $datedonessd)->delete();
+    
+Daysummarry::Create([
+  'salesamount'      => $newsalesasummaryfortheday,
+  'datedone'       => $datedonessd,
+  'payoutamount'         => $newpayoutsummaryfortheday,
+  'yeardone'         => $monthmade,
+  'monthdone'         => $yearmade,
+    
+  'ucret' => $userid,
+
+]);
+
+
+
 
 
     ///// Updating the collection and credits 

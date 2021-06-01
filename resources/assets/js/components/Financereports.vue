@@ -177,7 +177,7 @@ th {
                     <a class="nav-link active" id="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0" 
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab" 
                       @click="loadDailyrecordreport()"
-                      aria-controls="custom-tabs-two-home" aria-selected="true">Sales Reports</a>
+                      aria-controls="custom-tabs-two-home" aria-selected="true">Daily Report</a>
                       <!--  v-if="dailyfishreportAccessComponent > 0" -->
                   </li>
                   <li class="nav-item">
@@ -188,12 +188,7 @@ th {
                   </li>
                  
                  
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab" v-if="dailyfishreportAccessComponent > 0"
-                    @click="loadMonthlyreport()"  data-toggle="pill" href="#custom-tabs-two-messages" role="tab" 
-                    aria-controls="custom-tabs-two-messages" aria-selected="false">Branch Monthly Report</a>
-                    <!--  v-if="vuedetailsaccessComponent > 0" -->
-                  </li>
+                
                  
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
@@ -230,22 +225,22 @@ th {
        <input v-model="form.actionaid" type="hidden" readonly="" name="actionaid">
     
       <label for="exampleInputEmail1">To:</label>
-      <input v-model="form.enddate" type="date" name="enddate" :class="{ 'is-invalid': form.errors.has('enddate') }">
+      <input v-model="form.enddate" type="date" name="enddate"  v-on:change="myClickEvent" :class="{ 'is-invalid': form.errors.has('enddate') }">
       <has-error :form="form" field="enddate"></has-error>
 
       
-                    <label>Branch</label>
+                    <!-- <label>Branch</label>
                     <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEvent"  class="form-control-sm"  :class="{'is-invalid': form.errors.has('branchnametobalance')}">
                     <option value="900"> All  </option>
                     <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
 
                     </select>
-                    <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn" class="btn btn-primary btn-sm">Saveit</button>
+                  
 
-                                <has-error :form="form" field="branchnametobalance"></has-error>
+                                <has-error :form="form" field="branchnametobalance"></has-error> -->
 
 
-
+  <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn" class="btn btn-primary btn-sm">Saveit</button>
                                 
                      
        
@@ -256,25 +251,26 @@ th {
                 </form>
 
                      </div>
+                      <div class="bethapa-reportheader-header" >DAILY SALES  REPORT : <i> From : {{ seleceteddatefordailyreport|myDate2 }} To : {{ seleceteddatefordailyreportenddate|myDate2 }}</i></div> 
+         <button type="button" v-if="allowedtoaddmainmenu > 0" class="add-newm" @click="newautocorrect" >Auto Correct the Details </button>
+       
        <!-- v-if="allowedtoaddmainmenu > 0" -->
             
-                <table style="width:100%"  >
+                <table class="table"  >
                   <thead>
                     <tr>
                     <th> # </th>
                       <th > Date </th>
-                      <th > Branch </th>
-                      <th > Machine </th>
-                      <th > Openning </th>
-                      <th >Sales ({{currencydetails}} )</th>
-                      <th > Payout ({{currencydetails}} )</th>
-                      <th > Closing ({{currencydetails}} )</th>
-                      <th > Profit ({{currencydetails}} ) </th>
+                     
+                    
+                     
+                      <th >SALES ({{currencydetails}} )</th>
+                      <th > PAYOUT ({{currencydetails}} )</th>
+                 
+                      <th > GROSS PROFIT ({{currencydetails}} ) </th>
                         
-                      <th > Income ({{currencydetails}} )</th>
-                      <th > Collection ({{currencydetails}} )</th>
-                      <th > Credits ({{currencydetails}} )</th>
-                      <th > Net Collection ({{currencydetails}} )</th>
+                      
+                     
                     
                     </tr>
                   </thead>
@@ -287,25 +283,24 @@ th {
                       
                          
                      
-                            <td>  {{((mydataObjectinfo.dorder))}}</td>
+                            <td>  {{((mydataObjectinfo.id))}}</td>
                             <td>  {{((mydataObjectinfo.datedone))}}</td>
-                            <td>   <template v-if="mydataObjectinfo.branchname_dailycodes">	{{mydataObjectinfo.branchname_dailycodes.branchname}}</template></td>
-                               <td>    <template v-if="mydataObjectinfo.machinename_dailycodes">	{{mydataObjectinfo.machinename_dailycodes.machinename}}</template></td>
+                          
+                            
                             
                                  
-                                    <td> {{((mydataObjectinfo.openningcode))}} </td>
-                                    <td> {{((mydataObjectinfo.salescode))}} </td>
-                                    <td> {{((mydataObjectinfo.payoutcode))}} </td>
-                                    <td> {{((mydataObjectinfo.closingcode))}} </td>
-                                    <td> {{((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode))}}  </td>
+                                 
+                                  
+                                    <td> {{formatPrice((mydataObjectinfo.salesamount))}} </td>
+                                    <td> {{formatPrice((mydataObjectinfo.payoutamount))}} </td>
+                                  
                                     
-                                   <td> {{formatPrice((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode)*500)}}  </td>
+                         
 
 
-                                    <td> {{formatPrice((mydataObjectinfo.totalcollection))}} </td>
-                                      <td>{{formatPrice((mydataObjectinfo.totalcredits))}} </td>
-                                       <td>{{formatPrice((mydataObjectinfo.totalcollection)-(mydataObjectinfo.totalcredits))}} </td>
-                                       <!-- <td>{{formatPrice((mydataObjectinfo.amount))}} </td> -->
+                                    <td> {{formatPrice((mydataObjectinfo.salesamount - mydataObjectinfo.payoutamount))}} </td>
+                                   
+                                     
                                   
                                     
                                     
@@ -394,8 +389,8 @@ th {
                 </form>
                 </div>
                  
-            
-       <div class="bethapa-reportheader-header" >DAILY BRANCH REPORT : <i> From {{ seleceteddatefordailyreport|myDate2 }} To : {{ seleceteddatefordailyreportenddate|myDate2 }}</i></div> 
+           
+       <div class="bethapa-reportheader-header" >GENERAL SALES  REPORT : <i> From {{ generalreportselectedstartdate|myDate2 }} To : {{ generalreportselectedenddate|myDate2 }}</i></div> 
  <div class="row">
 
 
@@ -575,7 +570,7 @@ th {
 
 
 <!-- Modal add menu -->
-<div class="modal fade" id="addnewsubmenuModal">
+<div class="modal fade" id="activatesalesdate">
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
@@ -676,350 +671,7 @@ th {
 
 
                   </div>
-<!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
-
-                  <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
-             
-         <div class="bethapa-table-header">
-   <form @submit.prevent="savethemonthlyreporttoview()">
-                 
-                      <div class="form-group">
-                    <label for="exampleInputEmail1">Branch :</label>
-                 
-                 
-
-         <select name ="branchname" v-model="form.branchname" id ="branchname" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="">  </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branchname"></has-error>
-
-
-       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
-    
-
-
- <label for="exampleInputEmail1">Month :</label>
-                 
-                 
-
-         <select name ="monthname" v-model="form.monthname" id ="monthname"  :class="{'is-invalid': form.errors.has('monthname')}">
-<option value="">  </option>
-<option v-for='data in montheslist' v-bind:value='data.monthno'> {{ data.monthname }}</option>
-
-</select>
-            <has-error :form="form" field="monthname"></has-error>
-
- <label for="exampleInputEmail1">Year :</label>
-                 
-                 
-
-         <select name ="yearname" v-model="form.yearname" id ="yearname"  v-on:change="myClickEventtosavemonthlyreport"  :class="{'is-invalid': form.errors.has('yearname')}">
-<option value="">  </option>
-<option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
-
-</select>
-            <has-error :form="form" field="yearname"></has-error>
-
-
-      
-    <!-- <label for="exampleInputEmail1">Report Type :</label>
-              
-                 <select name ="reporttype" v-model="form.reporttype" id ="reporttype" v-on:change="myClickEventtosavemonthlyreport" :class="{'is-invalid': form.errors.has('reporttype')}">
-<option value="">  </option>
-<option v-for='data in monthreportslist' v-bind:value='data.sysname'> {{ data.reportname }}</option>
-
-</select>
-            <has-error :form="form" field="reporttype"></has-error> -->
-
-                              
-             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotoSales" class="btn btn-primary btn-sm">Saveit</button>         
-
-                                
-                     
-       
-       
-                   
-          </div>
-
-
-        
-
-                </form>                     </div>
-
-          
-             <!-- <div v-if="selecteddatetotalsales < 1 ">
-       <h1> No Records found for this selection </h1>
-     </div> -->
-        <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
-      <div v-if="selectedreporttype =='salesreport' ">
-        
-        <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '01'" > BRANCHES MONTHLY REPORT : January - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '02'" > BRANCHES MONTHLY REPORT : Febuary - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '03'" > BRANCHES MONTHLY REPORT : March - {{branchandyearreport}} </div>   
- <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '04'" > BRANCHES MONTHLY REPORT : April - {{branchandyearreport}} </div>   
-
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '05'" > BRANCHES MONTHLY REPORT : May - {{branchandyearreport}} </div>    
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '06'" > BRANCHES MONTHLY REPORT : June - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '07'" > BRANCHES MONTHLY REPORT : July - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '08'" > BRANCHES MONTHLY REPORT : August - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '09'" > BRANCHES MONTHLY REPORT : September - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '10'" > BRANCHES MONTHLY REPORT : October - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '11'" > BRANCHES MONTHLY REPORT : November - {{branchandyearreport}} </div>   
-  <div class="bethapa-reportheader-header" v-if="branchandmonthreport == '12'" > BRANCHES MONTHLY REPORT : December - {{branchandyearreport}} </div>   
- <div class="row">
-
-
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(salestotalmonthly) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>       
-          
-      
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(payoutmonthly) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>
-
-
-
-  <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(salestotalmonthly-payoutmonthly ) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS cc</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(collectionsmonthly ) }}</strong></span>
-           
-</button>
-                           </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
-</div>
-        
-               
-             <table class="table">
-                  <thead>
-                    <tr> 
-                     <th>#</th>
-                      <th>Date</th>
-                        <th>Branch</th>
-                        <th>Sales Amount ( {{currencydetails}} )</th>
-                         
-                            <th></th>
-                      </tr>
-                    
-                  </thead>
-                 
-                  <tbody>
-                    <tr>
-                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
-                       <td width="3%">{{monthrecs.dorder}}</td>                            
-                    <td width="10%">{{monthrecs.datedone}}</td>
-                     <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{formatPrice(monthrecs.daysalesamount)}}</td>
-                     
-                    <td width="40%">
-
-
-        
- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-info"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
-         
- </div>
-      
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-danger"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
-         
- </div> -->
-
-       
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-success"
-         role="progressbar"
-         v-bind:style="{ width: Math.round( ((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
-         
- </div> -->
-
-<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
-
-
-
-
-
-
-
-
-                    </td>
-                                        </tr>
-              
-                    
-                  </tbody>
-                  <tfoot>
-                        <tr>
-                      
-                    </tr>
-                  </tfoot>
-                </table>
-                  </div>
-                  <!-- close of No records -->
-       
-<div v-if="selectedreporttype =='pou' ">
- 
-  <div class="bethapa-reportheader-header" >Payout Report  </div>              
-             <table class="table">
-                  <thead>
-                    <tr> 
-                     <th>#</th>
-                      <th>Date</th>
-                        <th>Branch</th>
-                        <th>Sales ( {{currencydetails}} )</th>
-                         
-                            <th></th>
-                      </tr>
-                    
-                  </thead>
-                 
-                  <tbody>
-                    <tr>
-                       <tr v-for="monthrecs in monthlydatarecords.data" :key="monthrecs.id">
-                       <td width="3%">{{monthrecs.dorder}}</td>                            
-                    <td width="10%">{{monthrecs.datedone}}</td>
-                     <td width="10%">   <template v-if="monthrecs.branchname_dailycodes">	{{monthrecs.branchname_dailycodes.branchname}}</template></td>  
-                     <td width="20%">{{formatPrice(monthrecs.daysalesamount)}}</td>
-                     
-                    <td width="40%">
-
-
-        
- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-info"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
- </div>
-
-
-<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
-
-
-
-
-
-
-
-
-                    </td>
-                                        </tr>
-              
-                    
-                  </tbody>
-                  <tfoot>
-                        <tr>
-                      
-                    </tr>
-                  </tfoot>
-                </table>
-                  </div>
-
-
-
-    <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="monthlydatarecords" @pagination-change-page="paginationResultvuecomponents1"></pagination>
-                </ul>
-              </div>
-                     
-                 
-                    </div>
- 
- <!-- tab one end -->
-
-
-
-                  
+  
 
 
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmm --><!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
@@ -1316,7 +968,7 @@ th {
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">ADD NEW RECORD</h4> 
+                <h4  v-show="!editmode"    class="modal-title">Correct Daily Report</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
                  <form class="form-horizontal" @submit.prevent="editmode ? updatecomponentfeature():createcomponentfeature()"> 
@@ -1326,39 +978,19 @@ th {
                 
                 
                   <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">DATE</label>
                     <div class="col-sm-6">
-                 <input v-model="form.featurename" type="text" name="featurename"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('featurename') }">
-                    <has-error :form="form" field="featurename"></has-error>
+                 <input v-model="form.datedone" type="date" name="datedone"
+                      class="form-control" :class="{ 'is-invalid': form.errors.has('datedone') }">
+                    <has-error :form="form" field="datedone"></has-error>
                                   </div>
                    
       
                   </div>
                 
                 
-                <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">System Name</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.sysname" type="text" name="sysname"
-                      class="form-control" :class="{ 'is-invalid': form.errors.has('sysname') }">
-                    <has-error :form="form" field="sysname"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-
               
-                    <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
-                    <div class="col-sm-6">
-                <textarea v-model="form.description" type="text" name="description"
-                class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-              <has-error :form="form" field="description"></has-error>
-                                                 </div>
-                   
-      
-                  </div>
+
                           
                  </div>
                  
@@ -1498,6 +1130,8 @@ dailycollection :null,
          selectedreporttype:null,
          seleceteddatefordailyreport:null,
          seleceteddatefordailyreportenddate:null,
+          generalreportselectedstartdate:null,
+            generalreportselectedenddate:null,
          selectedbranchreportmonth:null,
          //selecteddatetotalpayout:null,
          genrealfishreportsAccess:'',
@@ -1729,15 +1363,15 @@ $('#addnewcomponentfeaturemodal').modal('show');
 
     createcomponentfeature(){
       this.$Progress.start();
-        this.form.post('api/componentfeatures')
+        this.form.post('api/correctmydaterecords')
         .then(()=>{
 
          
-    $('#addnewcomponentfeaturemodal').modal('hide');
-    axios.get("api/componentfeatures").then(({ data }) => (this.componentfeaturesrecords = data));
+    $('#addnewcomponentfeaturemodal').modal('show');
+   // axios.get("api/componentfeatures").then(({ data }) => (this.componentfeaturesrecords = data));
   Toast.fire({
   icon: 'success',
-  title: 'Record added successfully'
+  title: 'Date Corrected successfully'
 });
         this.$Progress.finish();
 
@@ -1839,14 +1473,13 @@ axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthrep
       
        },
 
-     newVuecomponentmodal(){
+     newautocorrect(){
         this.editmode = false;
         this.form.clear();
         this.form.reset();
      
-     $('#addnewvuecomponentmodal').modal('show');
+     $('#addnewcomponentfeaturemodal').modal('show');
             },
-  
   
   
   editvuecomponent(mainmenurecords){
@@ -1995,9 +1628,12 @@ if (result.isConfirmed) {
    
    axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
 
-axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
+     axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
      axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
-axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
+ axios.get("api/generalreportselectedstartdate").then(({ data }) => (this.generalreportselectedstartdate = data));
+     axios.get("api/generalreportselectedenddate").then(({ data }) => (this.generalreportselectedenddate = data));
+        
+     
 
   },
 
@@ -2124,7 +1760,7 @@ if (result.isConfirmed) {
   /// Main menus
   loadDailyrecordreport(){
        axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
-      
+       axios.get("api/getallowedtomanageadate").then(({ data }) => (this.allowedtoaddmainmenu = data));
             
            
     axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
@@ -2234,8 +1870,10 @@ axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetot
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
 axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
- axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));          
-                              //  Fire.$emit('AfterAction');
+ axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data)); 
+ axios.get("api/generalreportselectedstartdate").then(({ data }) => (this.generalreportselectedstartdate = data));
+     axios.get("api/generalreportselectedenddate").then(({ data }) => (this.generalreportselectedenddate = data));
+                        //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
 
@@ -2262,6 +1900,9 @@ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.selecetedd
                                 .then(()=>{
 
  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+ axios.get("api/seleceteddatefordailyreportenddate").then(({ data }) => (this.seleceteddatefordailyreportenddate = data));
+     axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+
                               //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
@@ -2373,10 +2014,8 @@ if (result.isConfirmed) {
             },// End of delrte function
 //////////////////////////////////////////////////////// End of main menu
           checkUsercomponentfeatures: function(){
-              axios.get("api/getAddnewmainmenu").then(({ data }) => (this.allowedtoaddmainmenu = data));
-              axios.get("api/geteditmainmenu").then(({ data }) => (this.allowedtoeditmainmenu = data));
-              axios.get("api/getdeletemainmenu").then(({ data }) => (this.allowedtodeletemainmenu = data));
-
+              axios.get("api/getallowedtomanageadate").then(({ data }) => (this.allowedtoaddmainmenu = data));
+              
      axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
    

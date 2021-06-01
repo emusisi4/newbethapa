@@ -133,7 +133,7 @@ if($reptov == "salesdetailsbybranch")
     'branch' => $request['branchnametobalance'],
     'startdate' => $request['startdate'],
     'reporttype' => $request['actionaid'],
-    'enddate' => $request['enddate'],
+   // 'enddate' => $request['enddate'],
 
     'ucret' => $userid,
    
@@ -168,99 +168,12 @@ if($reptov == "expreportbywallet")
 ///////////////////////////////////////////////////////////////////////
 
 
-public function savebranchtobalance(Request $request)
-    {
-        //
-       // return ['message' => 'i have data'];
-
-
-
-       $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191'
-     //'amount'   => 'sometimes |min:0'
-     ]);
-
-
-     $userid =  auth('api')->user()->id;
-   //  $userbranch =  auth('api')->user()->branch;
-   //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
-   //  $hid = $id1+1;
-
-  $datepaid = date('Y-m-d');
-     
-  //       $dats = $id;
-       return Branchtobalance::Create([
-      'branchnametobalance' => $request['branchnametobalance'],
-     
- 
-      'ucret' => $userid,
-    
-  ]);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
-    public function Branchtotalsd()
-    {
-        //getSinglebranchpayoutdaily
-        $ed = '0';
-      //  return Branchpayout::where('del',0)->sum('amount');
-      return   Branchpayout::latest('id')
-      //  return   Branchpayout::latest('id')
-         ->where('del', 0);
-     //  ->paginate(13);
  
-    }
-   
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //

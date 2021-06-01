@@ -41,6 +41,9 @@ Route::apiResources(['monthlyexpensesreportforallbra' => 'API\Expensesreporttovi
 Route::apiResources(['monthlyreportstoviewallbranches' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
+Route::apiResources(['correctmydaterecords' => 'API\AutocorrectdatedetailsController']);
+
+
 Route::apiResources(['authorisedbranchmachines' => 'API\AuthorisedbranchandmachineController']);
 Route::apiResources(['roletoaddsumenu' => 'API\RoletoaddsubmenuController']);
 Route::apiResources(['roletoaddmainmenu' => 'API\RoletoaddmainmenuController']);
@@ -50,6 +53,12 @@ Route::apiResources(['expenses' => 'API\ExpensesController']);
 Route::apiResources(['authorisedcomponents' => 'API\AuthorisedcomponentsController']);
 Route::apiResources(['saveaccesstovuecomponent' => 'API\GiveaccesstovuecomponentController']);
 Route::get('getlistofcomponents', 'APIController@getcomponentslist');
+
+Route::get('generalreportselectedstartdate', 'APIController@generalreportselectedstartdate');
+Route::get('generalreportselectedenddate', 'APIController@generalreportselectedenddate');
+
+
+
 Route::get('branchDetails', 'APIController@branchDetails');
 
 
@@ -93,6 +102,8 @@ Route::apiResources(['approvefishcashin' => 'API\Approvefishcashin']);
 Route::get('generalcomponentaccessSettings', 'APIController@generalcomponentaccessSettings');
 Route::get('dailyfishreportAccessComponent', 'APIController@dailyfishreportAccessComponent');
 Route::get('genrealfishreportsAccess', 'APIController@genrealfishreportsAccess');
+Route::get('getallowedtomanageadate', 'APIController@getallowedtomanageadate');
+
 
 Route::get('mainmenuaccessComponent', 'APIController@mainmenuaccessComponent');
 Route::get('submenuaccessComponent', 'APIController@submenuaccessComponent');
@@ -216,7 +227,8 @@ Route::apiResources(['mycashindetails' => 'API\UsercashindetailsController']);
 Route::apiResources(['maycashoutdetails' => 'API\UsercashoutdetailsController']);
 Route::apiResources(['expensesreportbybranch' => 'API\ExpensereportstoviewController']);
 Route::apiResources(['dailyfishrep' => 'API\FishreporttoviewController']);
-Route::apiResources(['dailycodesreportdata' => 'API\DaillyfishcodesreportController']);
+//Route::apiResources(['dailycodesreportdata' => 'API\DaillyfishcodesreportController']);
+Route::apiResources(['dailycodesreportdata' => 'API\DailysalessummaryreportController']);
 Route::apiResources(['monthlybranchexpensedetails' => 'API\MonthlyrexpesesreportabchbController']);
 Route::apiResources(['allbranchesexpenserept' => 'API\MonthlyrexpesesreportallbController']);
 Route::apiResources(['allbranchesmreports' => 'API\MonthlyreportsallbranchesController']);

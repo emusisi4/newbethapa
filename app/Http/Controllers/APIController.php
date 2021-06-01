@@ -544,7 +544,7 @@ public function selectedreporttype()
   $currentdate = date('Y-m-d');
   // $detoinact  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   
-  $repotytype  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('reporttype');
+  $repotytype  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('reporttype');
   // $totalsales = \DB::table('dailyreportcodes')
    
   //  ->where('datedone', '=', $detoinact)
@@ -565,10 +565,10 @@ public function payoutmonthly()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
-  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   $totalsales = \DB::table('dailyreportcodes')
    
    ->where('monthmade', '=', $monthtoview)
@@ -593,6 +593,92 @@ public function mothlyreportyear()
   return $yearview;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function generalreportselectedenddate()
+{
+/// Getting the Logged in User details
+$userid =  auth('api')->user()->id;
+$userbranch =  auth('api')->user()->branch;
+$userrole =  auth('api')->user()->type;
+
+    
+ $currentdate = date('Y-m-d');
+ $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+//  $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+//  $branchtov  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+
+ return $yearview;
+}
+
+public function generalreportselectedstartdate()
+{
+/// Getting the Logged in User details
+$userid =  auth('api')->user()->id;
+$userbranch =  auth('api')->user()->branch;
+$userrole =  auth('api')->user()->type;
+
+    
+ $currentdate = date('Y-m-d');
+ $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+//  $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+//  $branchtov  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+
+ return $yearview;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public function selectedbranchreportmonth()
 {
 /// Getting the Logged in User details
@@ -602,9 +688,9 @@ $userrole =  auth('api')->user()->type;
 
     
  $currentdate = date('Y-m-d');
- $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
- $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
- $branchtov  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+ $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+ $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+ $branchtov  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
 
  return $monthtoview;
 }
@@ -646,7 +732,7 @@ public function seleceteddatefordailyreportenddate()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $yearview  = \DB::table('fishreportselections')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
  
   return $yearview;
 }
@@ -660,7 +746,7 @@ public function seleceteddatefordailyreport()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $yearview  = \DB::table('fishreportselections')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
  
   return $yearview;
 }
@@ -672,7 +758,7 @@ public function branchandmonthreport()
  $userbranch =  auth('api')->user()->branch;
  $userrole =  auth('api')->user()->type;
 
-  // $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  // $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
   $monthtoview  = \DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $monthtoview;
 }
@@ -687,7 +773,7 @@ public function branchandyearreport()
      
   $currentdate = date('Y-m-d');
   $yearview  = DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
- // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+ // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
   return $yearview;
 }
 
@@ -767,10 +853,10 @@ public function collectionsmonthly()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
-  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $yearview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   if($branchtoview != "900")
   {
   $totalsales = \DB::table('dailyreportcodes')
@@ -876,26 +962,15 @@ public function dailycollection()
   $currentdate = date('Y-m-d');
   $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
-  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
-  if($branch == "900")
-  {
-    $totalsales = \DB::table('dailyreportcodes')
+  // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  // $branchtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $totalsales = \DB::table('dailyreportcodes')
    
 //  ->where('datedone', '=', $dateinquestion)
    ->whereBetween('datedone', [$startdate, $enddate])
    ->sum('totalcollection');
     return $totalsales;
-  }
-  if($branch != "900")
-  {
-    $totalsales = \DB::table('dailyreportcodes')
-   
-   ->where('branch', '=', $branch)
-   ->whereBetween('datedone', [$startdate, $enddate])
-   ->sum('totalcollection');
-    return $totalsales;
-  }
-  
   
  
 }
@@ -985,15 +1060,15 @@ public function salestotalmonthly()
 
      
   $currentdate = date('Y-m-d');
-  $yearview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
-  $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $yearview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('yearname');
+  $monthtoview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
+  $branchtoview  = \DB::table('monthlyreporttoviewallbranches')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
+  // $monthtoview  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   $totalsales = \DB::table('dailyreportcodes')
    
    ->where('monthmade', '=', $monthtoview)
    ->where('yearmade', '=', $yearview)
-   ->where('branch', '=', $branchtoview)
+  // ->where('branch', '=', $branchtoview)
    ->sum('daysalesamount');
     return $totalsales;
   
@@ -1623,6 +1698,27 @@ $comp ='dailyreportscomponentvue';
 }
 
 
+public function getallowedtomanageadate()
+{
+  $userid =  auth('api')->user()->id;
+  $userbranch =  auth('api')->user()->branch;
+  $userrole =  auth('api')->user()->type;
+  $udefinedrole =  auth('api')->user()->mmaderole;
+
+//$data = DB::table('users')->count();
+$component = "dailybranchreportcomponent";
+$actonaddnew = 'addnew';
+
+$wordCount = \DB::table('mycomponentfeatures')
+  ->where('component', '=', $component)
+    ->where('formcomponent', '=', $actonaddnew)
+    ->where('rolein', '=', $udefinedrole)
+    ->count();
+
+    return $wordCount;
+    
+  
+}
 public function genrealfishreportsAccess()
 {
   $userid =  auth('api')->user()->id;
