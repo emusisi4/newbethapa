@@ -471,7 +471,7 @@ th {
             <div class="col-md-3 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
+<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONSfff</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
            
@@ -2159,7 +2159,7 @@ $('#addnewMainmenumodal').modal('show');
                                 this.$Progress.start();
                                 this.form.post('api/monthlyreportstoviewallbranches')
                                 .then(()=>{
-
+axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
 axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreports = data));
   axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
    axios.get("api/mothlyreportmonth").then(({ data }) => (this.mothlyreportmonth = data));
@@ -2170,7 +2170,7 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
         axios.get("api/totalmonthlypayoutselectedreport").then(({ data }) => (this.totalmonthlypayoutselectedreport = data));
          axios.get("api/totalmonthlyprofitselectedreport").then(({ data }) => (this.totalmonthlyprofitselectedreport = data));
 //  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
-axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
+
                               //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');

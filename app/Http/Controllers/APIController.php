@@ -876,15 +876,26 @@ public function dailycollection()
   $currentdate = date('Y-m-d');
   $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
   $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
-  // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('monthname');
-  // $branchtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchname');
-  // // $monthtoview  = \DB::table('monthlyreporttoviews')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
-  $totalsales = \DB::table('dailyreportcodes')
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
    
 //  ->where('datedone', '=', $dateinquestion)
    ->whereBetween('datedone', [$startdate, $enddate])
    ->sum('totalcollection');
     return $totalsales;
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+   ->where('branch', '=', $branch)
+   ->whereBetween('datedone', [$startdate, $enddate])
+   ->sum('totalcollection');
+    return $totalsales;
+  }
+  
   
  
 }
