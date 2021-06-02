@@ -174,7 +174,7 @@ th {
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0" 
+                    <a class="nav-link active" id="custom-tabs-two-home-tab"  
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab" 
                       @click="loadDailyrecordreport()"
                       aria-controls="custom-tabs-two-home" aria-selected="true">Daily Report</a>
@@ -213,7 +213,7 @@ th {
       <div class="tab-content" id="custom-tabs-two-tabContent">
                   
                   <!-- tab one start -->
-                  <div class="tab-pane fade show active"  id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0">
+                  <div class="tab-pane fade show active"  id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                  <!-- v-if="dailyfishreportAccessComponent > 0" -->
                  <div class="bethapa-table-header">
                 <form @submit.prevent="savenewRecordtoview()">
@@ -1620,7 +1620,7 @@ if (result.isConfirmed) {
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
      axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
      axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
-     
+    
      ////
         axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
