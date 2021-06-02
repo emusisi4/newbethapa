@@ -430,7 +430,7 @@ th {
   <div class="col-md-3 col-sm-6 col-12">
             <div class="">
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PROFIT</b></button>
+<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS PROFIT</b></button>
               <div class="info-box-contentmycontent">
                 <button type="button" class="btn btn-block btn-secondary btn-flat"> 
                     <span class="sss"><strong>   {{currencydetails}}   {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>

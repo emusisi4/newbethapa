@@ -132,7 +132,7 @@ class MadeexpensesofficeConroller extends Controller
       'ucret' => $userid,
     
   ]);
-
+$walletofexpense = $request['walletexpense'];
   /// updating the Monthly Expenses 
   $brancchssjh = $request['branch'];
   DB::table('expmothlyexpensereports')->where('branch', $brancchssjh)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
@@ -156,6 +156,58 @@ $newexpensesamount = \DB::table('madeexpenses')
   'yearname'     => $yearmade,
 
 ]);
+/////////////////////////////////////////////////////////////////////////////
+$datedonessd = $request['datemade'];
+$dateinact = $request['datemade'];
+     $yearmade = date('Y', strtotime($dateinact));
+     $monthmade = date('m', strtotime($dateinact));
+/////month and year report
+$newexpensesmonthandyear = \DB::table('madeexpenses')
+///->where('datemade', '=', $datedonessd)
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+//->where('category', '=', $expcat)
+->where('approvalstate', '=', 1)
+->sum('amount');
+// sales summary
+$newexpensesbycategoryformonthandyear = \DB::table('madeexpenses')
+///->where('datemade', '=', $datedonessd)
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('category', '=', $expcat)
+->where('approvalstate', '=', 1)
+->sum('amount');
+$newexpensesbytypeformonthandyear = \DB::table('madeexpenses')
+// ->where('datemade', '=', $datedonessd)
+
+->where('monthmade', '=', $monthmade)
+->where('yearmade', '=', $yearmade)
+->where('exptype', '=', $exptyo)
+->where('approvalstate', '=', 1)
+->sum('amount');
+
+$newexpensesbywalletformonthandyear = \DB::table('madeexpenses')
+//->where('datemade', '=', $datedonessd)
+->where('walletofexpense', '=', $walletofexpense)
+->where('approvalstate', '=', 1)
+->sum('amount');
+//////////////////////////////////////////////////////////////////////////////
+/// expense categories
+DB::table('expmonthlyexpensesreportbycategories')->where('monthname', $monthmade)->where('yearname', $yearmade)->where('yearname', $yearmade)->delete();
+
+DB::table('expmonthlyexpensesreportbycategories')->insert([
+  [
+    'expensecategory' => $expcat
+  
+  ],
+  
+]);
+
+
+
+
+
+
     }
 
     
