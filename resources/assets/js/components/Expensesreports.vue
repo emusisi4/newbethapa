@@ -2066,7 +2066,7 @@ axios.get('/api/expensewalletslist').then(function (response) { this.expensewall
 
  axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
   
-  this.loading = false;
+ // this.loading = false;
      }
         // if(response.dailyexpensesrecordsexpcat.status === 'success')
         //             {
