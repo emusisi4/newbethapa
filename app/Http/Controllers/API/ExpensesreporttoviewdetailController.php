@@ -108,9 +108,14 @@ class ExpensesreporttoviewdetailController extends Controller
        //  'yearname'   => 'required'
      ]);
      DB::table('expensesreporttoviewdetails')->where('ucret', $userid)->delete();
+   
+
+  
+  {
      Expensesreporttoviewdetail::Create([
       //id, startdate, enddate, branch, monthname, yearname, walletname, categoryname, typename, ucret, created_at, updated_at, sortby
       // 'sortby' => $reptov1,
+      
       'monthname' => $request['monthname'],
      'yearname' => $request['yearname'],
       'branch' => $request['branchname'],
@@ -119,11 +124,13 @@ class ExpensesreporttoviewdetailController extends Controller
       'walletname' => $request['walletname'],
       'categoryname' => $request['categoryname'],
       'typename' => $request['typename'],
+      'sortby' => 'branch',
 
       'ucret' => $userid,
      
     
   ]);
+     }  //
        }
 
 

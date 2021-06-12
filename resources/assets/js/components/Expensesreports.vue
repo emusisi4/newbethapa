@@ -1,4 +1,5 @@
 <style scoped>
+
 tr:nth-child(even) {
   background-color: #96af9c;
   font-size: 20px;
@@ -69,6 +70,24 @@ tr:nth-child(odd) {
 th {
   background-color: #8c9765;
   font-size: 23px;
+}
+#axiosForm{  /* Components Root Element ID */
+    position: relative;
+}
+.loader{  /* Loader Div Class */
+    position: absolute;
+    top:0px;
+    right:0px;
+    width:100%;
+    height:100%;
+    background-color:#eceaea;
+    background-image: url('/images/load.gif');
+    background-size: 200px;
+    background-repeat:no-repeat;
+    background-position:center;
+    z-index:10000000;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
 }
 
 </style>
@@ -168,6 +187,8 @@ th {
         <!-- end of Headers -->
 
         <!-- Start of the -->
+
+       
      
 <div class="col-12 col-sm-12 col-lg-12">
             <div class="card card-primary card-outline card-tabs">
@@ -177,13 +198,21 @@ th {
                     <a class="nav-link active" id="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0" 
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab" 
                       @click="loadDailyrecordreport()"
-                      aria-controls="custom-tabs-two-home" aria-selected="true">Sales Reports</a>
+                      aria-controls="custom-tabs-two-home" aria-selected="true"> Expenses Report Summary - By Date </a>
                       <!--  v-if="dailyfishreportAccessComponent > 0" -->
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Daily Expenses Report - Detaild</a>
+                      @click="loadSubmenus()"  aria-controls="custom-tabs-two-profile" aria-selected="false">Expenses Report - By Branch</a>
+                      
+                      <!--  v-if="submenuaccessComponent > 0" -->
+                  </li>
+
+                     <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-expcategot-tab"
+                     data-toggle="pill" href="#custom-tabs-two-expcategot" role="tab"
+                      @click="loadexpesesreportcat()"  aria-controls="custom-tabs-two-expcategot" aria-selected="false">Expenses Report - Category</a>
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
@@ -215,25 +244,20 @@ th {
                   <div class="tab-pane fade show active"  id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab" v-if="dailyfishreportAccessComponent > 0">
                  <!-- v-if="dailyfishreportAccessComponent > 0" -->
                  <div class="bethapa-table-header">
-                <form @submit.prevent="savenewRecordtoview()">
+                <form @submit.prevent="savedatetoseesalesreportbydate()">
                  
                       <div class="form-group">
                     <label for="exampleInputEmail1">From :</label>
                     <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
                      <has-error :form="form" field="startdate"></has-error>
-       <input v-model="form.actionaid" type="hidden" readonly="" name="actionaid">
+     
     
       <label for="exampleInputEmail1">To:</label>
-      <input v-model="form.enddate" type="date" name="enddate" :class="{ 'is-invalid': form.errors.has('enddate') }">
+      <input v-model="form.enddate" type="date" name="enddate" v-on:change="myClickEventtosavesalesreportbydate"  :class="{ 'is-invalid': form.errors.has('enddate') }">
       <has-error :form="form" field="enddate"></has-error>
 
       
-                    <label>Branch</label>
-                    <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEvent"  class="form-control-sm"  :class="{'is-invalid': form.errors.has('branchnametobalance')}">
-                    <option value="900"> All  </option>
-                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-                    </select>
+                   
                     <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn" class="btn btn-primary btn-sm">Saveit</button>
 
                                 <has-error :form="form" field="branchnametobalance"></has-error>
@@ -247,28 +271,20 @@ th {
                    
           </div>
 
+
                 </form>
 
                      </div>
        <!-- v-if="allowedtoaddmainmenu > 0" -->
-            
+             <div class="bethapa-reportheader-header" >DAILY SUMMARY  EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div>   
                 <table style="width:100%"  >
                   <thead>
                     <tr>
                     <th> # </th>
                       <th > Date </th>
-                      <th > Branch </th>
-                      <th > Machine </th>
-                      <th > Openning </th>
-                      <th >Sales </th>
-                      <th > Payout </th>
-                      <th > Closing </th>
-                      <th > Profit </th>
-                        
-                      <th > Income </th>
-                      <th > Collection </th>
-                      <th > Credits </th>
-                      <th > Net Collection </th>
+                 
+                      <th > Total Amount ( {{currencydetails}}  )</th>
+                  
                     
                     </tr>
                   </thead>
@@ -281,31 +297,12 @@ th {
                       
                          
                      
-                            <td>  {{((mydataObjectinfo.dorder))}}</td>
+                            <td>  {{((mydataObjectinfo.id))}}</td>
                             <td>  {{((mydataObjectinfo.datedone))}}</td>
-                            <td>   <template v-if="mydataObjectinfo.branchname_dailycodes">	{{mydataObjectinfo.branchname_dailycodes.branchname}}</template></td>
-                               <td>    <template v-if="mydataObjectinfo.machinename_dailycodes">	{{mydataObjectinfo.machinename_dailycodes.machinename}}</template></td>
-                            
-                                 
-                                    <td> {{((mydataObjectinfo.openningcode))}} </td>
-                                    <td> {{((mydataObjectinfo.salescode))}} </td>
-                                    <td> {{((mydataObjectinfo.payoutcode))}} </td>
-                                    <td> {{((mydataObjectinfo.closingcode))}} </td>
-                                    <td> {{((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode))}}  </td>
-                                    
-                                   <td> {{currencydetails}} {{formatPrice((mydataObjectinfo.closingcode -mydataObjectinfo.openningcode)*500)}}  </td>
-
-
-                                    <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcollection))}} </td>
-                                      <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcredits))}} </td>
-                                       <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.totalcollection)-(mydataObjectinfo.totalcredits))}} </td>
-                                       <!-- <td>{{currencydetails}} {{formatPrice((mydataObjectinfo.amount))}} </td> -->
-                                  
-                                    
+                       
+                                    <td> {{(formatPrice(mydataObjectinfo.amount))}}  </td>
                                     
                                 
-               
-                              
                                
                     </tr>
               
@@ -331,7 +328,401 @@ th {
 
       <!-- End of Modal for -->
 <!--  -->
-                  <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
+
+
+<div class="tab-pane fade" id="custom-tabs-two-expcategot" role="tabpanel" aria-labelledby="custom-tabs-two-expcategot-tab">
+                   
+                   
+    <!-- tab one start -->
+                  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                 
+                 <div class="bethapa-table-header">
+                 
+                 
+                       <form @submit.prevent="expenseCategoryreport()">
+                 
+                      <div class="form-group">
+                    <label for="exampleInputEmail1">Start:</label>
+                    <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
+                     <has-error :form="form" field="startdate"></has-error>
+     
+    
+         <label for="exampleInputEmail1">End date  :</label>
+                    <input v-model="form.enddate" type="date" name="enddate"   :class="{ 'is-invalid': form.errors.has('enddate') }">
+
+                     <has-error :form="form" field="enddate"></has-error>
+      <!-- <label>Expense type :</label>
+                    <select name ="typename" v-model="form.typename" id ="typename" class="form-control-sm"   :class="{'is-invalid': form.errors.has('typename')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensetypeslist' v-bind:value='data.id'>{{ data.typename }}</option>
+
+                    </select>
+                          <has-error :form="form" field="typename"></has-error>
+ -->
+
+
+
+
+
+  <label>Expense Category :</label>
+                    <select name ="categoryname" v-model="form.categoryname" id ="categoryname" class="form-control-sm"  v-on:change="myClickEventtosavesalesreportbydatecategory"  :class="{'is-invalid': form.errors.has('categoryname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensecategorieslist' v-bind:value='data.id'>{{ data.expcatcatname }}</option>
+
+                    </select>
+                                <has-error :form="form" field="categoryname"></has-error>
+
+
+
+        <!-- <label>Wallet :</label>
+                    <select name ="walletname" v-model="form.walletname" id ="walletname" class="form-control-sm" :class="{'is-invalid': form.errors.has('walletname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensewalletslist' v-bind:value='data.id'>{{ data.name }}</option>
+
+                    </select>
+                                <has-error :form="form" field="walletname"></has-error> -->
+
+
+
+     <!-- <label>Branch :</label>
+                    <select name ="branchname" v-model="form.branchname" id ="branchname" class="form-control-sm" v-on:change="myClickEventtosavesalesreportbydate"  :class="{'is-invalid': form.errors.has('branchname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchname }}</option>
+
+                    </select>
+                    
+
+                                <has-error :form="form" field="branchname"></has-error>
+   -->
+
+                              
+             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportviecategory" class="btn btn-primary btn-sm">Saveit</button>         
+
+                                
+                     
+       
+       
+                   
+          </div>
+
+
+        
+
+                </form>
+                </div>
+                  
+            
+       <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
+
+   <div class="row">
+      <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>INVESTMENT</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+           <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>COLLECTIONS</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+  <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>TOTAL EXPENSES</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+          
+      
+        
+    
+          
+          
+        </div>
+   
+     <!-- <div v-if="selecteddatetotalsales < 1 ">
+       <h1> No Records found for this selection </h1>
+     </div> -->
+                   
+      <!-- <div v-if="selecteddatetotalsales > 0 "> -->
+ <div id="axiosForm">
+     <div class="loader" v-if="loading">
+       
+       <div class="spinner-border"  style="width: 10rem; height: 10rem;" role="status">
+  <span class="sr-only">Loading...</span>
+</div></div>
+        <h4 class="font-weight-semibold mb-4">Create a new Post</h4>
+            <form class="contact-form" @submit.prevent="storePost" method="POST" novalidate="novalidate">
+                <fieldset :disabled="loading">
+            
+
+         
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" placeholder="Post Title" value="" maxlength="100" class="form-control"  name="title">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <textarea maxlength="5000" placeholder="Body"  rows="5" class="form-control" name="body" required="" ></textarea>
+                     </div>
+                </div>
+                </fieldset>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="submit" value="Send Message" class="btn btn-primary btn-lg mb-5">
+                    </div>
+                </div>
+            </form>
+        </div>  
+
+
+   
+
+            <div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
+             <table style="width:100%"  >
+                  <thead>
+                    <tr> 
+                     <th>#</th>
+                      <th>DATE</th>
+                        <th>BRANCH</th>
+                        <th>EXPENSE</th>
+
+                         <th>DESCRIPTION</th>
+                         <th>TYPE</th>
+                         <th>CATEGORY</th>
+                         <th>AMOUNT</th>
+                         <th>WALLET</th>
+                              
+                          
+                      </tr>
+                    
+                  </thead>
+                 
+                  <tbody>
+                    <tr>
+                       <tr v-for="submenuinfo in dailyexpensesrecordsexpcat.data" :key="submenuinfo.id">
+                       <td>{{submenuinfo.id}}</td>                            
+                    <td>{{submenuinfo.datemade}}</td>
+                     <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                    
+                     
+                    <td>    <template v-if="submenuinfo.expense_name">	{{submenuinfo.expense_name.expensename}}</template></td>
+                                 
+                    
+                    <td>{{(submenuinfo.description)}}</td>
+                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                    
+                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                       
+                       <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Collections </span></span>
+                              </div>
+                               <div v-if="((submenuinfo.walletexpense)) == 2">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Investment </span></span>
+                              </div>
+                              
+                               
+                              
+                               </td>
+                       
+                        
+                        
+                 
+                                        </tr>
+              
+                    
+                  </tbody>
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+                  </div>
+                  <!-- close of No records -->
+
+    <div class="card-footer">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <pagination :data="dailyexpensesrecordsexpcat" @pagination-change-page="paginationResultsSubmenus"></pagination>
+                </ul>
+              </div>
+                     
+                 
+                    </div>
+ 
+ <!-- tab one end -->
+
+
+<!-- Modal add menu -->
+<div class="modal fade" id="addnewsubmenuModal">
+        <div class="modal-dialog modal-dialog-top modal-lg">
+        <div  class="modal-content">
+            <div  class="modal-header">
+                <h4  v-show="!editmode"    class="modal-title">ADD NEW RECORD</h4> 
+                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
+                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
+                 <form class="form-horizontal" @submit.prevent="editmode ? updateSubmenu():createSubmenu()"> 
+
+                    <div  class="modal-body">
+              
+                
+                
+                  <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Menu</label>
+                    <div class="col-sm-6">
+                 <input v-model="form.submenuname" type="text" name="submenuname"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('submenuname') }">
+                    <has-error :form="form" field="submenuname"></has-error>
+                                  </div>
+                   
+      
+                  </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                  <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Main menu</label>
+                    <div class="col-sm-6">
+                 <select name ="mainheadercategory" v-model="form.mainheadercategory" id ="mainheadercategory" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('mainheadercategory')}">
+<option value="">  </option>
+<option v-for='data in mainmenulist' v-bind:value='data.id'>{{ data.id }}. {{ data.mainmenuname }}</option>
+
+</select>
+            <has-error :form="form" field="mainheadercategory"></has-error>
+
+                                  </div>
+                   
+      
+                  </div>
+                 
+               
+                  <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Route</label>
+                    <div class="col-sm-6">
+                 <input v-model="form.linkrouterre" type="text" name="linkrouterre"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('linkrouterre') }">
+                    <has-error :form="form" field="linkrouterre"></has-error>
+                                  </div>
+                   
+      
+                  </div>
+
+                    
+          
+                  <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Display Order</label>
+                    <div class="col-sm-6">
+                 <input v-model="form.dorder" type="number" name="dorder"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('dorder') }">
+      <has-error :form="form" field="dorder"></has-error>
+                                  </div>
+                   
+      
+                  </div>
+      <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-6">
+                <textarea v-model="form.description" type="text" name="description"
+                class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+              <has-error :form="form" field="description"></has-error>
+                                                 </div>
+                         
+                  </div>
+                          
+                 </div>
+                 
+                  <div  class="modal-footer">
+                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
+                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
+                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
+                        </div>
+                 </form>
+                       </div>
+                          </div>
+              
+
+
+                  </div>
+
+
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
                    
                    
     <!-- tab one start -->
@@ -351,11 +742,42 @@ th {
          <label for="exampleInputEmail1">End date  :</label>
                     <input v-model="form.enddate" type="date" name="enddate"   :class="{ 'is-invalid': form.errors.has('enddate') }">
                      <has-error :form="form" field="enddate"></has-error>
-      
-     <label>Branch</label>
+      <!-- <label>Expense type :</label>
+                    <select name ="typename" v-model="form.typename" id ="typename" class="form-control-sm"   :class="{'is-invalid': form.errors.has('typename')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensetypeslist' v-bind:value='data.id'>{{ data.typename }}</option>
+
+                    </select>
+                          <has-error :form="form" field="typename"></has-error>
+
+
+
+
+
+  <label>Expense Category :</label>
+                    <select name ="categoryname" v-model="form.categoryname" id ="categoryname" class="form-control-sm"   :class="{'is-invalid': form.errors.has('categoryname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensecategorieslist' v-bind:value='data.id'>{{ data.expcatcatname }}</option>
+
+                    </select>
+                                <has-error :form="form" field="categoryname"></has-error>
+
+
+
+        <label>Wallet :</label>
+                    <select name ="walletname" v-model="form.walletname" id ="walletname" class="form-control-sm" :class="{'is-invalid': form.errors.has('walletname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensewalletslist' v-bind:value='data.id'>{{ data.name }}</option>
+
+                    </select>
+                                <has-error :form="form" field="walletname"></has-error> -->
+
+
+
+     <label>Branch :</label>
                     <select name ="branchname" v-model="form.branchname" id ="branchname" class="form-control-sm" v-on:change="myClickEventtosavesalesreportbydate"  :class="{'is-invalid': form.errors.has('branchname')}">
                     <option value="900"> All  </option>
-                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
+                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchname }}</option>
 
                     </select>
                     
@@ -381,73 +803,61 @@ th {
                   
             
        <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
- <div class="row">
 
+   <div class="row">
+      <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>INVESTMENT</h3>
 
-     
-
-
-
-  
-
-
-
-
-
-
-
-
- <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b> Capital Contribution</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> Capital dd: {{currencydetails}} {{formatPrice(rangeexpensesinvestment) }}</strong></span>
-           
-</button>
-                           </div>
-             
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-          </div>       
-        
+          </div>
+           <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>COLLECTIONS</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+  <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>TOTAL EXPENSES</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+          
       
-      <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> Collections :{{currencydetails}} {{formatPrice(branchmonthexpensefromcollectionmonth) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>
-
-
-
-  <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>TOTAL EXPENSES</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-info btn-flat"> 
-                    <span class="sss"><strong> Total Expenses : {{currencydetails}} {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth ) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>
-
-</div>
         
-               
+    
+          
+          
+        </div>
+   
      <!-- <div v-if="selecteddatetotalsales < 1 ">
        <h1> No Records found for this selection </h1>
      </div> -->
@@ -459,13 +869,15 @@ th {
                   <thead>
                     <tr> 
                      <th>#</th>
-                      <th>Date</th>
-                        <th>Branch</th>
-                        <th>Expense</th>
+                      <th>DATE</th>
+                        <th>BRANCH</th>
+                        <th>EXPENSE</th>
 
-                         <th>Description</th>
-                           <th>Amount</th>
-                              <th>Expense Wallet</th>
+                         <th>DESCRIPTION</th>
+                         <th>TYPE</th>
+                         <th>CATEGORY</th>
+                         <th>AMOUNT</th>
+                         <th>WALLET</th>
                               
                           
                       </tr>
@@ -480,11 +892,14 @@ th {
                      <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
                     
                      
-                      <td>    <template v-if="submenuinfo.expense_name">	{{submenuinfo.expense_name.expensename}}</template></td>
+                    <td>    <template v-if="submenuinfo.expense_name">	{{submenuinfo.expense_name.expensename}}</template></td>
                                  
                     
-                     <td>{{(submenuinfo.description)}}</td>
-                        <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                    <td>{{(submenuinfo.description)}}</td>
+                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                    
+                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
                        
                        <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
                                 <span class="cell" style="color:green ;">  
@@ -1020,11 +1435,13 @@ th {
 
 <script>
     export default {
-      
+       name: 'form-loading-spinner-example',
          data(){
            
         return {
-
+ success: false,
+            error: false,
+            loading: false,
            value: 60,
              country: 0,
 
@@ -1034,6 +1451,11 @@ th {
 
             ///////////////////////////////////
           brancheslist: null,
+
+           expensetypeslist: null,
+           expensecategorieslist: null,
+           expensewalletslist: null,
+          
           currencydetails:null,
          // accessusercoponent : null,
          
@@ -1102,6 +1524,7 @@ dailycollection :null,
           editmode: false,
           mainmenurecords : {},
           dailyexpensesrecords : {},
+          dailyexpensesrecordsexpcat:{},
           monthlybranchexpensesdatarecs : {},
           allbranchesexpenserept:{},
           componentfeaturesrecords :{},
@@ -1115,6 +1538,9 @@ dailycollection :null,
           selecteddailyexpensesreport2:{},
           selectedbranchreportmonth:{},
           brancheslist:{},
+           expensetypeslist:{},
+           expensecategorieslist:{},
+           expensewalletslist:{},
          selectedreporttype:{},
           montheslist:{},
           yearslist:{},
@@ -1136,6 +1562,11 @@ dailycollection :null,
                 email:'',
                 rolename:'',
                 type:'',
+                sortbycat:'expcat',
+                 sortbytyp:'exptyp',
+                  sortbybranch:'expbranch',
+                   sortbywalet:'expwallet',
+
 actionaidformonthlyreportvexp:'monthlyexpensereportsummary',
 actionforbranchmonthlyexpenses:'branchmonthlyexpensesrpt',
 
@@ -1168,6 +1599,30 @@ startdate : '2021-05-01',
          },
 
 methods:{
+   storePost(){
+                this.loading = true,
+                axios.post("https://jsonplaceholder.typicode.com/posts", this.formData)
+                    .then((res) => {
+                        this.reset();
+                        this.success = true;
+                        console.log(res);
+                    })
+                    .catch((error) => {
+                        this.error = true;
+                        console.log(error)
+                    }).finally(() => {
+                        this.loading =  false
+                    });
+            },
+
+            reset(){
+                this.success = false;
+                this.error = false;
+                for(let field in this.formData){
+                    this.formData[field] = null;
+                }
+            },
+    
 
   paginationResultmainmemurecords(page = 1) {
                         axios.get('api/mainmenucomponents?page=' + page)
@@ -1175,6 +1630,7 @@ methods:{
                             this.mainmenurecords = response.data;
                           });
                       },
+                      
 
 getRoles: function(){ axios.get('/api/getRoles').then(function (response) { this.roleslist = response.data;}.bind(this));},
 getUsertypes: function(){ axios.get('/api/getUsertypes').then(function (response) { this.typeslist = response.data;}.bind(this));},
@@ -1198,6 +1654,9 @@ myClickEventtosavemonthlyreport($event) { const elem = this.$refs.theButtontotoS
             elem.click()
         },
 myClickEventtosavesalesreportbydate($event) { const elem = this.$refs.theButtontosabemonthlyreportvie
+            elem.click()
+        },
+        myClickEventtosavesalesreportbydatecategory($event) { const elem = this.$refs.theButtontosabemonthlyreportviecategory
             elem.click()
         },
 myClickEventforsubmenus($event) { const elem = this.$refs.myBtnsubmenus
@@ -1579,10 +2038,15 @@ if (result.isConfirmed) {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////// Start of Sub menus
+loadexpesesreportcat(){
+  this.loading = true;
+   axios.get("api/dailyexpensesrecordsexpcat").then(({ data }) => (this.dailyexpensesrecordsexpcat = data))
+  {
+        axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
 
-  /// Main submenu
-  loadSubmenus(){
-      axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
+axios.get('/api/expensecategorieslist').then(function (response) { this.expensecategorieslist = response.data;}.bind(this));
+axios.get('/api/expensewalletslist').then(function (response) { this.expensewalletslist = response.data;}.bind(this));
       axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
       axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
           
@@ -1592,9 +2056,48 @@ if (result.isConfirmed) {
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
      axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
   axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
-    //  axios.get("api/submenuaccessComponent").then(({ data }) => (this.submenuaccessComponent = data));
-    //  axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+  
+     ////
+        axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+         axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+           axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+   
+   axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
+
+ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+  
+  this.loading = false;
+     }
+        // if(response.dailyexpensesrecordsexpcat.status === 'success')
+        //             {
+        //              this.loading = false;
+        //             }
+
+                      
+             
      
+   
+       
+  // this.loading = false
+
+  },
+  loadSubmenus(){
+      axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+          axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
+
+axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
+axios.get('/api/expensecategorieslist').then(function (response) { this.expensecategorieslist = response.data;}.bind(this));
+axios.get('/api/expensewalletslist').then(function (response) { this.expensewalletslist = response.data;}.bind(this));
+      axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+      axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+          
+     axios.get("api/orderlistfordatesalesreport").then(({ data }) => (this.orderlistfordatesalesreport = data));
+     axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
+     axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+  axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+  
      ////
         axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
          axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
@@ -1729,11 +2232,20 @@ if (result.isConfirmed) {
 
   /// Main menus
   loadDailyrecordreport(){
-       axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
+        axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));
       
             
            
     axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
+
+axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
+axios.get('/api/expensecategorieslist').then(function (response) { this.expensecategorieslist = response.data;}.bind(this));
+axios.get('/api/expensewalletslist').then(function (response) { this.expensewalletslist = response.data;}.bind(this));
+
+
+
+
+
      axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
      axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
 axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
@@ -1793,37 +2305,95 @@ axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyre
                                 })
 
 }, 
-     savethemonthlyreporttoview(){
+
+expenseCategoryreport(){
 
                                 this.$Progress.start();
-                                this.form.post('api/monthlyexpensesreportforallbra')
+                               this.form.post('api/monthlyexpensesreportcat')
                                 .then(()=>{
+                                               axios.get("api/dailyexpensesrecordsexpcat").then(({ data }) => (this.dailyexpensesrecordsexpcat = data));
+                                            axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+                                            axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+                                            axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+                                            axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
 
-                                    axios.get("api/monthlybranchexpensedetails").then(({ data }) => (this.monthlybranchexpensesdatarecs = data));
-                                    axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));
-                                    axios.get("api/branchandyearreport").then(({ data }) => (this.branchandyearreport = data));
-                                    axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));
-                                    axios.get("api/salestotalmonthly").then(({ data }) => (this.salestotalmonthly = data));
-                                    axios.get("api/payoutmonthly").then(({ data }) => (this.payoutmonthly = data));
-                                    axios.get("api/collectionsmonthly").then(({ data }) => (this.collectionsmonthly = data));
-                                    axios.get("api/expensefrominvestmentmonth").then(({ data }) => (this.expensefrominvestmentmonth = data));
-                                    axios.get("api/expensefromcollectionmonth").then(({ data }) => (this.expensefromcollectionmonth = data));
- 
- axios.get("api/branchmonthexpensefrominvestmentmonth").then(({ data }) => (this.branchmonthexpensefrominvestmentmonth = data));     
- axios.get("api/branchmonthexpensefromcollectionmonth").then(({ data }) => (this.branchmonthexpensefromcollectionmonth = data)); 
+                                            axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+                                            axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+                                            axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+                                            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+                                            axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+                                            axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));          
+                                                                        //  Fire.$emit('AfterAction');
 
-////////////////////////////////////////////////////////
-   
-     
-// axios.get("api/allbranchesexpenserept").then(({ data }) => (this.allbranchesexpenserept = data));
-      
+                               // $('#addNew').modal('hide');
 
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
 
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
 
+                                })
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                    
-//  axios.get("api/dailycodesreportdata").then(({ data }) => (this.dailycodesreportdata = data));
-                              //  Fire.$emit('AfterAction');
+}, 
+savedatetoseesalesreportbydatetype(){
+
+                                this.$Progress.start();
+                               this.form.post('api/monthlyexpensesreporttype')
+                                .then(()=>{
+                                            axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+                                            axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+                                            axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+                                            axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+                                            axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+
+                                            axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+                                            axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+                                            axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+                                            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+                                            axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+                                            axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));          
+                                                                        //  Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+
+                                this.$Progress.finish();
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+}, 
+savedatetoseesalesreportbydatewallet(){
+
+                                this.$Progress.start();
+                               this.form.post('api/monthlyexpensesreportwallet')
+                                .then(()=>{
+                                            axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+                                            axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+                                            axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+                                            axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+                                            axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+
+                                            axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+                                            axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+                                            axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+                                            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+                                            axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+                                            axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));          
+                                                                        //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
 
@@ -1847,25 +2417,25 @@ axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyre
                                 this.$Progress.start();
                                this.form.post('api/monthlyexpensesreportforallbra')
                                 .then(()=>{
-  axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
-       axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
-  axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
-axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
-  axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+                                            axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
+                                            axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+                                            axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+                                            axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+                                            axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
 
-axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
- axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
-         axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
-           axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
-axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
-           
-                              //  Fire.$emit('AfterAction');
+                                            axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+                                            axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+                                            axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+                                            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+                                            axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+                                            axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));          
+                                                                        //  Fire.$emit('AfterAction');
 
                                // $('#addNew').modal('hide');
 
                                 Toast.fire({
                                 icon: 'success',
-                                title: 'Record Added Successfully'
+                                title: 'Branch Selected'
                                 });
 
                                 this.$Progress.finish();

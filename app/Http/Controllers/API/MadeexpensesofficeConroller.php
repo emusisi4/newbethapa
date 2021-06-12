@@ -12,13 +12,13 @@ use App\Expense;
 use App\Expensescategory;
 use App\Madeexpense;
 use App\Expmothlyexpensereport;
+use App\Generalexpensereportsummarry;
+use App\Expmonthlyexpensesreportbycategory;
+use App\Expmonthlyexpensesreportbywallet;
+use App\Expdailyreport;
+use App\Expmonthlyexpensesreportbytype;
 class MadeexpensesofficeConroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct()
     {
        $this->middleware('auth:api');
@@ -169,39 +169,173 @@ $newexpensesmonthandyear = \DB::table('madeexpenses')
 //->where('category', '=', $expcat)
 ->where('approvalstate', '=', 1)
 ->sum('amount');
-// sales summary
+
+
+
+
+
+
+
+
 $newexpensesbycategoryformonthandyear = \DB::table('madeexpenses')
-///->where('datemade', '=', $datedonessd)
-->where('monthmade', '=', $monthmade)
-->where('yearmade', '=', $yearmade)
+->where('datemade', '=', $datedonessd)
+//->where('monthmade', '=', $monthmade)
+//->where('yearmade', '=', $yearmade)
 ->where('category', '=', $expcat)
 ->where('approvalstate', '=', 1)
 ->sum('amount');
+
+
+
 $newexpensesbytypeformonthandyear = \DB::table('madeexpenses')
 // ->where('datemade', '=', $datedonessd)
-
-->where('monthmade', '=', $monthmade)
-->where('yearmade', '=', $yearmade)
+->where('datemade', '=', $datedonessd)
+////->where('monthmade', '=', $monthmade)
+//->where('yearmade', '=', $yearmade)
 ->where('exptype', '=', $exptyo)
 ->where('approvalstate', '=', 1)
 ->sum('amount');
 
 $newexpensesbywalletformonthandyear = \DB::table('madeexpenses')
 //->where('datemade', '=', $datedonessd)
-->where('walletofexpense', '=', $walletofexpense)
+//->where('walletofexpense', '=', $walletofexpense)
 ->where('approvalstate', '=', 1)
 ->sum('amount');
-//////////////////////////////////////////////////////////////////////////////
-/// expense categories
-DB::table('expmonthlyexpensesreportbycategories')->where('monthname', $monthmade)->where('yearname', $yearmade)->where('yearname', $yearmade)->delete();
 
-DB::table('expmonthlyexpensesreportbycategories')->insert([
-  [
-    'expensecategory' => $expcat
-  
-  ],
-  
+
+
+$newexpensebywallettotal = \DB::table('madeexpenses')
+->where('datemade', '=', $datedonessd)
+//->where('monthmade', '=', $monthmade)
+//->where('yearmade', '=', $yearmade)
+->where('walletexpense', '=', $walletofexpense)
+->where('approvalstate', '=', 1)
+->sum('amount');
+
+
+
+
+
+$newexpensedailytotal = \DB::table('madeexpenses')
+->where('datemade', '=', $datedonessd)
+//->where('monthmade', '=', $monthmade)
+//->where('yearmade', '=', $yearmade)
+//->where('walletexpense', '=', $walletofexpense)
+//->where('approvalstate', '=', 1)
+->sum('amount');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+/// General Expenses Summary
+DB::table('generalexpensereportsummarries')->where('monthname', $monthmade)->where('yearname', $yearmade)->delete();
+Generalexpensereportsummarry::Create([
+  'ucret'   => $userid,
+  'amount'=> $newexpensesmonthandyear,
+  'monthname'    => $monthmade,
+  'yearname'     => $yearmade,
 ]);
+///id, expensecategory, monthname, yearname, ucret, created_at, updated_at, amount, datedone
+/// Daily expenses and category
+/// CategoryGeneral Expenses Summary
+DB::table('expmonthlyexpensesreportbycategories')->where('datedone', $datedonessd)->where('expensecategory', $expcat)->delete();
+Expmonthlyexpensesreportbycategory::Create([
+  'ucret'   => $userid,
+  'amount'=> $newexpensesbycategoryformonthandyear,
+  'datedone'=> $datedonessd,
+  'monthname'    => $monthmade,
+  'expensecategory'    => $expcat,
+  'yearname'     => $yearmade,
+]);
+
+
+///////////////////
+DB::table('expmonthlyexpensesreportbytypes')->where('datedone', $datedonessd)->where('expensetype', $exptyo)->delete();
+Expmonthlyexpensesreportbytype::Create([
+  'ucret'   => $userid,
+  'amount'=> $newexpensesbytypeformonthandyear,
+  'datedone'=> $datedonessd,
+  'monthname'    => $monthmade,
+  'expensetype'    => $exptyo,
+  'yearname'     => $yearmade,
+]);
+//////////////////
+DB::table('expmonthlyexpensesreportbywallets')->where('datedone', $datedonessd)->where('walletname', $walletofexpense)->delete();
+Expmonthlyexpensesreportbywallet::Create([
+  'ucret'   => $userid,
+  'amount'=> $newexpensebywallettotal,
+  'datedone'=> $datedonessd,
+  'monthname'    => $monthmade,
+  'walletname'    => $walletofexpense,
+  'yearname'     => $yearmade,
+]);
+////////////////////////////////////////
+DB::table('expdailyreports')->where('datedone', $datedonessd)->delete();
+Expdailyreport::Create([
+  'ucret'   => $userid,
+  'amount'=> $newexpensedailytotal,
+  'datedone'=> $datedonessd,
+  // // 'monthname'    => $monthmade,
+  // // 'walletname'    => $walletofexpense,
+  // 'yearname'     => $yearmade,
+]);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//DB::table('expmonthlyexpensesreportbycategories')->where('monthname', $monthmade)->where('yearname', $yearmade)->where('yearname', $yearmade)->delete();
+
+// DB::table('generalexpensereportsummarries')->insert([
+//   [
+//     'amount' => $newexpensesmonthandyear,
+//     'monthname'=> $monthmade,
+//     'yearname' => $yearmade
+
+  
+//   ],
+  
+// ]);
+
+
+
+
+
+
+
+
+
 
 
 

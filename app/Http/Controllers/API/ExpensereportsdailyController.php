@@ -44,7 +44,18 @@ class ExpensereportsdailyController extends Controller
         $startdat = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('startdate');
         $enddate = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('enddate');
 
-        if($branch == '900')
+        $walletname = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('walletname');
+        $categoryname = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('categoryname');
+        $typename = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('typename');
+        $sort = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('sortby');
+
+
+
+
+if($sort == 'branch')
+      {  
+          
+        if($branch == '900' )
         {
         return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
      
@@ -55,7 +66,9 @@ class ExpensereportsdailyController extends Controller
         ////    ->where('branch', $branch)
             ->paginate(35);
         }
-        if($branch != '900')
+
+
+        if($branch != '900' )
         {
         return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
      
@@ -63,9 +76,32 @@ class ExpensereportsdailyController extends Controller
         //    ->where('monthmade', $monthtodisplay)
         ->whereBetween('datemade', [$startdat, $enddate])
         //      ->where('datemade', $datemade)
-            ->where('branch', $branch)
+       ->where('branch', $branch)
             ->paginate(35);
         }
+}
+
+
+
+if($sort == 'category')
+      {  
+          
+        // if($branch == '900' )
+        {
+        return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
+     
+        //    ->where('yearmade', $yeartodisplay)
+        //    ->where('monthmade', $monthtodisplay)
+        ->whereBetween('datemade', [$startdat, $enddate])
+           ->where('category', $categoryname)
+        ////    ->where('branch', $branch)
+            ->paginate(35);
+        }
+
+
+}
+
+    
     
 
       

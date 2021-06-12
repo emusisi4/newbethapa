@@ -38,6 +38,22 @@ Route::apiResources(['saleareportsview' => 'API\SalesreporttoviewController']);
 Route::apiResources(['monthlyreportstoview' => 'API\MonthlyreportsController']);
 
 Route::apiResources(['monthlyexpensesreportforallbra' => 'API\ExpensesreporttoviewdetailController']);
+Route::apiResources(['monthlyexpensesreportcat' => 'API\ExpensesreporttoviewdetailcategoryController']);
+Route::apiResources(['monthlyexpensesreporttype' => 'API\ExpensesreporttoviewdetailtypeController']);
+Route::apiResources(['monthlyexpensesreportwallet' => 'API\ExpensesreporttoviewdetailwalletController']);
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::apiResources(['monthlyreportstoviewallbranches' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
@@ -60,6 +76,54 @@ Route::get('generalreportselectedenddate', 'APIController@generalreportselectede
 
 
 Route::get('branchDetails', 'APIController@branchDetails');
+
+
+
+
+
+
+
+Route::get('expensetypeslist', 'APIController@expensetypeslist');
+Route::get('expensewalletslist', 'APIController@expensewalletslist');
+Route::get('expensecategorieslist', 'APIController@expensecategorieslist');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Route::get('montheslist', 'APIController@montheslist');
@@ -91,7 +155,10 @@ Route::get('contactscomponentaccess', 'APIController@acccesscontactscomponentacc
 
 Route::apiResources(['mainmenucomponents' => 'API\MainmenucomponentController']);
 Route::apiResources(['submenus' => 'API\SubmenusController']);
+Route::apiResources(['dailyexpensesreportsummary' => 'API\DailyexpensesreportsummaryController']);
 Route::apiResources(['dailyexpensesrecords' => 'API\ExpensereportsdailyController']);
+Route::apiResources(['dailyexpensesrecordsexpcat' => 'API\ExpensesreporttoviewdetailcategoryController']);
+
 Route::apiResources(['salesrecs' => 'API\FishreporttoviewController']);
 Route::apiResources(['currencydetailsrecords' => 'API\CompanycurrencyController']);
 Route::apiResources(['vuecomponents' => 'API\VuecomponentsController']);
@@ -142,7 +209,7 @@ Route::get('branchmonthexpensefrominvestmentmonth', 'APIController@branchmonthex
 Route::get('branchmonthexpensefromcollectionmonth', 'APIController@branchmonthexpensefromcollectionmonth'); 
 
 Route::get('rangeexpensesinvestment', 'APIController@rangeexpensesinvestment'); 
-Route::get('rangeexpensescollection', 'APIController@rangeexpensescollection'); 
+Route::get('rangeexpensescollections', 'APIController@rangeexpensescollections'); 
 
 
 // axios.get("api/branchandmonthreport").then(({ data }) => (this.branchandmonthreport = data));

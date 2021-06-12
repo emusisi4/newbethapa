@@ -433,6 +433,47 @@ public function mybranch()
       ->get();
               return response()->json($data);
  }
+ 
+ 
+ 
+ public function expensetypeslist()
+     {
+         $userid =  auth('api')->user()->id;
+         $userbranch =  auth('api')->user()->branch;
+         $userrole =  auth('api')->user()->type;
+        /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+       
+        $data = Expensetype::latest('id')
+        //->where('sysname', '!=', $component)
+        ->get();
+                return response()->json($data);
+   }
+
+   public function expensewalletslist()
+   {
+       $userid =  auth('api')->user()->id;
+       $userbranch =  auth('api')->user()->branch;
+       $userrole =  auth('api')->user()->type;
+      /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+     
+      $data = Expensewalet::latest('id')
+      //->where('sysname', '!=', $component)
+      ->get();
+              return response()->json($data);
+ }
+
+ public function expensecategorieslist()
+ {
+     $userid =  auth('api')->user()->id;
+     $userbranch =  auth('api')->user()->branch;
+     $userrole =  auth('api')->user()->type;
+    /// $roleto  = Bran::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');  
+   
+    $data = Expensescategory::latest('id')
+    //->where('sysname', '!=', $component)
+    ->get();
+            return response()->json($data);
+}
 
 
 

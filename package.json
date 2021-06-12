@@ -20,12 +20,14 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "chart.js": "^3.3.2",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.1",
         "select2": "^4.0.13",
         "sweetalert2": "^10.15.7",
         "v-select2-component": "^0.4.7",
         "vform": "^1.0.1",
+        "vue-chartjs": "^3.5.1",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.1"
     }
