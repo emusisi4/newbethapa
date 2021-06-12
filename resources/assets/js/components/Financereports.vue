@@ -509,7 +509,10 @@ th {
      </div> -->
                    
       <!-- <div v-if="selecteddatetotalsales > 0 "> -->
-<div>
+<div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
             
               <table style="width:100%"  >
                   <thead>
@@ -878,6 +881,10 @@ th {
           
 </div>
         </div>
+        <div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
          
              <table class="table">
                   <thead>
@@ -983,7 +990,7 @@ th {
                      
                  
                     </div>
- 
+                  </div>
  <!-- tab one end -->
 
 
@@ -1817,7 +1824,7 @@ $('#addnewMainmenumodal').modal('show');
 
    savethemonthlyreportforallbranches(){
 
-                                this.$Progress.start();
+                                this.loading = true;
                                 this.form.post('api/monthlyreportstoviewallbranches')
                                 .then(()=>{
 axios.get("api/totalmonthlycollectionsselectedreport").then(({ data }) => (this.totalmonthlycollectionsselectedreport = data));
@@ -1841,7 +1848,8 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                                                              this.loading = false;
+
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -1852,7 +1860,7 @@ axios.get("api/allbranchesmreports").then(({ data }) => (this.allbranchesmreport
 }, 
      savethemonthlyreporttoview(){
 
-                                this.$Progress.start();
+                            this.loading = true;
                                 this.form.post('api/monthlyreportstoview')
                                 .then(()=>{
 
@@ -1873,7 +1881,7 @@ axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecord
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                            this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -1885,7 +1893,7 @@ axios.get("api/monthrlreporyrecords").then(({ data }) => (this.monthlydatarecord
 
          savedatetoseesalesreportbydate(){
 
-                                this.$Progress.start();
+                              this.loading = true;
                                 this.form.post('api/saleareportsview')
                                 .then(()=>{
 
@@ -1907,7 +1915,7 @@ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.selecetedd
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                                this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })
