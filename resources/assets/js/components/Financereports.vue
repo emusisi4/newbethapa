@@ -70,6 +70,24 @@ th {
   background-color: #8c9765;
   font-size: 23px;
 }
+#axiosForm{  /* Components Root Element ID */
+    position: relative;
+}
+.loader{  /* Loader Div Class */
+    position: absolute;
+    top:0px;
+    right:0px;
+    width:100%;
+    height:100%;
+    background-color:#eceaea;
+    background-image: url('/images/load.gif');
+    background-size: 200px;
+    background-repeat:no-repeat;
+    background-position:center;
+    z-index:10000000;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
 
 </style>
 
@@ -255,7 +273,11 @@ th {
          <button type="button" v-if="allowedtoaddmainmenu > 0" class="add-newm" @click="newautocorrect" >Auto Correct the Details </button>
        
        <!-- v-if="allowedtoaddmainmenu > 0" -->
-            
+ <div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
+               
                 <table class="table"  >
                   <thead>
                     <tr>
@@ -323,6 +345,8 @@ th {
                      
                  
                     </div>
+                  </div>
+                  <!-- closure of loading image -->
  
  <!-- tab one end -->
 
@@ -1067,11 +1091,12 @@ th {
 
 <script>
     export default {
-      
+         name: 'form-loading-spinner-example',
          data(){
            
         return {
 
+  loading: false,
            value: 60,
              country: 0,
 
@@ -1894,7 +1919,7 @@ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.selecetedd
 
 
              savenewRecordtoview(){
-
+this.loading = true;
                                 this.$Progress.start();
                                 this.form.post('api/dailyfishrep')
                                 .then(()=>{
@@ -1911,6 +1936,7 @@ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.selecetedd
                                 icon: 'success',
                                 title: 'Record Added Successfully'
                                 });
+this.loading = false;
 
                                 this.$Progress.finish();
                                   this.form.clear();

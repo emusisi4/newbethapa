@@ -473,7 +473,7 @@ th {
      </div> -->
                    
       <!-- <div v-if="selecteddatetotalsales > 0 "> -->
- <div id="axiosForm">
+ <!-- <div id="axiosForm">
      <div class="loader" v-if="loading">
        
        <div class="spinner-border"  style="width: 10rem; height: 10rem;" role="status">
@@ -502,12 +502,12 @@ th {
                     </div>
                 </div>
             </form>
-        </div>  
+        </div>   -->
 
 
    
 
-            <div id="axiosForm"> 
+<div id="axiosForm"> 
                 <div class="loader" v-if="loading">
        
     </div>
@@ -2039,10 +2039,13 @@ if (result.isConfirmed) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////// Start of Sub menus
 loadexpesesreportcat(){
-  this.loading = true;
-   axios.get("api/dailyexpensesrecordsexpcat").then(({ data }) => (this.dailyexpensesrecordsexpcat = data))
-  {
-        axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
+
+     
+        this.form.post('')
+        .then(()=>{
+
+     
+      axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
 
 axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
 axios.get('/api/expensecategorieslist').then(function (response) { this.expensecategorieslist = response.data;}.bind(this));
@@ -2066,19 +2069,17 @@ axios.get('/api/expensewalletslist').then(function (response) { this.expensewall
 
  axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
   
- // this.loading = false;
-     }
-        // if(response.dailyexpensesrecordsexpcat.status === 'success')
-        //             {
-        //              this.loading = false;
-        //             }
+  this.loading = false;
 
-                      
-             
-     
-   
+ 
+        })
+        .catch(()=>{
+          
+        })
+
+
+
        
-  // this.loading = false
 
   },
   loadSubmenus(){
@@ -2307,7 +2308,7 @@ axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyre
 }, 
 
 expenseCategoryreport(){
-
+  this.loading = true;
                                 this.$Progress.start();
                                this.form.post('api/monthlyexpensesreportcat')
                                 .then(()=>{
@@ -2331,7 +2332,7 @@ expenseCategoryreport(){
                                 icon: 'success',
                                 title: 'Record Added Successfully'
                                 });
-
+  this.loading = false;
                                 this.$Progress.finish();
                                   this.form.clear();
         this.form.reset();
