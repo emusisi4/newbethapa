@@ -50,27 +50,25 @@ class ExpensesreporttoviewdetailcategoryController extends Controller
         if($categoryname == '900')
         {
            
-                return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')->orderby('category', 'Desc')
+                return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')
              
-                //    ->where('yearmade', $yeartodisplay)
-                //    ->where('monthmade', $monthtodisplay)
+                
                 ->whereBetween('datemade', [$startdat, $enddate])
-                  // ->where('category', $categoryname)
-                ////    ->where('branch', $branch)
-                    ->paginate(35);
+                ->paginate(35);
         }
             
 
 
-if($categoryname != '900')
+if($categoryname != "900")
 {
    
-        return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
-     
+    return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')
+             
+           
         //    ->where('yearmade', $yeartodisplay)
         //    ->where('monthmade', $monthtodisplay)
         ->whereBetween('datemade', [$startdat, $enddate])
-           ->where('category', $categoryname)
+        ->where('category', $categoryname)
         ////    ->where('branch', $branch)
             ->paginate(35);
 }

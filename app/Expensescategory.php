@@ -28,7 +28,10 @@ class Expensescategory extends Authenticatable
    
         return $this->hasMany(Product::class, 'category', 'id'); 
     }
-
+    public function expenseCategoryrpt(){
+   
+        return $this->hasMany(Madeexpense::class, 'category', 'id'); 
+    }
     public function expenseCategory(){
         // creating a relationship between the students model 
         return $this->belongsTo(Branch::class, 'bpaying'); 

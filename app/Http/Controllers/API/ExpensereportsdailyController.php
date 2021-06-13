@@ -57,7 +57,7 @@ if($sort == 'branch')
           
         if($branch == '900' )
         {
-        return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
+            return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')
      
         //    ->where('yearmade', $yeartodisplay)
         //    ->where('monthmade', $monthtodisplay)
@@ -70,7 +70,7 @@ if($sort == 'branch')
 
         if($branch != '900' )
         {
-        return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
+        return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')
      
         //    ->where('yearmade', $yeartodisplay)
         //    ->where('monthmade', $monthtodisplay)
@@ -83,23 +83,9 @@ if($sort == 'branch')
 
 
 
-if($sort == 'category')
-      {  
-          
-        // if($branch == '900' )
-        {
-        return   Madeexpense::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
-     
-        //    ->where('yearmade', $yeartodisplay)
-        //    ->where('monthmade', $monthtodisplay)
-        ->whereBetween('datemade', [$startdat, $enddate])
-           ->where('category', $categoryname)
-        ////    ->where('branch', $branch)
-            ->paginate(35);
-        }
 
 
-}
+
 
     
     

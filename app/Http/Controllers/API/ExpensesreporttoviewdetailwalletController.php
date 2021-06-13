@@ -15,7 +15,7 @@ use App\Branchtobalance;
 use App\Branchtocollect;
 use App\Incomereporttoview;
 use App\Expensesreporttoviewdetail;
-
+use App\Madeexpense;
 class ExpensesreporttoviewdetailwalletController extends Controller
 {
   
@@ -27,65 +27,52 @@ class ExpensesreporttoviewdetailwalletController extends Controller
 
     public function index()
     {
-        $userid =  auth('api')->user()->id;
-        $userbranch =  auth('api')->user()->branch;
-        $userrole =  auth('api')->user()->type;
-     //   if($userrole = 1)
+      $userid =  auth('api')->user()->id;
+      $userbranch =  auth('api')->user()->branch;
+      $userrole =  auth('api')->user()->type;
+    //  id, startdate, enddate, branch, monthname, yearname, walletname, categoryname, typename, ucret, created_at, updated_at, sortby
+    //  $reporttype = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('reporttype');
+      // $monthtodisplay = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('monthname');
+      // $yeartodisplay = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('yearname');
+      // $branch = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('branch');
+       $walletname = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('walletname');
+      // $typename = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('typename');
+      // $sort = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('sortby');
 
+      $startdat = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('startdate');
+      $enddate = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('enddate');
 
-     if($userrole == '101')
-      {
+     
       
-         return   Madeexpense::with(['branchName','expenseName'])->latest('id')
-      // return   Madeexpense::latest('id')
-        ->where('del', 0)
-        ->where('branch', $userbranch)
-        ->where('explevel', 1)
-       ->paginate(13);
-      }
-      if($userrole != '101')
+
+      if($walletname == '900')
       {
-      
-         return   Madeexpense::with(['branchName','expenseName'])->latest('id')
-      // return   Madeexpense::latest('id')
-        ->where('del', 0)
-       // ->where('branch', $userbranch)
-       ->paginate(13);
-      }
-
-
-       // return Student::all();
-     //  return   Submheader::with(['maincomponentSubmenus'])->latest('id')
-       // return   MainmenuList::latest('id')
-     //    ->where('del', 0)
-         //->paginate(15)
-     //    ->get();
-
-   //   return   Branchpayout::with(['ExpenseTypeconnect','expenseCategory','payingUserdetails'])->latest('id')
-     //  return   Branchpayout::latest('id')
-     //   ->where('del', 0)
-     //  ->paginate(13);
-
-       //  return Submheader::latest()
-         //  -> where('ucret', $userid)
+         
+        return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')->orderby('created_at', 'Desc')->orderby('walletexpense', 'Desc')
            
+               
+              //    ->where('yearmade', $yeartodisplay)
+              //    ->where('monthmade', $monthtodisplay)
+              ->whereBetween('datemade', [$startdat, $enddate])
+            
+              ////    ->where('branch', $branch)
+                  ->paginate(35);
+      }
 
 
-
-
-
-
-
-
-
-
-       // {
-      // return Submheader::latest()
-      //  -> where('ucret', $userid)
-    //    ->paginate(15);
-      //  }
-
-      
+      if($walletname != '900')
+      {
+         
+        return   Madeexpense::with(['branchnameDailycodes','expenseName','expenseCategoryrpt','expenseWallet','expenseTyperpt'])->orderby('amount', 'Desc')->orderby('created_at', 'Desc')->orderby('walletexpense', 'Desc')
+           
+           
+              //    ->where('yearmade', $yeartodisplay)
+              //    ->where('monthmade', $monthtodisplay)
+              ->whereBetween('datemade', [$startdat, $enddate])
+              ->where('walletexpense', $walletname)
+              ////    ->where('branch', $branch)
+                  ->paginate(35);
+      }
     }
 
  

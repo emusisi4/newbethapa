@@ -36,9 +36,18 @@ class Madeexpense extends Authenticatable
       
         return $this->belongsTo(Expensescategory::class, 'expensecategory'); 
     }
+    public function expenseWallet(){
+      
+        return $this->belongsTo(Expensewalet::class, 'walletexpense'); 
+    }
+    public function expenseCategoryrpt(){
+        // creating a relationship between the students model 
+        return $this->belongsTo(Expensescategory::class, 'category'); 
+      }
 
-
-
+      public function expenseTyperpt(){
+        return $this->belongsTo(Expensetype::class, 'exptype');
+      }
    
     protected $hidden = [
       //  'hid', 'id',

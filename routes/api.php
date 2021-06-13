@@ -42,7 +42,7 @@ Route::apiResources(['monthlyexpensesreportcat' => 'API\Expensesreporttoviewdeta
 Route::apiResources(['monthlyexpensesreporttype' => 'API\ExpensesreporttoviewdetailtypeController']);
 Route::apiResources(['monthlyexpensesreportwallet' => 'API\ExpensesreporttoviewdetailwalletController']);
 
-
+Route::apiResources(['dailyexpensesrecordsexpwallet' => 'API\ExpensesreporttoviewdetailwalletController']);
 
 
 

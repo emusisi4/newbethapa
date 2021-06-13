@@ -216,6 +216,12 @@ th {
                       <!--  v-if="submenuaccessComponent > 0" -->
                   </li>
                  
+                    <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-expwallet-tab"
+                     data-toggle="pill" href="#custom-tabs-two-expwallet" role="tab"
+                      @click="loadexpesesreportwallet()"  aria-controls="custom-tabs-two-expwallet" aria-selected="false">Expenses Report - Wallet</a>
+                      <!--  v-if="submenuaccessComponent > 0" -->
+                  </li>
                  
                  
                   <li class="nav-item">
@@ -277,6 +283,13 @@ th {
                      </div>
        <!-- v-if="allowedtoaddmainmenu > 0" -->
              <div class="bethapa-reportheader-header" >DAILY SUMMARY  EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div>   
+              
+                       
+<div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
+              
                 <table style="width:100%"  >
                   <thead>
                     <tr>
@@ -319,7 +332,7 @@ th {
                      
                  
                     </div>
- 
+                  </div>
  <!-- tab one end -->
 
 
@@ -342,7 +355,7 @@ th {
                        <form @submit.prevent="expenseCategoryreport()">
                  
                       <div class="form-group">
-                    <label for="exampleInputEmail1">Start:</label>
+                    <label for="exampleInputEmail1">Starting Date :</label>
                     <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
                      <has-error :form="form" field="startdate"></has-error>
      
@@ -511,6 +524,8 @@ th {
                 <div class="loader" v-if="loading">
        
     </div>
+
+           
              <table style="width:100%"  >
                   <thead>
                     <tr> 
@@ -542,8 +557,9 @@ th {
                                  
                     
                     <td>{{(submenuinfo.description)}}</td>
-                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                          <td>   <template v-if="submenuinfo.expense_typerpt">	{{submenuinfo.expense_typerpt.typename}}</template></td>  
+                       <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
+                    
                     
                     <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
                        
@@ -585,7 +601,7 @@ th {
               </div>
                      
                  
-                    </div>
+                  </div>          
  
  <!-- tab one end -->
 
@@ -864,7 +880,11 @@ th {
                    
       <!-- <div v-if="selecteddatetotalsales > 0 "> -->
 
-            <div>
+           
+<div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
              <table style="width:100%"  >
                   <thead>
                     <tr> 
@@ -896,8 +916,9 @@ th {
                                  
                     
                     <td>{{(submenuinfo.description)}}</td>
-                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                       <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                         <td>   <template v-if="submenuinfo.expense_typerpt">	{{submenuinfo.expense_typerpt.typename}}</template></td>  
+                       <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
+                    
                     
                     <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
                        
@@ -1053,8 +1074,7 @@ th {
 
 
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmm --><!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
-
-                  <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+<div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
                     
                     <div class="bethapa-table-header">
    <form @submit.prevent="savethemonthlyreportforallbranches()">
@@ -1209,7 +1229,11 @@ th {
           
 </div>
         </div>
-         
+        
+<div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div> 
              <table class="table">
                   <thead>
                     <tr> 
@@ -1307,10 +1331,217 @@ th {
                      
                  
                     </div>
- 
+                  </div>
  <!-- tab one end -->
 
+<!-- kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk -->
 
+<div class="tab-pane fade" id="custom-tabs-two-expwallet" role="tabpanel" aria-labelledby="custom-tabs-two-expwallet-tab">
+                   
+                   
+    <!-- tab one start -->
+                  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                 
+                 <div class="bethapa-table-header">
+                 
+                 
+                       <form @submit.prevent="expensewalletreport()">
+                 
+                      <div class="form-group">
+                    <label for="exampleInputEmail1">Start:</label>
+                    <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
+                     <has-error :form="form" field="startdate"></has-error>
+     
+    
+         <label for="exampleInputEmail1">End date  :</label>
+                    <input v-model="form.enddate" type="date" name="enddate"   :class="{ 'is-invalid': form.errors.has('enddate') }">
+
+                     <has-error :form="form" field="enddate"></has-error>
+      <!-- <label>Expense type :</label>
+                    <select name ="typename" v-model="form.typename" id ="typename" class="form-control-sm"   :class="{'is-invalid': form.errors.has('typename')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensetypeslist' v-bind:value='data.id'>{{ data.typename }}</option>
+
+                    </select>
+                          <has-error :form="form" field="typename"></has-error> myClickEventtosavesalesreportbydatewallet
+ -->
+
+
+
+<label>Wallet :</label>
+                    <select name ="walletname" v-model="form.walletname" id ="walletname" class="form-control-sm"  v-on:change="myClickEventtosavesalesreportbydatewallet" :class="{'is-invalid': form.errors.has('walletname')}">
+                    <option value="900"> All  </option>
+                    <option v-for='data in expensewalletslist' v-bind:value='data.id'>{{ data.name }}</option>
+
+                    </select>
+                                <has-error :form="form" field="walletname"></has-error>
+
+
+
+                              
+             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportviewwallet" class="btn btn-primary btn-sm">Saveit</button>         
+
+                                
+                     
+       
+       
+                   
+          </div>
+
+
+        
+
+                </form>
+                </div>
+                  
+            
+       <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
+
+   <div class="row">
+      <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>INVESTMENT</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+           <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>COLLECTIONS</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+  <div class="col-lg-4 col-2">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>TOTAL EXPENSES</h3>
+
+           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+          
+      
+        
+    
+          
+          
+        </div>
+   
+    
+
+   
+
+<div id="axiosForm"> 
+                <div class="loader" v-if="loading">
+       
+    </div>
+             <table style="width:100%"  >
+                  <thead>
+                    <tr> 
+                     <th>#</th>
+                      <th>DATE</th>
+                        <th>BRANCH</th>
+                        <th>EXPENSE</th>
+
+                         <th>DESCRIPTION</th>
+                         <th>TYPE</th>
+                         <th>CATEGORY</th>
+                         <th>AMOUNT</th>
+                         <th>WALLET</th>
+                              
+                          
+                      </tr>
+                    
+                  </thead>
+                 
+                  <tbody>
+                    <tr>
+                       <tr v-for="submenuinfo in dailyexpensesrecordsexpwallet.data" :key="submenuinfo.id">
+                       <td>{{submenuinfo.id}}</td>                            
+                    <td>{{submenuinfo.datemade}}</td>
+                     <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
+                    
+                     
+                    <td>    <template v-if="submenuinfo.expense_name">	{{submenuinfo.expense_name.expensename}}</template></td>
+                                 
+                    
+                    <td>{{(submenuinfo.description)}}</td>
+                       <td>   <template v-if="submenuinfo.expense_typerpt">	{{submenuinfo.expense_typerpt.typename}}</template></td>  
+                       <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
+                    
+                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                       
+                       <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Collections </span></span>
+                              </div>
+                               <div v-if="((submenuinfo.walletexpense)) == 2">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Investment </span></span>
+                              </div>
+                              
+                               
+                              
+                               </td>
+                       
+                        
+                        
+                 
+                                        </tr>
+              
+                    
+                  </tbody>
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+                  </div>
+                  <!-- close of No records -->
+
+    <div class="card-footer">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <pagination :data="dailyexpensesrecordsexpcat" @pagination-change-page="paginationResultsSubmenus"></pagination>
+                </ul>
+              </div>
+                     
+                 
+                    </div>
+ 
+
+
+
+
+
+                  </div>
+<!-- kjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk -->
 <!-- Modal add menu -->
 <div class="modal fade" id="addnewcomponentfeaturemodal">
         <div class="modal-dialog modal-dialog-top modal-lg">
@@ -1525,6 +1756,8 @@ dailycollection :null,
           mainmenurecords : {},
           dailyexpensesrecords : {},
           dailyexpensesrecordsexpcat:{},
+          dailyexpensesrecordsexpwallet:{},
+          dailyexpensesrecordsexptype:{},
           monthlybranchexpensesdatarecs : {},
           allbranchesexpenserept:{},
           componentfeaturesrecords :{},
@@ -1657,6 +1890,10 @@ myClickEventtosavesalesreportbydate($event) { const elem = this.$refs.theButtont
             elem.click()
         },
         myClickEventtosavesalesreportbydatecategory($event) { const elem = this.$refs.theButtontosabemonthlyreportviecategory
+            elem.click()
+        },
+        
+         myClickEventtosavesalesreportbydatewallet($event) { const elem = this.$refs.theButtontosabemonthlyreportviewwallet
             elem.click()
         },
 myClickEventforsubmenus($event) { const elem = this.$refs.myBtnsubmenus
@@ -2038,13 +2275,12 @@ if (result.isConfirmed) {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////// Start of Sub menus
-loadexpesesreportcat(){
 
+loadexpesesreportwallet(){
      
-        this.form.post('')
-        .then(()=>{
-
      
+this.loading = true;
+     axios.get("api/dailyexpensesrecordsexpwallet").then(({ data }) => (this.dailyexpensesrecordsexpwallet = data));
       axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
 
 axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
@@ -2072,16 +2308,45 @@ axios.get('/api/expensewalletslist').then(function (response) { this.expensewall
   this.loading = false;
 
  
-        })
-        .catch(()=>{
-          
-        })
+       
 
 
 
        
 
   },
+loadexpesesreportcat(){
+
+     
+      
+      axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
+
+axios.get('/api/expensetypeslist').then(function (response) { this.expensetypeslist = response.data;}.bind(this));
+axios.get('/api/expensecategorieslist').then(function (response) { this.expensecategorieslist = response.data;}.bind(this));
+axios.get('/api/expensewalletslist').then(function (response) { this.expensewalletslist = response.data;}.bind(this));
+      axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+      axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+          
+     axios.get("api/orderlistfordatesalesreport").then(({ data }) => (this.orderlistfordatesalesreport = data));
+     axios.get("api/getMainmenues").then(({ data }) => (this.mainmenulist = data));
+     axios.get("api/genrealfishreportsAccess").then(({ data }) => (this.genrealfishreportsAccess = data));
+     axios.get("api/dailyfishreportAccessComponent").then(({ data }) => (this.dailyfishreportAccessComponent = data));
+     axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+  axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+  
+     ////
+        axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+         axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+           axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+   
+   axios.get("api/selectedbranchreportmonth").then(({ data }) => (this.selectedbranchreportmonth = data));
+
+ axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+  
+  this.loading = false;
+
+ 
+       },
   loadSubmenus(){
       axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
           axios.get('/api/branchDetails').then(function (response) { this.brancheslist = response.data;}.bind(this));
@@ -2307,12 +2572,47 @@ axios.get("api/mothlyreportmonthallbrnchyear").then(({ data }) => (this.mothlyre
 
 }, 
 
-expenseCategoryreport(){
+expensewalletreport(){
   this.loading = true;
-                                this.$Progress.start();
+                              
+                               this.form.post('api/monthlyexpensesreportwallet')
+                                .then(()=>{
+                                               axios.get("api/dailyexpensesrecordsexpwallet").then(({ data }) => (this.dailyexpensesrecordsexpwallet = data));
+                                            axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
+                                            axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
+                                            axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
+                                           // axios.get("api/rangeexpensescollections").then(({ data }) => (this.rangeexpensescollections = data)); 
+
+                                            axios.get("api/selecteddatetotalsales").then(({ data }) => (this.selecteddatetotalsales = data));
+                                            axios.get("api/dailytotalsales").then(({ data }) => (this.dailytotalsales = data));
+                                            axios.get("api/dailytotalpayout").then(({ data }) => (this.dailytotalpayout = data));
+                                            axios.get("api/dailycollection").then(({ data }) => (this.dailycollection = data));
+                                            axios.get("api/seleceteddatefordailyreport").then(({ data }) => (this.seleceteddatefordailyreport = data));
+                                            axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));          
+                                                                        //  Fire.$emit('AfterAction');
+
+                               // $('#addNew').modal('hide');
+
+                                Toast.fire({
+                                icon: 'success',
+                                title: 'Record Added Successfully'
+                                });
+  this.loading = false;
+                              
+                                  this.form.clear();
+        this.form.reset();
+                                })
+                                .catch(()=>{
+
+                                })
+
+}, 
+expenseCategoryreport(){
+ // this.loading = true;
+                              
                                this.form.post('api/monthlyexpensesreportcat')
                                 .then(()=>{
-                                               axios.get("api/dailyexpensesrecordsexpcat").then(({ data }) => (this.dailyexpensesrecordsexpcat = data));
+                                            axios.get("api/dailyexpensesrecordsexpcat").then(({ data }) => (this.dailyexpensesrecordsexpcat = data));
                                             axios.get("api/selecteddailyexpensesreport").then(({ data }) => (this.selecteddailyexpensesreport = data));
                                             axios.get("api/selecteddailyexpensesreport2").then(({ data }) => (this.selecteddailyexpensesreport2 = data));
                                             axios.get("api/rangeexpensesinvestment").then(({ data }) => (this.rangeexpensesinvestment = data)); 
@@ -2330,10 +2630,10 @@ expenseCategoryreport(){
 
                                 Toast.fire({
                                 icon: 'success',
-                                title: 'Record Added Successfully'
+                                title: 'Success'
                                 });
   this.loading = false;
-                                this.$Progress.finish();
+                              
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -2344,7 +2644,7 @@ expenseCategoryreport(){
 }, 
 savedatetoseesalesreportbydatetype(){
 
-                                this.$Progress.start();
+                                this.loading = true;
                                this.form.post('api/monthlyexpensesreporttype')
                                 .then(()=>{
                                             axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
@@ -2368,7 +2668,7 @@ savedatetoseesalesreportbydatetype(){
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                                this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -2379,7 +2679,7 @@ savedatetoseesalesreportbydatetype(){
 }, 
 savedatetoseesalesreportbydatewallet(){
 
-                                this.$Progress.start();
+                               this.loading = true;
                                this.form.post('api/monthlyexpensesreportwallet')
                                 .then(()=>{
                                             axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
@@ -2403,7 +2703,7 @@ savedatetoseesalesreportbydatewallet(){
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                                this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -2415,7 +2715,7 @@ savedatetoseesalesreportbydatewallet(){
 
          savedatetoseesalesreportbydate(){
 
-                                this.$Progress.start();
+                                this.loading = true;
                                this.form.post('api/monthlyexpensesreportforallbra')
                                 .then(()=>{
                                             axios.get("api/dailyexpensesrecords").then(({ data }) => (this.dailyexpensesrecords = data));
@@ -2439,7 +2739,7 @@ savedatetoseesalesreportbydatewallet(){
                                 title: 'Branch Selected'
                                 });
 
-                                this.$Progress.finish();
+                              this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })
@@ -2452,7 +2752,7 @@ savedatetoseesalesreportbydatewallet(){
 
              savenewRecordtoview(){
 
-                                this.$Progress.start();
+                               this.loading = true;
                                 this.form.post('api/dailyfishrep')
                                 .then(()=>{
 
@@ -2466,7 +2766,7 @@ savedatetoseesalesreportbydatewallet(){
                                 title: 'Record Added Successfully'
                                 });
 
-                                this.$Progress.finish();
+                          this.loading = false;
                                   this.form.clear();
         this.form.reset();
                                 })

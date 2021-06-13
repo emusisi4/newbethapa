@@ -44,17 +44,13 @@ class DailyexpensesreportsummaryController extends Controller
         $startdat = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('startdate');
         $enddate = \DB::table('expensesreporttoviewdetails')->where('ucret', '=', $userid)->value('enddate');
 
-        // if($branch == '900')
-        {
+      
        // return   Expdailyreport::with(['branchnameDailycodes','expenseName'])->orderby('amount', 'Desc')
         return   Expdailyreport::orderby('datedone', 'Desc')
-        //    ->where('yearmade', $yeartodisplay)
-        //    ->where('monthmade', $monthtodisplay)
         ->whereBetween('datedone', [$startdat, $enddate])
-        //      ->where('datemade', $datemade)
-        ////    ->where('branch', $branch)
+      
             ->paginate(35);
-        }
+
       
     
 

@@ -17,10 +17,14 @@ class Expensewalet extends Authenticatable
     ];
     
     public function students(){
-      // creating a relationship between the students model 
-      return $this->hasMany(Expense::class, 'expensetype', 'id'); 
+     return $this->hasMany(Expense::class, 'expensetype', 'id'); 
   }
-   
+  public function expenseWallet(){
+    return $this->hasMany(Madeexpense::class, 'walletexpense', 'id'); 
+}
+
+
+
   
     protected $hidden = [
       //  'hid', 'id',

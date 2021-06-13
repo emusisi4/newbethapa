@@ -25,11 +25,10 @@ class Expensetype extends Authenticatable
       // creating a relationship between the students model 
       return $this->hasMany(Expense::class, 'expensetype', 'id'); 
   }
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+   
+  public function expenseTyperpt(){
+    return $this->hasMany(Madeexpense::class, 'exptype', 'id'); 
+  }
     protected $hidden = [
       //  'hid', 'id',
     ];
