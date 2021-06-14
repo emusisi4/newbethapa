@@ -135,8 +135,10 @@ Route::get('monthreportslist', 'APIController@monthreportslist');
 
 Route::get('bettingproducts', 'APIController@bettingproducts');
 Route::get('branchmachineslist', 'APIController@branchmachineslist');
-
 Route::get('mybranch', 'APIController@mybranch');
+Route::get('incomesourceslist', 'APIController@incomesourceslist');
+Route::get('transactiontypeslist', 'APIController@transactiontypeslist');
+
 Route::apiResources(['authorisedformcomponents' => 'API\AuthorisedformcomponentsController']);
 Route::get('getformfeatures', 'APIController@getformfeatures');
 Route::apiResources(['saveformcomponentaccess' => 'API\GiveaccesstoformcomponentController']);
@@ -179,6 +181,8 @@ Route::get('vuedetailsaccessComponent', 'APIController@vuedetailsaccessComponent
 Route::get('gencomponentaccessHrms', 'APIController@gencomponentaccessHrms');
 
 Route::get('gencomponentaccessCahtransactions', 'APIController@gencomponentaccessCahtransactions');
+
+Route::get('gencomponentaccessCompanyincomes', 'APIController@gencomponentaccessCompanyincomes');
 Route::get('gencomponentaccessExpenses', 'APIController@gencomponentaccessExpenses');
 Route::get('generalcomponentaccessComponentfeatures', 'APIController@generalcomponentaccessComponentfeatures');
 Route::get('usersccessSettings', 'APIController@usersccessSettings');
@@ -352,6 +356,8 @@ Route::get('geteditcashcollection', 'APIController@geteditcashcollection');
 Route::get('getdeletecashcollection', 'APIController@getdeletecashcollection');
 Route::get('getaddnewcashcollection', 'APIController@getaddnewcashcollection');
 Route::get('getaddnewcashcollection', 'APIController@getaddnewcashcollection');
+
+Route::apiResources(['registernewincome' => 'API\RegisternewincomeConroller']);
 Route::apiResources(['makeexpenseofficeuser' => 'API\MadeexpensesofficeConroller']);
 ////////////////////////////////////////////////////////////////////////////////
 Route::get('geteditcashcredit', 'APIController@geteditcashcredit');
@@ -481,6 +487,9 @@ Route::get('getGrantcomponentaccess', 'APIController@getGrantcomponentaccess');
 Route::get('getRevokecomponentaccess', 'APIController@getRevokecomponentaccess');
 Route::get('getcurrencydetails', 'APIController@Currencysymbol'); 
 /// cash transactions
+
+// Route::apiResources(['registernewincome' => 'API\CompanyincomesConroller']);
+Route::apiResources(['theincomedetails' => 'API\CompanyincomesConroller']);
 Route::apiResources(['cashindetails' => 'API\CashCollectionController']);
 Route::get('allowedtoaddshopBalancingRecord', 'APIController@allowedtoaddshopBalancingRecord');
 Route::get('allowedtodeleteshopBalancingRecord', 'APIController@allowedtodeleteshopBalancingRecord');

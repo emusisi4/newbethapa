@@ -36,6 +36,8 @@ use App\Sortlistreport;
 use App\Mymonth;
 use App\Myyear;
 use App\Generalreport;
+use App\Incomesource;
+use App\Transactiontype;
 class APIController extends Controller
 
 {
@@ -313,6 +315,35 @@ $dateinquestion  = Branchtobalance::latest('id')->where('ucret', $userid)->order
    
 }
 
+public function transactiontypeslist()
+     {
+         $userid =  auth('api')->user()->id;
+         $userbranch =  auth('api')->user()->branch;
+         $userrole =  auth('api')->user()->type;
+       
+     
+        $data = Transactiontype::latest('id')
+     //   ->where('id', '=', $userbranch)
+        ->get();
+        
+                return response()->json($data);
+     
+   }
+public function incomesourceslist()
+     {
+         $userid =  auth('api')->user()->id;
+         $userbranch =  auth('api')->user()->branch;
+         $userrole =  auth('api')->user()->type;
+       
+     
+        $data = Incomesource::latest('id')
+     //   ->where('id', '=', $userbranch)
+        ->get();
+        
+                return response()->json($data);
+     
+   }
+   
 public function mybranch()
      {
          $userid =  auth('api')->user()->id;
@@ -1925,6 +1956,27 @@ $comp ='expensetypecomponent';
 
 ///////////////////////////////////////////////////////////////
 
+
+public function gencomponentaccessCompanyincomes()
+{
+  $userid =  auth('api')->user()->id;
+  $userbranch =  auth('api')->user()->branch;
+  $userrole =  auth('api')->user()->type;
+  $assignedrole =  auth('api')->user()->mmaderole;
+
+//////////// geting the shop to balance
+//$branchto  = Branchtobalance::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchnametobalance');
+//$dateinquestion  = Branchtobalance::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('datedone');
+$comp ='generalecompanyincomes';
+ $roleisallowedtoaccess = \DB::table('componentsaccesses')
+
+    ->where('componentto', '=', $comp)
+    ->where('mmaderole', '=', $assignedrole)
+    ->count();
+
+    return $roleisallowedtoaccess;
+   
+}
 
 
 public function gencomponentaccessExpenses()

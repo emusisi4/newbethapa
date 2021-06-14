@@ -86,6 +86,7 @@ let routes = [
 ////////
 { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
 { path: '/cashtransactions', component: require('./components/Cashtransactions.vue')},
+{ path: '/incomes', component: require('./components/Companyincomes.vue')},
 // { path: '/shopdesdecashout', component: require('./components/Branchescashouttransactions.vue')},
   ]
   const router = new VueRouter({

@@ -39,7 +39,7 @@ class CurrentShopbalancingContoller extends Controller
       // return   Shopbalancingrecord::latest('id')
        //  return   Branchpayout::latest('id')
         ->where('ucret', $userid)
-        ->paginate(20);
+        ->paginate(40);
       }
 
 
