@@ -25,7 +25,7 @@ th {
  <div  v-if="genrealfishreportsAccess > 0 ">
 
 
-   <div class="bethapa-component-header" >FISH REPORTS </div>    
+   <div class="bethapa-component-header" >FISH REPORTS nnnnn </div>    
   <div class="row">
             <div class="col-sm-2 col-2">
                 <div class="small-box bg-secondary">

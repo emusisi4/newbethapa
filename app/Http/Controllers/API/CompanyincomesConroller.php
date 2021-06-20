@@ -96,8 +96,7 @@ class CompanyincomesConroller extends Controller
         //
     }
    
-  
-    
+   
     public function update(Request $request, $id)
     {
         //
@@ -119,11 +118,12 @@ $user->update($request->all());
  
     public function destroy($id)
     {
-       
+        //
+     //   $this->authorize('isAdmin'); 
 
         $user = Companyincome::findOrFail($id);
         $user->delete();
-       
+       // return['message' => 'user deleted'];
 
     }
 

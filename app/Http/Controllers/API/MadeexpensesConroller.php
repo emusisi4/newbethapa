@@ -14,11 +14,7 @@ use App\Madeexpense;
 
 class MadeexpensesConroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function __construct()
     {
        $this->middleware('auth:api');
@@ -107,6 +103,7 @@ class MadeexpensesConroller extends Controller
 
 
      $userid =  auth('api')->user()->id;
+     $mywallet =  auth('api')->user()->mywallet;
      $dateinact = $request['datemade'];
      $yearmade = date('Y', strtotime($dateinact));
      $monthmade = date('m', strtotime($dateinact));
@@ -116,22 +113,49 @@ class MadeexpensesConroller extends Controller
      $expcat = \DB::table('expenses')->where('expenseno', $exp )->value('expensecategory');
 //$expcat =  Expense::where('id', $exp)->value('expensecategory');
      $exptyo = \DB::table('expenses')->where('expenseno', $exp)->value('expensetype');
-     
-  //       $dats = $id;
-       return Madeexpense::Create([
+
+  $approvalstate = \DB::table('expenses')->where('expenseno', $exp )->value('appstate');
+  if($approvalstate == '1')
+{
+  $approvedstatus = 1;
+}
+if($approvalstate != '1')
+{
+  $approvedstatus = 0;
+}
+     $expenseamount = $request['amount'];
+  //getting the wallet balance'
+  $mywalletbalance = \DB::table('expensewalets')->where('id', $mywallet )->value('bal');
+  if($mywalletbalance >= $expenseamount)
+  {
+       Madeexpense::Create([
       'expense' => $request['expense'],
      //'expenseno' => $hid,
       'description' => $request['description'],
       'amount' => $request['amount'],
+      'walletexpense' => $mywallet,
       'datemade' => $request['datemade'],
       'branch' => $request['branch'],
       'category' => $expcat,
       'exptype' => $exptyo,
       'yearmade' => $yearmade,
+      'approvalstate' => $approvedstatus,
       'monthmade' => $monthmade,
       'ucret' => $userid,
     
   ]);
+
+  //// Gettint the current wallet balance
+  
+  if($approvalstate == '1' )
+  {
+    $newwalletbalance  = $mywalletbalance-$expenseamount;
+    $result2 = \DB::table('expensewalets')->where('id', $mywallet)->update(['bal' =>  $newwalletbalance]);
+
+  }
+ 
+
+} /// closing the if balance is enough to spend
     }
 
     
@@ -159,19 +183,38 @@ $this->validate($request,[
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
+    
     public function destroy($id)
     {
         //
      //   $this->authorize('isAdmin'); 
-
-        $user = Madeexpense::findOrFail($id);
-        $user->delete();
+     $userid =  auth('api')->user()->id;
+   
+   
+     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+     $walletofexpense = \DB::table('madeexpenses')->where('id', $id )->value('walletexpense');
+     if($approvalstate == '1')
+     {
+      $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+      $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+      $newbal = $thewalletbalance+$expenseamount;
+      $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+      $user = Madeexpense::findOrFail($id);
+      $user->delete();
+     }
+    
+     if($approvalstate != '1')
+     {
+      // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+      // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+      // $newbal = $thewalletbalance+$expenseamount;
+      // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+      $user = Madeexpense::findOrFail($id);
+      $user->delete();
+     }
+      
+      
        // return['message' => 'user deleted'];
 
     }

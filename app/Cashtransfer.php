@@ -11,13 +11,10 @@ class Cashtransfer extends Authenticatable
     use HasApiTokens, Notifiable;
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+  
+    
     protected $fillable = ['transerdate','transferfrom','transferto','yeardone','amount','description',
-        'ucret','monthdone',
+        'ucret','monthdone', 'transactionno','accountinact','transfertype','destination'
     ];
     //public function maincomponentSubmenus(){
         // creating a relationship between the students model 

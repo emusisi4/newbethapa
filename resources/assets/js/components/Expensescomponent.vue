@@ -140,21 +140,8 @@
                      href="#custom-tabs-two-three" role="tab" @click="loadShopbalancingrecords()" 
                      aria-controls="custom-tabs-two-three" aria-selected="false">EXPENSE REQUESTS</a>
                   </li>
+                  
 
-<!-- -->
-                    <li class="nav-item"  v-if="cashcollectionaccessSetting > 0 " >
-                    <a class="nav-link" id="custom-tabs-two-four-tab" data-toggle="pill"
-                     href="#custom-tabs-two-four" role="tab" @click="loadAdmincashin()" 
-                     aria-controls="custom-tabs-two-four" aria-selected="false">CASH COLLECTION </a>
-                  </li>
-
-
-                     <li class="nav-item" >
-                    <a class="nav-link" id="custom-tabs-two-five-tab" data-toggle="pill"  @click="loadAdmincashout()"
-                    href="#custom-tabs-two-five" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">CASH CREDIT</a>
-                  </li>
-
-                 
                   
 
                 </ul>
@@ -678,6 +665,7 @@
                      
                     <th> STATION </th>
                        <th> EXPENSE WALLET </th>
+                        <th> STATUS </th>
                    
                       <th></th>
                     </tr>
@@ -724,13 +712,27 @@
                               </div>
                               
                                </td>
+                                <td> <div v-if="((offcmadeexp.approvalstate))== 0">
+                                <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.0em;" center >  Pending </span></span>
+                              </div>
+                              <div v-if="((offcmadeexp.approvalstate))== 1">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >  Approved </span></span>
+                              </div>
+                              
+                              </td>
 
                                
                           <td> 
-                                <!-- v-if="allowedtoeditadmincashcollection > 0 "    -->
-                             <button type="button" v-if="allowedtoeditofficeexpense > 0" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editOfficemadeexpense(offcmadeexp)">Edit</button>
-      <button type="button" v-if="allowedtodeleteofficeexpense > 0"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(offcmadeexp.id)"> DEl </button>
-
+                                <!-- div  >       -->
+        <div >                         
+       <button v-show="offcmadeexp.approvalstate < 1" type="button"   class="btn  bg-gradient-success btn-xs fas fa-eye"  @click="confirmexpense(offcmadeexp.id)"> Approve  </button>
+      <button type="button" v-if="offcmadeexp.approvalstate < 1" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editOfficemadeexpense(offcmadeexp)">Edit</button>
+      <button type="button" v-if="offcmadeexp.approvalstate < 1"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(offcmadeexp.id)"> Delete Expense </button>
+        </div>
 <!-- v-if="allowedtodeleteadmincashcollection > 0 " -->
                       </td>
                     </tr>
@@ -1257,110 +1259,7 @@
 
  </div>
 <!-- End od pane -->
-                    <div class="tab-pane fade" id="custom-tabs-two-four" role="tabpanel" aria-labelledby="custom-tabs-two-four-tab">
-                                                     
-            <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
-                  
-                  
-                    <div class="form-group">
-                  <label>Role</label>
-                    <select name ="roletoallow" v-model="form.roletoallow" id ="roletoallow"   :class="{'is-invalid': form.errors.has('roletoallow')}">
-                    <option value=" ">  </option>
-                    <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
 
-                    </select>
-                    
-
-                                <has-error :form="form" field="roletoallow"></has-error>
-
-
-                     <label>Component</label>
-                    <select name ="componentto" v-model="form.componentto" id ="componentto"   :class="{'is-invalid': form.errors.has('componentto')}">
-                    <option value=" ">  </option>
-                    <option v-for='data in componentslist' v-bind:value='data.sysname'> ({{ data.sysname }}) - {{ data.componentname }}</option>
-
-                    </select>
-                    
-
-                                <has-error :form="form" field="componentto"></has-error>
-                       <button type="submit" id="submit" name= "submit" ref="myBtn" class="btn btn-info btn-sm">Proceed</button>
-                                    </div>
-                                </form> -->
-                  
-                       <div class="bethapa-table-header">
-                    CASH COLLECTION DETAILS <button v-if="allowedtoaddnewcashcollection > 0" type="button" class="add-newm" @click="newCashcollection" >Make COllection </button>
-                     </div>
-
-
-                      <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                     <th>#</th>
-                      
-                      <th>DATE</th>
-                      <th>BRANCH</th>
-                     
-                      <th>FROM </th>
-                      
-                      <th>AMOUNT</th>
-                      <th>USER INITIATED</th>
-                        <th>APPROVED</th>
-                         <th>USER - APPROVED</th>
-                         <th>STATUS</th>
-                     <th >  </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-
-                              <tr v-for="alladmincashcollection in admincashindatarecords.data" :key="alladmincashcollection.id">
-                      
-                 
-                  
-                
-                      
-                         
-                             <td>{{alladmincashcollection.id}}</td>
-                       <td>{{(alladmincashcollection.transferdate)}}</td>
-                       <td>   <template v-if="alladmincashcollection.branch_name">	{{alladmincashcollection.branch_name.branchname}}</template></td>
-                       <td> <template v-if="alladmincashcollection.branch_namefrom">	{{alladmincashcollection.branch_namefrom.branchname}}</template></td>
-                       <td>{{currencydetails}} {{formatPrice(alladmincashcollection.amount)}}</td>
-                       <td> <template v-if="alladmincashcollection.cerated_userdetails">	{{alladmincashcollection.cerated_userdetails.name}}</template></td>
-                       <td>{{(alladmincashcollection.comptime)}}</td>
-                       <td> <template v-if="alladmincashcollection.approved_userdetails">	{{alladmincashcollection.approved_userdetails.name}}</template></td>
-                       <td> <template v-if="alladmincashcollection.status_name">	{{alladmincashcollection.status_name.name}}</template></td>
-                           
-                        <td>
-                          
-      <button type="button" v-if="allowedtoeditadmincashcollection > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editBranchexpenserecord(alladmincashcollection)">Edit</button>
-      <button type="button" v-if="allowedtodeleteadmincashcollection > 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteBranchexpenserecord(alladmincashcollection.id)"> DEl </button>
-
-
-
-
-                             
-                              </td>
-
-               
-                              
-                               
-                    </tr>
-              
-                     
-                  </tbody>
-              
- 
-                                   </table>
-   
-   
-                      <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="allowedrolecomponentfeaturesObject" @pagination-change-page="paginationroleAuthorisedcomponentsfeature"></pagination>
-                </ul>
-              </div>
-                     
-                 
-                    </div>
  
  <!-- tab one end -->
 
@@ -1490,112 +1389,6 @@
 
 <!-- End of pane -->
 
-                <div class="tab-pane fade" id="custom-tabs-two-five" role="tabpanel" aria-labelledby="custom-tabs-two-five-tab">
-                     
-                <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
-                  
-                  
-                    <div class="form-group">
-                  <label>Role</label>
-                    <select name ="roletoallow" v-model="form.roletoallow" id ="roletoallow"   :class="{'is-invalid': form.errors.has('roletoallow')}">
-                    <option value=" ">  </option>
-                    <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
-
-                    </select>
-                    
-
-                                <has-error :form="form" field="roletoallow"></has-error>
-
-
-                     <label>Component</label>
-                    <select name ="componentto" v-model="form.componentto" id ="componentto"   :class="{'is-invalid': form.errors.has('componentto')}">
-                    <option value=" ">  </option>
-                    <option v-for='data in componentslist' v-bind:value='data.sysname'> ({{ data.sysname }}) - {{ data.componentname }}</option>
-
-                    </select>
-                    
-
-                                <has-error :form="form" field="componentto"></has-error>
-                       <button type="submit" id="submit" name= "submit" ref="myBtn" class="btn btn-info btn-sm">Proceed</button>
-                                    </div>
-                                </form> -->
-                  
-                       <div class="bethapa-table-header">
-                    CASH CREDIT DETAILS <button v-if="allowedtoaddnewcashcredit > 0" type="button" class="add-newm" @click="newCashcredit" >Make Credit </button>
-                     </div>
-
-
-                      <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                   <th>#</th>
-                      
-                      <th>DATE</th>
-                      <th>BRANCH</th>
-                     
-                      <th>DESTINATION </th>
-                      
-                      <th>AMOUNT</th>
-                      <th>ASKED BY</th>
-                        <th>APPROVED</th>
-                         <th>USER - APPROVED</th>
-                         <th>STATUS</th>
-                     <th >  </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-
-                              <tr v-for="alladmincashouts in admincashoutrecords.data" :key="alladmincashouts.id">
-                      
-                 
-                  
-                
-                      
-                         
-                             <td>{{alladmincashouts.id}}</td>
-                       <td>{{(alladmincashouts.transferdate)}}</td>
-                       <td>   <template v-if="alladmincashouts.branch_name">	{{alladmincashouts.branch_name.branchname}}</template></td>
-                       <td> <template v-if="alladmincashouts.branch_namefrom">	{{alladmincashouts.branch_namefrom.branchname}}</template></td>
-                       <td>{{currencydetails}} {{formatPrice(alladmincashouts.amount)}}</td>
-                       <td> <template v-if="alladmincashouts.cerated_userdetails">	{{alladmincashouts.cerated_userdetails.name}}</template></td>
-                       <td>{{(alladmincashouts.comptime)}}</td>
-                       <td> <template v-if="alladmincashouts.approved_userdetails">	{{alladmincashouts.approved_userdetails.name}}</template></td>
-                       <td> <template v-if="alladmincashouts.status_name">	{{alladmincashouts.status_name.name}}</template></td>
-                           
-                        <td>
-                          
-      <button type="button" v-if="allowedtoeditadmincashcredit > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editcashcredit(alladmincashouts)">Edit</button>
-      <button type="button" v-if="allowedtodeleteadmincashcredit> 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcredit(alladmincashouts.id)"> DEl </button>
-
-
-
-
-                             
-                              </td>
-
-               
-                              
-                               
-                    </tr>
-              
-                     
-                  </tbody>
-              
- 
-                                   </table>
-   
-   
-                      <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="allowedrolecomponentfeaturesObject" @pagination-change-page="paginationroleAuthorisedcomponentsfeature"></pagination>
-                </ul>
-              </div>
-                     
-                 
-                    </div>
- 
- <!-- tab one end -->
 
 
 <!-- Modal add menu -->
@@ -2057,6 +1850,48 @@ SavetheCollectionbranch (){
 
 
         }, 
+
+
+  confirmexpense(id){
+   Swal.fire({
+  title: 'Approve Expense',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes'
+}).then((result) => {
+
+/// send request ti
+if (result.isConfirmed) {
+  this.form.delete('api/makeexpenseofficeuser/'+id).then(()=>{
+  
+                        Swal.fire(
+                          'Approved!',
+                          'Your Record has been Confirmed.',
+                          'success'
+                        )
+  axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.officemadeexpensesrecords = data));
+
+  }).catch(()=>{
+     Swal.fire({  
+         icon: 'error',
+        title: 'Failed',
+       text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
+
+  });
+
+
+}                  
+
+
+
+})
+
+            },
+
+
         SavetheCreditbranch (){
 
   axios.get("api/cashoutfromoffice").then(({ data }) => (this.admincashoutrecords = data));
@@ -2702,50 +2537,50 @@ if (result.isConfirmed) {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            deleteBranchexpenserecord(id){
-   Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes'
-}).then((result) => {
+//             deleteBranchexpenserecord(id){
+//    Swal.fire({
+//   title: 'Are you sure?',
+//   text: "You won't be able to revert this!",
+//   icon: 'warning',
+//   showCancelButton: true,
+//   confirmButtonColor: '#3085d6',
+//   cancelButtonColor: '#d33',
+//   confirmButtonText: 'Yes'
+// }).then((result) => {
 
-/// send request ti
-if (result.isConfirmed) {
-  this.form.delete('api/makeexpense/'+id).then(()=>{
+// /// send request ti
+// if (result.isConfirmed) {
+//   this.form.delete('api/makeexpense/'+id).then(()=>{
   
-                        Swal.fire(
-                          'Deleted!',
-                          'Your file has been deleted.',
-                          'success'
-                        )
+//                         Swal.fire(
+//                           'Deleted!',
+//                           'Your file has been deleted.',
+//                           'success'
+//                         )
                    
- axios.get("api/expenses").then(({ data }) => (this.datarecordscompanyexpenses = data));
-  axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
-     axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
-     axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
-     axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
-     axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+//  axios.get("api/expenses").then(({ data }) => (this.datarecordscompanyexpenses = data));
+//   axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+//      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
+//      axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
+//      axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
+//      axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
 
-  }).catch(()=>{
-     Swal.fire({  
-         icon: 'error',
-        title: 'Failed',
-       text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
+//   }).catch(()=>{
+//      Swal.fire({  
+//          icon: 'error',
+//         title: 'Failed',
+//        text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
 
-  });
-
-
-}                  
+//   });
 
 
+// }                  
 
-})
 
-            },
+
+// })
+
+//             },
            
 
 deletemadeexpense(id){
@@ -2761,7 +2596,7 @@ deletemadeexpense(id){
 
 /// send request ti
 if (result.isConfirmed) {
-  this.form.delete('api/makeexpenseofficeuser/'+id).then(()=>{
+  this.form.delete('api/makeexpense/'+id).then(()=>{
   
                         Swal.fire(
                           'Deleted!',

@@ -32,8 +32,11 @@ class DailysalessummaryreportController extends Controller
      $startdat = DB::table('fishreportselections')->where('ucret', $userid)->value('startdate');
      $enddate = DB::table('fishreportselections')->where('ucret', $userid)->value('enddate');
      
-      { return   Daysummarry::orderby('datedone', 'Dec')
-   
+      { 
+        
+        // branchnameDailycodes
+     //   return   Daysummarry::orderby('datedone', 'Dec')
+        return   Daysummarry::with(['branchnameDailycodes'])->latest('datedone')
     
         ->whereBetween('datedone', [$startdat, $enddate])
        ->paginate(40);

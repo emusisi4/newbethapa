@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
-|
+|0784705551
 */ 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -35,6 +35,11 @@ Route::apiResources(['roletobalance' => 'API\RoletoaddcomponentsController']);
 Route::apiResources(['branchtoworkon' => 'API\BranchtoworkonController']);
 Route::apiResources(['authorisedbranchproducts' => 'API\AuthorisedbranchproductsController']);
 Route::apiResources(['saleareportsview' => 'API\SalesreporttoviewController']);
+Route::apiResources(['castransactionstoview' => 'API\Cashtransactionstoview']);
+
+
+
+
 Route::apiResources(['monthlyreportstoview' => 'API\MonthlyreportsController']);
 
 Route::apiResources(['monthlyexpensesreportforallbra' => 'API\ExpensesreporttoviewdetailController']);
@@ -64,6 +69,10 @@ Route::apiResources(['authorisedbranchmachines' => 'API\Authorisedbranchandmachi
 Route::apiResources(['roletoaddsumenu' => 'API\RoletoaddsubmenuController']);
 Route::apiResources(['roletoaddmainmenu' => 'API\RoletoaddmainmenuController']);
 Route::apiResources(['expensecategories' => 'API\ExpensecategoriesController']);
+Route::apiResources(['cashtransferrecords' => 'API\CashtransfersConroller']);
+
+
+
 Route::apiResources(['expensetypes' => 'API\ExpensetypesController']);
 Route::apiResources(['expenses' => 'API\ExpensesController']);
 Route::apiResources(['authorisedcomponents' => 'API\AuthorisedcomponentsController']);
@@ -201,6 +210,36 @@ Route::get('dailytotalpayout', 'APIController@dailytotalpayout');
 Route::get('dailycollection', 'APIController@dailycollection'); 
 
 
+
+Route::get('capitalaccountcurrentbalance', 'APIController@capitalaccountcurrentbalance'); 
+Route::get('pettycashaccountcurrentbalance', 'APIController@pettycashaccountcurrentbalance'); 
+Route::get('bankaccountcurrentbalance', 'APIController@bankaccountcurrentbalance'); 
+Route::get('collectionsaccountcurrentbalance', 'APIController@collectionsaccountcurrentbalance'); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('totalmonthlycollectionsselectedreport', 'APIController@totalmonthlycollectionsselectedreport'); 
 Route::get('totalmonthlyprofitselectedreport', 'APIController@totalmonthlyprofitselectedreport'); 
 Route::get('totalmonthlypayoutselectedreport', 'APIController@totalmonthlypayoutselectedreport'); 
@@ -236,11 +275,17 @@ Route::get('selecteddailyexpensesreport', 'APIController@selecteddailyexpensesre
 Route::get('selecteddailyexpensesreport2', 'APIController@selecteddailyexpensesreport2'); 
 Route::get('selectedreporttype', 'APIController@selectedreporttype'); 
 
+//////////////////////////////////////////////////////////////////////////////////////
 
+Route::get('cashtransferSettings', 'APIController@cashtransferSettings');
+Route::get('collectionsaccountSetting', 'APIController@collectionsaccountSetting');
+Route::get('petycashaccountSetting', 'APIController@petycashaccountSetting');
+Route::get('bankaccountSettings', 'APIController@bankaccountSettings');
+Route::get('incomeaccessSetting', 'APIController@incomeaccessSetting');
+Route::get('capitalaccountSetting', 'APIController@capitalaccountSetting');
+//
 
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('expensecategoriesaccessSettings', 'APIController@expensecategoriesaccessSettings');
 Route::get('expensetypesaccessSettings', 'APIController@expensetypesaccessSettings');
 Route::get('allcompanyexpensesaccessSettings', 'APIController@allcompanyexpensesaccessSettings');
@@ -306,13 +351,19 @@ Route::apiResources(['allbranchesmreports' => 'API\MonthlyreportsallbranchesCont
 Route::apiResources(['monthrlreporyrecords' => 'API\MonthlyreportsController']);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('getaddnewexpensecategory', 'APIController@getaddnewexpensecategory');
+
+
+Route::get('getaddnewincome', 'APIController@getaddnewincome');
 Route::get('geteditexpensecategory', 'APIController@geteditexpensecategory');
 Route::get('getdeleteexpensecategory', 'APIController@getdeleteexpensecategory');
 
-
-Route::get('getaddnewexpensetype', 'APIController@getaddnewexpensetype');
-Route::get('geteditexpensetype', 'APIController@geteditexpensetype');
-Route::get('getdeleteexpensetype', 'APIController@getdeleteexpensetype');
+Route::get('allowedtoviewcapitalaccount', 'APIController@allowedtoviewcapitalaccount');
+Route::get('allowedtoviewpettycashaccount', 'APIController@allowedtoviewpettycashaccount');
+Route::get('allowedtoviewbankaccount', 'APIController@allowedtoviewbankaccount');
+Route::get('allowedtoviewcollectionsccount', 'APIController@allowedtoviewcollectionsccount');
+// Route::get('allowedtoviewcapitalaccount', 'APIController@allowedtoviewcapitalaccount');
+// Route::get('allowedtoviewpettycashaccount', 'APIController@allowedtoviewpettycashaccount');
+// Route::get('allowedtoviewbankaccount', 'APIController@allowedtoviewbankaccount');
 
 
 
@@ -357,7 +408,9 @@ Route::get('getdeletecashcollection', 'APIController@getdeletecashcollection');
 Route::get('getaddnewcashcollection', 'APIController@getaddnewcashcollection');
 Route::get('getaddnewcashcollection', 'APIController@getaddnewcashcollection');
 
-Route::apiResources(['registernewincome' => 'API\RegisternewincomeConroller']);
+Route::apiResources(['registernewincome' => 'API\BankstatementsConroller']);
+Route::apiResources(['makecashtransferfromaccountto' => 'API\CashtransfersConroller']);
+
 Route::apiResources(['makeexpenseofficeuser' => 'API\MadeexpensesofficeConroller']);
 ////////////////////////////////////////////////////////////////////////////////
 Route::get('geteditcashcredit', 'APIController@geteditcashcredit');

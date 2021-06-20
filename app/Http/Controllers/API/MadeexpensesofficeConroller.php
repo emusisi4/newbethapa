@@ -376,9 +376,54 @@ $user->update($request->all());
         //
      //   $this->authorize('isAdmin'); 
 
-        $user = Madeexpense::findOrFail($id);
-        $user->delete();
-       // return['message' => 'user deleted'];
+
+
+
+
+
+
+     $userid =  auth('api')->user()->id;
+   
+   
+     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+     $walletofexpense = \DB::table('madeexpenses')->where('id', $id )->value('walletexpense');
+   
+   
+  
+     $transamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+     $currentaccountbalancespending = \DB::table('expensewalets')->where('id', $walletofexpense)->value('bal');
+
+
+   if($currentaccountbalancespending >= $transamount)
+   {
+    $newwalletamountrecieving = $currentaccountbalancespending-$transamount;
+    $updatingthegivingaccount = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newwalletamountrecieving]);
+    $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+   }
+     
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //   $user = Madeexpense::findOrFail($id);
+      //   $user->delete();
+      //  // return['message' => 'user deleted'];
+
+
 
     }
 }
