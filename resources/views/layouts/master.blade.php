@@ -327,7 +327,8 @@ foreach ($allowedsubmenu as $rowallsub)
 
   })
 </script>
-<div class="card card-default">
+<!--
+  <div class="card card-default">
           <div class="card-header">
             <h3 class="card-title">Select2 (Bootstrap4 Theme)</h3>
 
@@ -336,7 +337,7 @@ foreach ($allowedsubmenu as $rowallsub)
               <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
             </div>
           </div>
-          <!-- /.card-header -->
+         
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
@@ -352,18 +353,14 @@ foreach ($allowedsubmenu as $rowallsub)
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
               
-                <!-- /.form-group -->
               </div>
-              <!-- /.col -->
-    
-              <!-- /.col -->
+             
             </div>
-            <!-- /.row -->
+           
           </div>
   
-        </div>
+        </div> --->
 </body>
 
 </html>
