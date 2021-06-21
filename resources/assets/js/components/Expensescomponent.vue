@@ -745,8 +745,9 @@
         <div >                         
        <button v-show="offcmadeexp.approvalstate < 1" type="button"   class="btn  bg-gradient-success btn-xs fas fa-eye"  @click="confirmexpense(offcmadeexp.id)"> Approve  </button>
       <button type="button" v-if="offcmadeexp.approvalstate < 1" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editOfficemadeexpense(offcmadeexp)">Edit</button>
+       </div>
       <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(offcmadeexp.id)"> Delete Expense </button>
-        </div>
+       
 <!-- v-if="allowedtodeleteadmincashcollection > 0 " -->
                       </td>
                     </tr>
