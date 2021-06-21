@@ -2155,11 +2155,53 @@ $data = User::latest('id')
 }
 public function getExpensestomake()
 {
- 
+  $userid =  auth('api')->user()->id;
+     $userbranch =  auth('api')->user()->branch;
+    $userrole =  auth('api')->user()->mmaderole; 
+
+
+   if($userrole == '103') 
+   {
 $data = Expense::latest('id')
-->where('del', 0)
+->where('collectionswallet', 1)
 ->get();
     return response()->json($data);
+  }
+  if($userrole == '102') 
+  {
+$data = Expense::latest('id')
+->where('pettycashwallet', 1)
+->get();
+   return response()->json($data);
+ }
+
+ if($userrole == '106') 
+  {
+$data = Expense::latest('id')
+->where('capitalcashwallet', 1)
+->get();
+   return response()->json($data);
+ }
+ if($userrole == '100') 
+ {
+$data = Expense::latest('id')
+//->where('capitalcashwallet', 1)
+->get();
+  return response()->json($data);
+}
+
+  if($userrole == '900') 
+  {
+$data = Expense::latest('id')
+//->where('collectionswallet', 1)
+->get();
+   return response()->json($data);}
+
+
+
+
+
+
 }
 
 public function getWallets()

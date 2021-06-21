@@ -469,6 +469,7 @@
                       <th>DESCRIPTION</th>
                     
                       <th>CREATED</th>
+                        <th>COLLECTION</th>
                        <th></th>
                     </tr>
                   </thead>
@@ -481,11 +482,24 @@
                     <td>{{compexps.id}}</td>
                     <td>{{compexps.expensename}}</td>
                 
-                           <td>    <template v-if="compexps.expense_category">	{{compexps.expense_category.name}}</template></td>
+                           <td>    <template v-if="compexps.expense_category">	{{compexps.expense_category.expcatcatname}}</template></td>
                            <td>    <template v-if="compexps.expense_typeconnect">	{{compexps.expense_typeconnect.typename}}</template></td>
                        
                                <td>{{compexps.description}}</td>
                                <td>{{compexps.created_at}}</td>
+                               <td>
+                                 
+
+<div class="form-group clearfix">
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" id="checkboxPrimary1" checked="">
+                        <label for="checkboxPrimary1">
+                        </label>
+                      </div>
+                     
+                     
+                   
+                    </div>                               </td>
                           <td>     
                               <!-- v-if="allowedtoedituser > 0 "  -->
                             <button type="button" v-if="allowedtoeditCompanyexpense > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editCompanyexp(compexps)">Edit</button>
