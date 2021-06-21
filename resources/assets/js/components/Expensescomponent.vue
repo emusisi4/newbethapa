@@ -675,7 +675,7 @@
                       <th>BRANCH</th>
                       <th>EXPENSE</th>
                        <th>DESCRIPTION</th>
-                      <th>AMOUNT</th>
+                      <th>AMOUNT ( {{currencydetails}} ) </th>
                      
                     <th> STATION </th>
                        <th> EXPENSE WALLET </th>
@@ -694,7 +694,7 @@
                            <td>    <template v-if="offcmadeexp.expense_name">	{{offcmadeexp.expense_name.expensename}}</template></td>
                           <td>{{offcmadeexp.description}}</td>
                        
-                               <td> {{currencydetails}} {{formatPrice((offcmadeexp.amount))}}</td>
+                               <td> {{formatPrice((offcmadeexp.amount))}}</td>
                                <td>   <div v-if="((offcmadeexp.explevel)) == 1">
                                 <span class="cell" style="color:#dc3545 ;">  
    
