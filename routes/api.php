@@ -62,6 +62,7 @@ Route::apiResources(['dailyexpensesrecordsexpwallet' => 'API\Expensesreporttovie
 Route::apiResources(['monthlyreportstoviewallbranches' => 'API\MonthlyreportsallbranchesController']);
 Route::apiResources(['allowedbranchanduserdatarecords' => 'API\AuthorisedbranchanduserController']);
 
+Route::apiResources(['correctmydaterecordsexpenses' => 'API\AutocorrectdatedetailsexpensesreportController']);
 Route::apiResources(['correctmydaterecords' => 'API\AutocorrectdatedetailsController']);
 
 

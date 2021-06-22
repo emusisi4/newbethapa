@@ -289,7 +289,54 @@ th {
                 <div class="loader" v-if="loading">
        
     </div>
+              <div class="modal fade" id="addnewcomponentfeaturemodal">
+        <div class="modal-dialog modal-dialog-top modal-lg">
+        <div  class="modal-content">
+            <div  class="modal-header">
+                <h4  v-show="!editmode"    class="modal-title">Correct Daily Report</h4> 
+                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
+                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
+                 <form class="form-horizontal" @submit.prevent="editmode ? updatecomponentfeature():createcomponentfeature()"> 
+
+                    <div  class="modal-body">
               
+                
+                
+                  <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">DATE</label>
+                    <div class="col-sm-6">
+                 <input v-model="form.datedone" type="date" name="datedone"
+                      class="form-control" :class="{ 'is-invalid': form.errors.has('datedone') }">
+                    <has-error :form="form" field="datedone"></has-error>
+                                  </div>
+                   
+      
+                  </div>
+                
+                
+              
+
+                          
+                 </div>
+                 
+                  <div  class="modal-footer">
+                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
+                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
+                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
+                        </div>
+                 </form>
+                       </div>
+                          </div>
+              
+       
+                    
+                    
+                    
+                        </div>
+                              
+        
+           <button type="button"  class="add-newm" @click="correctdatereportdaily" >Auto Correct Date Records </button>
+
                 <table style="width:100%"  >
                   <thead>
                     <tr>
@@ -2026,17 +2073,37 @@ $('#addnewcomponentfeaturemodal').modal('show');
             },
            
 
-    createcomponentfeature(){
+//     createcomponentfeature(){
+//       this.$Progress.start();
+//         this.form.post('api/componentfeatures')
+//         .then(()=>{
+
+         
+//     $('#addnewcomponentfeaturemodal').modal('hide');
+//     axios.get("api/componentfeatures").then(({ data }) => (this.componentfeaturesrecords = data));
+//   Toast.fire({
+//   icon: 'success',
+//   title: 'Record added successfully'
+// });
+//         this.$Progress.finish();
+
+//         })
+//         .catch(()=>{
+          
+//         })
+         
+//     }, // end of create
+  createcomponentfeature(){
       this.$Progress.start();
-        this.form.post('api/componentfeatures')
+        this.form.post('api/correctmydaterecordsexpenses')
         .then(()=>{
 
          
-    $('#addnewcomponentfeaturemodal').modal('hide');
-    axios.get("api/componentfeatures").then(({ data }) => (this.componentfeaturesrecords = data));
+    $('#addnewcomponentfeaturemodal').modal('show');
+axios.get("api/dailyexpensesreportsummary").then(({ data }) => (this.dailycodesreportdata = data));
   Toast.fire({
   icon: 'success',
-  title: 'Record added successfully'
+  title: 'Date Corrected successfully'
 });
         this.$Progress.finish();
 
@@ -2045,7 +2112,7 @@ $('#addnewcomponentfeaturemodal').modal('show');
           
         })
          
-    }, // end of create
+    },
    updatecomponentfeature(){
     this.$Progress.start();
           
@@ -2775,7 +2842,13 @@ savedatetoseesalesreportbydatewallet(){
                                 })
 
 }, 
-
+  correctdatereportdaily(){
+        this.editmode = false;
+        this.form.clear();
+        this.form.reset();
+     
+     $('#addnewcomponentfeaturemodal').modal('show');
+            },
 
     createMainmenu(){
       this.$Progress.start();

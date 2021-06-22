@@ -271,6 +271,8 @@ th {
                      </div>
                       <div class="bethapa-reportheader-header" >DAILY SALES  REPORT : <i> From : {{ seleceteddatefordailyreport|myDate2 }} To : {{ seleceteddatefordailyreportenddate|myDate2 }}</i></div> 
          <button type="button" v-if="allowedtoaddmainmenu > 0" class="add-newm" @click="newautocorrect" >Auto Correct the Details </button>
+           
+
        
        <!-- v-if="allowedtoaddmainmenu > 0" -->
  <div id="axiosForm"> 
