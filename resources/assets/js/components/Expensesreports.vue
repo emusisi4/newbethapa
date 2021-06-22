@@ -584,7 +584,7 @@ th {
                          <th>DESCRIPTION</th>
                          <th>TYPE</th>
                          <th>CATEGORY</th>
-                         <th>AMOUNT</th>
+                         <th>AMOUNT ( {{currencydetails}}  )</th>
                          <th>WALLET</th>
                               
                           
@@ -608,7 +608,7 @@ th {
                        <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
                     
                     
-                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                    <td>{{formatPrice(submenuinfo.amount)}}</td>
                        
                        <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
                                 <span class="cell" style="color:green ;">  
@@ -943,7 +943,7 @@ th {
                          <th>DESCRIPTION</th>
                          <th>TYPE</th>
                          <th>CATEGORY</th>
-                         <th>AMOUNT</th>
+                         <th>AMOUNT ( {{currencydetails}}  )</th>
                          <th>WALLET</th>
                               
                           
@@ -967,7 +967,7 @@ th {
                        <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
                     
                     
-                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                    <td>{{formatPrice(submenuinfo.amount)}}</td>
                        
                        <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
                                 <span class="cell" style="color:green ;">  
@@ -1286,7 +1286,7 @@ th {
                     <tr> 
                                       
                         <th>BRANCH</th>
-                        <th>TOTAL EXPENSE AMOUNT</th>
+                        <th>TOTAL AMOUNT ( {{currencydetails}}  )</th>
                        
                      
                         <th> LAST UPDATED</th>
@@ -1302,7 +1302,7 @@ th {
                                              
                     
                      <td>   <template v-if="mrhdghh.branchname_dailycodes">	{{mrhdghh.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{currencydetails}} {{formatPrice(mrhdghh.amount)}}</td>
+                     <td> {{formatPrice(mrhdghh.amount)}}</td>
                  
  <td>{{(mrhdghh.updated_at )}}</td>
                     <!-- <td>
@@ -1517,7 +1517,7 @@ th {
                          <th>DESCRIPTION</th>
                          <th>TYPE</th>
                          <th>CATEGORY</th>
-                         <th>AMOUNT</th>
+                         <th>AMOUNT ( {{currencydetails}}  )</th>
                          <th>WALLET</th>
                               
                           
@@ -1540,7 +1540,7 @@ th {
                        <td>   <template v-if="submenuinfo.expense_typerpt">	{{submenuinfo.expense_typerpt.typename}}</template></td>  
                        <td>   <template v-if="submenuinfo.expense_categoryrpt">	{{submenuinfo.expense_categoryrpt.expcatcatname}}</template></td>  
                     
-                    <td>{{currencydetails}} {{formatPrice(submenuinfo.amount)}}</td>
+                    <td> {{formatPrice(submenuinfo.amount)}}</td>
                        
                        <td>   <div v-if="((submenuinfo.walletexpense)) == 1">
                                 <span class="cell" style="color:green ;">  
@@ -2941,7 +2941,7 @@ if (result.isConfirmed) {
             },// End of delrte function
 //////////////////////////////////////////////////////// End of main menu
           checkUsercomponentfeatures: function(){
-              axios.get("api/getAddnewmainmenu").then(({ data }) => (this.allowedtoaddmainmenu = data));
+              axios.get("api/getallowedtomanageadate").then(({ data }) => (this.allowedtoaddmainmenu = data));
               axios.get("api/geteditmainmenu").then(({ data }) => (this.allowedtoeditmainmenu = data));
               axios.get("api/getdeletemainmenu").then(({ data }) => (this.allowedtodeletemainmenu = data));
 
