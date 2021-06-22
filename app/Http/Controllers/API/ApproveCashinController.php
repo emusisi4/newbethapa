@@ -185,7 +185,9 @@ $transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amo
 // getting the users wallet balance 
 $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
 $newbalance = $currentbalance+$transferamount;
-
+DB::table('expensewalets')
+->where('id', $mywallet)
+->update(['bal' => $newbalance]);
 
 }
 
@@ -211,6 +213,9 @@ $transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amo
 // getting the users wallet balance 
 $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
 $newbalance = $currentbalance+$transferamount;
+DB::table('expensewalets')
+->where('id', $mywallet)
+->update(['bal' => $newbalance]);
 }
 
 if($newbalance < 0)
