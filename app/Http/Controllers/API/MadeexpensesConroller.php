@@ -84,13 +84,8 @@ class MadeexpensesConroller extends Controller
   
     public function store(Request $request)
     {
-        //
-       // return ['message' => 'i have data'];
-//// Getting the category
-  
-//$startdat = DB::table('incomereporttoviews')->where('ucret', $userid)->value('startdate');
-
-
+   
+      
 
        $this->validate($request,[
         'expense'   => 'required | String |max:191',

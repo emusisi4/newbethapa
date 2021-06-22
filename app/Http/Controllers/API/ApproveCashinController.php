@@ -149,6 +149,8 @@ $user->update($request->all());
     {
         $userid =  auth('api')->user()->id;
         $userbranch =  auth('api')->user()->branch; 
+      
+        $mywallet =  auth('api')->user()->mywallet;
 /////// checking if the branch exists in the cash details
 
 $branchinact = \DB::table('cintransfers')->where('id', '=', $id)->value('branchto');
@@ -179,6 +181,11 @@ if($existanceofbranch < 1)
 DB::table('cintransfers')
 ->where('id', $id)
 ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
+$transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
+// getting the users wallet balance 
+$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+$newbalance = $currentbalance+$transferamount;
+
 
 }
 
@@ -200,6 +207,10 @@ DB::table('cintransfers')
 ->where('id', $id)
 ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
 // return['message' => 'user deleted'];
+$transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
+// getting the users wallet balance 
+$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+$newbalance = $currentbalance+$transferamount;
 }
 
 if($newbalance < 0)
