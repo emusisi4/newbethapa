@@ -21,7 +21,7 @@
         <br>
     <div class="row">
       <!-- v-if="allowedtoviewcollectionsccount > 0 " -->
-            <div class="col-lg-3 col-3" >
+            <div class="col-lg-3 col-3" v-if="allowedtoviewcollectionsccount > 0 "  >
 
             <!-- small box -->
             <div class="small-box bg-danger">
@@ -2532,6 +2532,7 @@
           shopcintransferrecords:{},
           fishcollectionrecords:{},
           fishcashcreditrecords:{},
+            allowedtoviewcollectionsccount:{},
           datarecordsSubmenusauthorised:{},
           allowedrolecomponentsObject :{},
           shopbalancingdatarecords :{},
@@ -3251,6 +3252,7 @@ balancescheck(){
        axios.get("api/allowedtoviewpettycashaccount").then(({ data }) => (this.allowedtoviewpettycashaccount = data));
         axios.get("api/allowedtoviewbankaccount").then(({ data }) => (this.allowedtoviewbankaccount = data));
          axios.get("api/allowedtoviewcollectionsccount").then(({ data }) => (this.allowedtoviewcollectionsccount = data));
+          
 
   },
 

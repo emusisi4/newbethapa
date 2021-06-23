@@ -186,45 +186,8 @@ th {
         <!-- end of Headers -->
 
         <!-- Start of the -->
- <div class="bethapa-component-header" >COMPANY INCOMES </div>        
-<div class="col-12 col-sm-12 col-lg-12">
-            <div class="card card-primary card-outline card-tabs">
-              <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <!--  -->
-                  <li class="nav-item"  v-if="cashtransferSettings > 0 " >
-                    <a class="nav-link active" id="custom-tabs-two-home-tab"
-                     data-toggle="pill" href="#custom-tabs-two-home" role="tab"
-                     @click="loadExpensecategories()" aria-controls="custom-tabs-two-home" aria-selected="true">CASH TRANSFERS</a>
-                  </li>
-<!--   v-if="branchcashInSettings > 0 " -->
-
-                 
-<!-- incomeaccessSetting -->
-                   <li class="nav-item" v-if="incomeaccessSetting > 0 " >
-                    <a class="nav-link" id="custom-tabs-two-three-tab" data-toggle="pill"
-                     href="#custom-tabs-two-three" role="tab" @click="loadincomedetails()" 
-                     aria-controls="custom-tabs-two-three" aria-selected="false">INCOMES</a>
-                  </li>
-
-
-           
-
-
-                 
-                  
-
-                </ul>
-              </div>
-              <div class="card-body">
-
-
-<div class="tab-content" id="custom-tabs-two-tabContent"  >
-                  
-                  <!-- tab one start -->
-                  <!-- v-if="branchcashOutSettings > 0 " -->
-                 <div class="tab-pane fade show active" id="custom-tabs-two-home" v-if="cashtransferSettings > 0 "  role="tabpanel"  aria-labelledby="custom-tabs-two-home-tab"> 
-  <div class="row">   
+ <div class="bethapa-component-header" >COMPANY INCOMES </div>    
+   <div class="row">   
     <div class="col-lg-3 col-2" v-if="allowedtoviewcapitalaccount > 0 ">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -295,15 +258,47 @@ th {
             </div>
           </div>
 
+          
+          
+        </div>    
+<div class="col-12 col-sm-12 col-lg-12">
+            <div class="card card-primary card-outline card-tabs">
+              <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <!--  -->
+                  <li class="nav-item"  v-if="cashtransferSettings > 0 " >
+                    <a class="nav-link active" id="custom-tabs-two-home-tab"
+                     data-toggle="pill" href="#custom-tabs-two-home" role="tab"
+                     @click="loadExpensecategories()" aria-controls="custom-tabs-two-home" aria-selected="true">CASH TRANSFERS</a>
+                  </li>
+<!--   v-if="branchcashInSettings > 0 " -->
+
+                 
+<!-- incomeaccessSetting -->
+                   <li class="nav-item" v-if="incomeaccessSetting > 0 " >
+                    <a class="nav-link" id="custom-tabs-two-three-tab" data-toggle="pill"
+                     href="#custom-tabs-two-three" role="tab" @click="loadincomedetails()" 
+                     aria-controls="custom-tabs-two-three" aria-selected="false">INCOMES</a>
+                  </li>
 
 
-          
-      
-        
-    
-          
-          
-        </div>
+           
+
+
+                 
+                  
+
+                </ul>
+              </div>
+              <div class="card-body">
+
+
+<div class="tab-content" id="custom-tabs-two-tabContent"  >
+                  
+                  <!-- tab one start -->
+                  <!-- v-if="branchcashOutSettings > 0 " -->
+                 <div class="tab-pane fade show active" id="custom-tabs-two-home" v-if="cashtransferSettings > 0 "  role="tabpanel"  aria-labelledby="custom-tabs-two-home-tab"> 
+
         <div class="bethapa-table-header"></div>
              <form @submit.prevent="savedetailsforcashtransactionstoview()">
                  
