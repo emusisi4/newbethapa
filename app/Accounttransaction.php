@@ -13,8 +13,7 @@ class Accounttransaction extends Authenticatable
 
    
     protected $fillable = [
-        'transactiondate', 'transactiontype','ucret','amount','walletinaction','accountresult','transactionno','yearmade','monthmade'
-       
+        'transactiondate', 'transactiontype','ucret','amount','walletinaction','accountresult','transactionno','yearmade','monthmade','transactionno'       
     ];
     
 

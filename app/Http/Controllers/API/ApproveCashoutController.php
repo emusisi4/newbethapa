@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\User;
+use App\Accounttransaction;
 
 use App\Couttransfer;
 use App\Branchcashstanding;
@@ -118,96 +120,49 @@ $user->update($request->all());
         $userid =  auth('api')->user()->id;
         $userbranch =  auth('api')->user()->branch;
       $userrole =  auth('api')->user()->mmaderole;
-
+      $mywallet =  auth('api')->user()->mywallet;
       
         //
      //   $this->authorize('isAdmin'); 
-
-     //   $id = Couttransfer::findOrFail($id);
-      //  $user->delete();
-      
-$branchinact = \DB::table('couttransfers')->where('id', '=', $id)->value('branchto');
+$transactionno = Str::random(20);
+   
+     
 $amountrecieved = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
+$transactiondate = \DB::table('couttransfers')->where('id', '=', $id)->value('transferdate');
+$currentdate = date("Y-m-d H:i:s");
 
 
-$existanceofbranch = \DB::table('branchcashstandings')->where('branch', '=', $branchinact)->count();
-
-
-
-      $currentdate = date("Y-m-d H:i:s");
-if($existanceofbranch < 1)
+$gettintthewalletbalance = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+if($gettintthewalletbalance >= $amountrecieved)
 {
- Branchcashstanding::Create([
-    'branch' => $branchinact,
-    'outstanding' => $amountrecieved,
-    //'outstanding' => 0,
-    //'ucret' => $userid,
+
+  DB::table('couttransfers')->where('id', $id)->update(['status' => '1', 'comptime' => $currentdate, 'transactionno' => $transactionno, 'ucomplete' => $userid]);
+/////////////////////////////////////////
+$transferamount  = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
+$newtrans = \DB::table('couttransfers')->where('id', '=', $id)->value('transactionno');
+$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+$newbalance = $currentwalletbalance-$transferamount;
+DB::table('expensewalets')
+->where('id', $mywallet)
+->update(['bal' => $newbalance]);
+
+/// Updating the transaction
+Accounttransaction::Create([
+  'transactiondate' => $transdate,
+'transactionno' => $newtrans,
+  'transactiontype' => 1,
+  'amount' => $amountrecieved,
+  'walletinaction' => $mywallet,
+  'accountresult'=> $newbalance,
+  'ucret' => $userid,
+  'description' => 'Branch Credit',
+  //'yearmade' => $yearmade,
+ // 'monthmade' => $monthmade,
   
+
 ]);
-
-DB::table('couttransfers')
-->where('id', $id)
-->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
-
 }
 
-
-      if($existanceofbranch > 0)
-      {
-        $currentbalance = \DB::table('branchcashstandings')->where('branch', '=', $branchinact)->value('outstanding');
-        $newbalance = $currentbalance + $amountrecieved;
-      /// checking to make sure that the amount is not less than the collected amount
-     // if($newbalance >= 0)
-      {
-        /// Updating the shop cash
-      DB::table('branchcashstandings')
-      ->where('branch', $branchinact)
-      ->update(['outstanding' => $newbalance]);
-      /// Updating the transfers
-      DB::table('couttransfers')->where('id', $id)->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
-
-      }
-      
-      
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-       // return['message' => 'user deleted'];
-
-    }
-
-
+}
 
 }

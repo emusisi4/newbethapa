@@ -12,6 +12,8 @@ use App\Expense;
 use App\Expensescategory;
 use App\Cintransfer;
 use App\Branchcashstanding;
+use Illuminate\Support\Str;
+use App\Accounttransaction;
 class Approvefishcashin extends Controller
 {
     
@@ -149,80 +151,48 @@ $user->update($request->all());
 
     public function destroy($id)
     {
-        $userid =  auth('api')->user()->id;
+      $userid =  auth('api')->user()->id;
         $userbranch =  auth('api')->user()->branch; 
+      
+        $mywallet =  auth('api')->user()->mywallet;
 /////// checking if the branch exists in the cash details
 
 $branchinact = \DB::table('cintransfers')->where('id', '=', $id)->value('branchto');
 $amountrecieved = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
+$currentdate = date("Y-m-d H:i:s");
 
-
-// $existanceofbranch = \DB::table('branchcashstandings')->where('branch', '=', $branchinact)->count();
-
-     $currentdate = date("Y-m-d H:i:s");
-
-    
-
-
-// if($existanceofbranch < 1)
-// {
-//  Branchcashstanding::Create([
-//     'branch' => $branchinact,
-//      //'outstanding' => $amountrecieved,
-//     'outstanding' => 0,
-//     //'ucret' => $userid,
-  
-// ]);
-
-// DB::table('cintransfers')
-// ->where('id', $id)
-// ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
-// return['message' => 'user deleted'];
+$transactionno = Str::random(20);  
 DB::table('cintransfers')
 ->where('id', $id)
-->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
-
-
-/// Updating the daily records
-
-
-// }
+->update(['status' => '1', 'comptime' => $currentdate, 'transactionno' => $transactionno, 'ucomplete' => $userid]);
 
 
 
-// if($existanceofbranch > 0)
-// {
-//   $currentbalance = \DB::table('branchcashstandings')->where('branch', '=', $branchinact)->value('outstanding');
-//   $newbalance = $currentbalance - $amountrecieved;
-// /// checking to make sure that the amount is not less than the collected amount
-// if($newbalance >= 0)
-// {
-//   /// Updating the shop cash
-// DB::table('branchcashstandings')
-// ->where('branch', $branchinact)
-// ->update(['outstanding' => $newbalance]);
-// /// Updating the transfers
-// DB::table('cintransfers')
-// ->where('id', $id)
-// ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
-// // return['message' => 'user deleted'];
-// }
 
-// if($newbalance < 0)
-// {
-//   Zedcaszoozalemd::Create([
-//     'branch' => $branchinact,
-//     // 'outstanding' => $amountrecieved,
-//    // 'outstanding' => 0,
-//     //'ucret' => $userid,
+$transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
+$transactiondate = \DB::table('cintransfers')->where('id', '=', $id)->value('transferdate');
+$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+$newtrans = \DB::table('cintransfers')->where('id', '=', $id)->value('transactionno');
+$newbalance = $currentwalletbalance+$transferamount;
+DB::table('expensewalets')
+->where('id', $mywallet)
+->update(['bal' => $newbalance]);
+
+
+Accounttransaction::Create([
+  'transactiondate' => $transactiondate,
+  'transactionno' => $newtrans,
+  'transactiontype' => 2,
+  'amount' => $amountrecieved,
+  'walletinaction' => $mywallet,
+  'accountresult'=> $newbalance,
+  'ucret' => $userid,
+  'description' => 'Branch Collection',
+  //'yearmade' => $yearmade,
+ // 'monthmade' => $monthmade,
   
-// ]);
 
-// }
-
-// }
-
-
+]);
 
      
     }

@@ -304,7 +304,8 @@ Route::get('todayscashouttotal', 'APIController@todayscashouttotal');
 Route::get('todaysexpensestotal', 'APIController@todaysexpensestotal'); 
 Route::get('todayspayouttotal', 'APIController@todayspayouttotal'); 
 
-
+Route::apiResources(['deletecashcreditcollection' => 'API\DeletecashcreditConroller']);
+Route::apiResources(['deletecashincollection' => 'API\DeletecashcollectionConroller']);
 Route::apiResources(['makeexpense' => 'API\MadeexpensesConroller']);
 Route::get('getExpensestomake', 'APIController@getExpensestomake');
 Route::get('getauthorisedtransferlist', 'APIController@getauthorisedtransferlist');

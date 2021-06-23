@@ -212,8 +212,9 @@
                        <td> <template v-if="couttans.approved_userdetails">	{{couttans.approved_userdetails.name}}</template></td>
                        <td> <template v-if="couttans.status_name">	{{couttans.status_name.name}}</template></td>
                        <td>
-                       <button v-show="couttans.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashintransfer(couttans.id)"> Confirm  </button>
-                       <button v-show="couttans.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                       <button v-show="couttans.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashintransfer(couttans.id)"> Confirm</button>
+                       <button v-show="couttans.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed </button>
+                       <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(couttans.id)"> Delete </button>
                    
 
                        </td>
@@ -364,7 +365,7 @@
                        <td> <template v-if="cinshopt.approved_userdetails">	{{cinshopt.approved_userdetails.name}}</template></td>
                        <td> <template v-if="cinshopt.status_name">	{{cinshopt.status_name.name}}</template></td>
                      <td>
-                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  </button>
+                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  credit </button>
                        <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
                    
 
@@ -2045,8 +2046,9 @@
                        <td> <template v-if="fishcoll.approved_userdetails">	{{fishcoll.approved_userdetails.name}}</template></td>
                        <td> <template v-if="fishcoll.status_name">	{{fishcoll.status_name.name}}</template></td>
                      <td>
-                       <button v-show="fishcoll.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmFishcashin(fishcoll.id)"> Confirm  </button>
+                       <button v-show="fishcoll.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmFishcashin(fishcoll.id)"> Confirm Collection </button>
                        <button v-show="fishcoll.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                         <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcoll.id)"> Delete Collection </button>
                      <!-- <button type="button"  v-show="fishcoll.status < 1"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editfishcollection(fishcollectionrecords)">Edit</button>
                              <button type="button"  v-show="fishcoll.status < 1" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcollectionrecords.id)"> DEl </button> -->
 
@@ -2265,8 +2267,9 @@
                        <td> <template v-if="cinshopt.approved_userdetails">	{{cinshopt.approved_userdetails.name}}</template></td>
                        <td> <template v-if="cinshopt.status_name">	{{cinshopt.status_name.name}}</template></td>
                      <td>
-                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  </button>
+                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm Fish Credit </button>
                        <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                        <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcreditcollection(cinshopt.id)"> Delete Credit </button>
                    
 
                        </td>
@@ -3110,24 +3113,7 @@ $('#addnewcashcollection').modal('show');
 $('#addnewexpensebybranch').modal('show');
             },
 
-////////////////////////////////////////////////////////////////////////////////////////////////
- newAdmincashcollectionmodal(){
-        this.editmode = false;
-        this.form.clear();
-        this.form.reset();
-     
-     $('#addnewcashcollection').modal('show');
-            },
-   editcashcollection(admincashindatarecords){
-                this.editmode = true;
-                 this.form.clear();
-        this.form.reset();
-        this.form.fill(admincashindatarecords);
-
-$('#addnewcashcollection').modal('show');
-            },
-
-   deletecashcollection(id){
+deletecashcreditcollection(id){
    Swal.fire({
   title: 'Are you sure?',
   text: "You won't be able to revert this!",
@@ -3140,20 +3126,14 @@ $('#addnewcashcollection').modal('show');
 
 /// send request ti
 if (result.isConfirmed) {
-  this.form.delete('api/cashindetails/'+id).then(()=>{
+  this.form.delete('api/deletecashcreditcollection/'+id).then(()=>{
   
                         Swal.fire(
                           'Deleted!',
-                          'Your Record has been deleted.',
+                          'Your file has been deleted.',
                           'success'
                         )
-                   
-     axios.get("api/cashindetails").then(({ data }) => (this.admincashindatarecords = data));
-     axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
-     axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
-     axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
-     axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
-     axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+  axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
 
   }).catch(()=>{
      Swal.fire({  
@@ -3171,6 +3151,105 @@ if (result.isConfirmed) {
 })
 
             },
+deletecashcollection(id){
+   Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes'
+}).then((result) => {
+
+/// send request ti
+if (result.isConfirmed) {
+  this.form.delete('api/deletecashincollection/'+id).then(()=>{
+  
+                        Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        )
+ axios.get("api/fishcollections").then(({ data }) => (this.fishcollectionrecords = data));
+
+  }).catch(()=>{
+     Swal.fire({  
+         icon: 'error',
+        title: 'Failed',
+       text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
+
+  });
+
+
+}                  
+
+
+
+})
+
+            },
+////////////////////////////////////////////////////////////////////////////////////////////////
+ newAdmincashcollectionmodal(){
+        this.editmode = false;
+        this.form.clear();
+        this.form.reset();
+     
+     $('#addnewcashcollection').modal('show');
+            },
+   editcashcollection(admincashindatarecords){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(admincashindatarecords);
+
+$('#addnewcashcollection').modal('show');
+            },
+
+//    deletecashcollection(id){
+//    Swal.fire({
+//   title: 'Are you sure?',
+//   text: "You won't be able to revert this!",
+//   icon: 'warning',
+//   showCancelButton: true,
+//   confirmButtonColor: '#3085d6',
+//   cancelButtonColor: '#d33',
+//   confirmButtonText: 'Yes'
+// }).then((result) => {
+
+// /// send request ti
+// if (result.isConfirmed) {
+//   this.form.delete('api/cashindetails/'+id).then(()=>{
+  
+//                         Swal.fire(
+//                           'Deleted!',
+//                           'Your Record has been deleted.',
+//                           'success'
+//                         )
+                   
+//      axios.get("api/cashindetails").then(({ data }) => (this.admincashindatarecords = data));
+//      axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+//      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
+//      axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
+//      axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
+//      axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+
+//   }).catch(()=>{
+//      Swal.fire({  
+//          icon: 'error',
+//         title: 'Failed',
+//        text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
+
+//   });
+
+
+// }                  
+
+
+
+// })
+
+//             },
 ///////////////////////
 
 
