@@ -148,7 +148,7 @@ DB::table('expensewalets')
 
 /// Updating the transaction
 Accounttransaction::Create([
-  'transactiondate' => $transdate,
+  'transactiondate' => $transactiondate,
 'transactionno' => $newtrans,
   'transactiontype' => 1,
   'amount' => $amountrecieved,
