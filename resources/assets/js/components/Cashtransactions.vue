@@ -20,19 +20,29 @@
         <!-- the HGeaders -->
         <br>
     <div class="row">
-            <div class="col-sm-2 col-2">
-                <div class="small-box bg-secondary">
-                    <div class="inner"><h4><strong> OPENNING </strong></h4> 
-                    <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance)}}</b></h5></div>
-                     <div class="icon"><i class="ion ion-bag"></i></div> 
-                     <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a></div>
-                     </div> 
+      <!-- v-if="allowedtoviewcollectionsccount > 0 " -->
+            <div class="col-lg-3 col-3" >
+
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>COLLECTIONS ACCOUNT</h3>
+   <h5>   <b> Available Cash : {{currencydetails}} {{formatPrice(collectionsaccountcurrentbalance) }}</b> </h5>
+        
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
                   
                   
               
-                     <div class="col-lg-2 col-2">
-                         <div class="small-box bg-info">
-                             <div class="inner"><h5><b>CASH IN </b><sup style="font-size: 20px;"></sup></h5>
+                     <div class="col-lg-3 col-3">
+                         <div class="small-box bg-success">
+                             <div class="inner"><h5><b>TODAYS COLLECTIONS </b><sup style="font-size: 20px;"></sup></h5>
                               <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
                              </div> 
                              <div class="icon"><i class="ion ion-stats-bars"></i>
@@ -42,17 +52,17 @@
                              </div>
 
 
-                              <div class="col-lg-2 col-2">
+                              <div class="col-lg-3 col-3">
                                   
                                   <div class="small-box bg-warning">
-                                      <div class="inner"><h5><b>CASHOUT </b><sup style="font-size: 20px;"></sup></h5> 
+                                      <div class="inner"><h5><b>TODAYS CREDITS </b><sup style="font-size: 20px;"></sup></h5> 
                                       <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
                                       <div class="icon"><i class="ion ion-person-add"></i></div>
                                        <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
                                        </div>
                                        </div> 
-                                       <div class="col-lg-2 col-2">
-                                           <div class="small-box bg-danger">
+                                       <div class="col-lg-3 col-3">
+                                           <div class="small-box bg-info">
                                                <div class="inner"><h5><b>EXPENSES</b><sup style="font-size: 20px;"></sup>
                                                </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
                                                </div> 
@@ -66,30 +76,7 @@
                                             
                                             
                                             
-                                                      <div class="col-sm-2 col-3">
-                                                         <div class="small-box bg-primary">
-                                                             <div class="inner"><h5><b>PAYOUT</b><sup style="font-size: 20px;"></sup></h5> 
-                                                             <h5>  <b>{{ (currencydetails) }} {{formatPrice(todayspayouttotal)}}</b></h5>
-                                                             </div> 
-                                                             <div class="icon"><i class="ion ion-pie-graph"></i>
-                                                             </div> 
-                                                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                                             </div>
-                                                             </div>
-                                                             
-
-
-
-                         <div class="col-lg-2 col-2">
-                         <div class="small-box bg-success">
-                             <div class="inner"><h5><b>CASH AT HAND </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance+todayscashintotal - todayscashouttotal-todaysexpensestotal-todayspayouttotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div>
+                                     
 
 
       </div>
@@ -2494,6 +2481,7 @@
                 roleslist: [],
                 typeslist:[],
                 branchbalancedforthisdate : null,
+                collectionsaccountcurrentbalance:null,
                 currencydetails:null,
                 shopopenningpalance:null,
                 todayscashintotal:null,
@@ -3252,6 +3240,19 @@ $('#addnewcashcollection').modal('show');
 //             },
 ///////////////////////
 
+balancescheck(){
+       axios.get("api/getWalletlist").then(({ data }) => (this.walletlist = data));
+       axios.get("api/capitalaccountcurrentbalance").then(({ data }) => (this.capitalaccountcurrentbalance = data));
+    axios.get("api/pettycashaccountcurrentbalance").then(({ data }) => (this.pettycashaccountcurrentbalance = data));
+    axios.get("api/bankaccountcurrentbalance").then(({ data }) => (this.bankaccountcurrentbalance = data));
+    axios.get("api/collectionsaccountcurrentbalance").then(({ data }) => (this.collectionsaccountcurrentbalance = data));
+    ////
+     axios.get("api/allowedtoviewcapitalaccount").then(({ data }) => (this.allowedtoviewcapitalaccount = data));
+       axios.get("api/allowedtoviewpettycashaccount").then(({ data }) => (this.allowedtoviewpettycashaccount = data));
+        axios.get("api/allowedtoviewbankaccount").then(({ data }) => (this.allowedtoviewbankaccount = data));
+         axios.get("api/allowedtoviewcollectionsccount").then(({ data }) => (this.allowedtoviewcollectionsccount = data));
+
+  },
 
 
 
@@ -4221,7 +4222,7 @@ if (result.isConfirmed) {
             this.loadBranchcashouttransactions();
              axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
       });
-  //setInterval(() =>this.loadBranchcashouttransactions(),3000);
+   setInterval(() =>this.balancescheck(),1000);
         }
     }
 </script>
