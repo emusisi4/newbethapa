@@ -4009,7 +4009,7 @@ createNewexpensebranch(){
         this.form.post('api/makeexpense')
         .then(()=>{
 
-         
+           this.form.reset();
     $('#addnewexpensebybranch').modal('show');
        axios.get("api/makeexpense").then(({ data }) => (this.datarecordsbranchexpensesrecords = data));
       axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
