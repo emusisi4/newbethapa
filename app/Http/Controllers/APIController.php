@@ -3185,6 +3185,48 @@ $userid =  auth('api')->user()->id;
 
 
 ///////////////////////////////////////////////////////
+public function allowedtodeletecollection()
+{
+  $userid =  auth('api')->user()->id;
+  $userbranch =  auth('api')->user()->branch;
+  $userrole =  auth('api')->user()->type;
+  $udefinedrole =  auth('api')->user()->mmaderole;
+
+//$data = DB::table('users')->count();
+$component = "deletecollectioncomponent";
+$actonaddnew = 'deleterecord';
+
+ $wordCount = \DB::table('mycomponentfeatures')
+   ->where('component', '=', $component)
+    ->where('formcomponent', '=', $actonaddnew)
+    ->where('rolein', '=', $udefinedrole)
+    ->count();
+
+    return $wordCount;
+    
+  
+}
+public function allowedtodeletecredit()
+{
+  $userid =  auth('api')->user()->id;
+  $userbranch =  auth('api')->user()->branch;
+  $userrole =  auth('api')->user()->type;
+  $udefinedrole =  auth('api')->user()->mmaderole;
+
+//$data = DB::table('users')->count();
+$component = "deletecreditcomponent";
+$actonaddnew = 'deleterecord';
+
+ $wordCount = \DB::table('mycomponentfeatures')
+   ->where('component', '=', $component)
+    ->where('formcomponent', '=', $actonaddnew)
+    ->where('rolein', '=', $udefinedrole)
+    ->count();
+
+    return $wordCount;
+    
+  
+}
 public function getaddnewincome()
 {
   $userid =  auth('api')->user()->id;

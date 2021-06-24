@@ -1,3 +1,99 @@
+<style scoped>
+
+tr:nth-child(even) {
+  background-color: #96af9c;
+  font-size: 20px;
+}
+tr:nth-child(odd) {
+  background-color: #d1dbb9;
+ font-size: 20px;
+ 
+}
+.sss{
+
+    font-weight: 900;
+    font-size: 29px;
+    color: white;
+
+}
+.info-payots {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #dc3545;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-collections {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #33a2b8;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-profit {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #3f8a30;
+;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+.info-salesdetails {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 26.25rem;
+    background: #6c757d;;
+    display: -ms-flexbox;
+    display: flex;
+    /* margin-bottom: 1rem; */
+    min-height: 80px;
+        padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+th {
+  background-color: #8c9765;
+  font-size: 23px;
+}
+#axiosForm{  /* Components Root Element ID */
+    position: relative;
+}
+.loader{  /* Loader Div Class */
+    position: absolute;
+    top:0px;
+    right:0px;
+    width:100%;
+    height:100%;
+    background-color:#eceaea;
+    background-image: url('/images/load.gif');
+    background-size: 200px;
+    background-repeat:no-repeat;
+    background-position:center;
+    z-index:10000000;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+ 
+</style>
+
+
+
 <template>
 
     <div>
@@ -176,7 +272,7 @@
                      
                       <th>DESTINATION </th>
                       
-                      <th>AMOUNT</th>
+                      <th>AMOUNT {{ (currencydetails) }} </th>
                       <th>ASKED BY</th>
                         <th>APPROVED</th>
                          <th>USER - APPROVED</th>
@@ -200,8 +296,12 @@
                        <td> <template v-if="couttans.status_name">	{{couttans.status_name.name}}</template></td>
                        <td>
                        <button v-show="couttans.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashintransfer(couttans.id)"> Confirm</button>
-                       <button v-show="couttans.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed </button>
+                       <!-- <button v-show="couttans.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed </button> -->
+                     <div v-if="deletecashcredit > 0">  
                        <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletemadeexpense(couttans.id)"> Delete </button>
+
+                       </div>
+                    
                    
 
                        </td>
@@ -694,7 +794,7 @@
                       <th>EXPENSE</th>
                        <th>DESCRIPTION</th>
                              
-                      <th>AMOUNT</th>
+                      <th>AMOUNT({{currencydetails}})</th>
                       <th>STATUS</th>
                        <th></th>
                     </tr>
@@ -712,7 +812,7 @@
                             <td>    <template v-if="alldayexpense.expense_name">	{{alldayexpense.expense_name.expensename}}</template></td>
                           <td>{{alldayexpense.description}}</td>
                        
-                               <td> {{ (currencydetails) }} {{formatPrice((alldayexpense.amount))}}</td>
+                               <td> {{formatPrice((alldayexpense.amount))}}</td>
                               <td> <div v-if="((alldayexpense.approvalstate))== 0">
                                 <span class="cell" style="color:maroon ;">  
    
@@ -2035,8 +2135,10 @@
                      <td>
                        <button v-show="fishcoll.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmFishcashin(fishcoll.id)"> Confirm Collection </button>
                        <button v-show="fishcoll.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
-                         <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcoll.id)"> Delete Collection </button>
-                     <!-- <button type="button"  v-show="fishcoll.status < 1"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editfishcollection(fishcollectionrecords)">Edit</button>
+                       <div v-if="allowedtodeletecollection > 0">
+                           <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcoll.id)"> Delete Collection </button>
+                       </div>
+                       <!-- <button type="button"  v-show="fishcoll.status < 1"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editfishcollection(fishcollectionrecords)">Edit</button>
                              <button type="button"  v-show="fishcoll.status < 1" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcollectionrecords.id)"> DEl </button> -->
 
 
@@ -2255,9 +2357,10 @@
                        <td> <template v-if="cinshopt.status_name">	{{cinshopt.status_name.name}}</template></td>
                      <td>
                        <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm Fish Credit </button>
-                       <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                       <!-- <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button> -->
+                       <div v-if="allowedtodeletecredit > 0">
                         <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcreditcollection(cinshopt.id)"> Delete Credit </button>
-                   
+                       </div>
 
                        </td>
                   
@@ -2560,6 +2663,8 @@
             allowedtodeleteadmincashcredit:{},
           allowedtodeleteadmincashcollection:{},
           allowedtoaddnewcashcollection:{},
+           allowedtodeletecollection:{},
+              allowedtodeletecredit:{},
           allowedtodeleteexpenserecord:{},
           allowedtoaddnewexpensereccord:{},
 
@@ -2998,7 +3103,9 @@ axios.get("api/payouts").then(({ data }) => (this.branchpayoutrecords = data));
 
    loadAdmincashin(){
       axios.get("api/cashindetails").then(({ data }) => (this.admincashindatarecords = data));
-         
+    
+              axios.get("api/allowedtodeletecredit").then(({ data }) => (this.allowedtodeletecredit = data));   
+               axios.get("api/allowedtodeletecollection").then(({ data }) => (this.allowedtodeletecollection = data));   
           axios.get("api/getaddnewcashcollection").then(({ data }) => (this.allowedtoaddnewcashcollection = data));                   
        axios.get("api/geteditcashcollection").then(({ data }) => (this.allowedtoeditadmincashcollection = data));
        axios.get("api/getdeletecashcollection").then(({ data }) => (this.allowedtodeleteadmincashcollection = data));
@@ -3252,7 +3359,8 @@ balancescheck(){
        axios.get("api/allowedtoviewpettycashaccount").then(({ data }) => (this.allowedtoviewpettycashaccount = data));
         axios.get("api/allowedtoviewbankaccount").then(({ data }) => (this.allowedtoviewbankaccount = data));
          axios.get("api/allowedtoviewcollectionsccount").then(({ data }) => (this.allowedtoviewcollectionsccount = data));
-          
+         axios.get("api/allowedtodeletecredit").then(({ data }) => (this.allowedtodeletecredit = data));   
+               axios.get("api/allowedtodeletecollection").then(({ data }) => (this.allowedtodeletecollection = data));       
 
   },
 

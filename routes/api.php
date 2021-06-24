@@ -353,8 +353,8 @@ Route::apiResources(['allbranchesmreports' => 'API\MonthlyreportsallbranchesCont
 Route::apiResources(['monthrlreporyrecords' => 'API\MonthlyreportsController']);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('getaddnewexpensecategory', 'APIController@getaddnewexpensecategory');
-
-
+Route::get('allowedtodeletecollection', 'APIController@allowedtodeletecollection');
+Route::get('allowedtodeletecredit', 'APIController@allowedtodeletecredit');
 Route::get('getaddnewincome', 'APIController@getaddnewincome');
 Route::get('geteditexpensecategory', 'APIController@geteditexpensecategory');
 Route::get('getdeleteexpensecategory', 'APIController@getdeleteexpensecategory');
