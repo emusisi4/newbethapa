@@ -2134,7 +2134,7 @@ th {
                        <td> <template v-if="fishcoll.status_name">	{{fishcoll.status_name.name}}</template></td>
                      <td>
                        <button v-show="fishcoll.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmFishcashin(fishcoll.id)"> Confirm Collection </button>
-                       <button v-show="fishcoll.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
+                       <!-- <button v-show="fishcoll.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button> -->
                        <div v-if="allowedtodeletecollection > 0">
                            <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcoll.id)"> Delete Collection </button>
                        </div>
