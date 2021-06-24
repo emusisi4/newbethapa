@@ -3643,7 +3643,7 @@ updateexpenserecord(){
 this.form.put('api/makeexpense/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addnewexpensebybranch').modal('hide');
+   $('#addnewexpensebybranch').modal('show');
   
     Swal.fire(
         'Update!',
@@ -4009,7 +4009,7 @@ createNewexpensebranch(){
         .then(()=>{
 
          
-    $('#addnewexpensebybranch').modal('hide');
+    $('#addnewexpensebybranch').modal('show');
        axios.get("api/makeexpense").then(({ data }) => (this.datarecordsbranchexpensesrecords = data));
       axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
      axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
