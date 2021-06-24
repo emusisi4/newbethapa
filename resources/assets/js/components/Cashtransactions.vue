@@ -3644,6 +3644,7 @@ this.form.put('api/makeexpense/'+this.form.id)
   .then(()=> {
     // on success
    $('#addnewexpensebybranch').modal('show');
+    this.form.reset();
   
     Swal.fire(
         'Update!',
