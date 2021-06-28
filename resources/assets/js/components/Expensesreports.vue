@@ -1,96 +1,3 @@
-<style scoped>
-
-tr:nth-child(even) {
-  background-color: #96af9c;
-  font-size: 20px;
-}
-tr:nth-child(odd) {
-  background-color: #d1dbb9;
- font-size: 20px;
- 
-}
-.sss{
-
-    font-weight: 900;
-    font-size: 29px;
-    color: white;
-
-}
-.info-payots {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #dc3545;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-collections {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #33a2b8;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-profit {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #3f8a30;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-salesdetails {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #6c757d;;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-th {
-  background-color: #8c9765;
-  font-size: 23px;
-}
-#axiosForm{  /* Components Root Element ID */
-    position: relative;
-}
-.loader{  /* Loader Div Class */
-    position: absolute;
-    top:0px;
-    right:0px;
-    width:100%;
-    height:100%;
-    background-color:#eceaea;
-    background-image: url('/images/load.gif');
-    background-size: 200px;
-    background-repeat:no-repeat;
-    background-position:center;
-    z-index:10000000;
-    opacity: 0.4;
-    filter: alpha(opacity=40);
-}
-
-</style>
 
 <template>
 
@@ -101,84 +8,11 @@ th {
 
 <!-- general component access -->
  <div  v-if="genrealfishreportsAccess > 0 ">
-
+<div class="bethapa-table-header"></div>
 
    <div class="bethapa-component-header" >EXPENSES REPORTS </div>    
-  <!-- <div class="row">
-            <div class="col-sm-2 col-2">
-                <div class="small-box bg-secondary">
-                    <div class="inner"><h4><strong> Sales </strong></h4> 
-                    <h5><b> {{ (currencydetails) }} {{formatPrice(selecteddatetotalsales)}}</b></h5></div>
-                     <div class="icon"><i class="ion ion-bag"></i></div> 
-                     <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a></div>
-                     </div> 
-                  
-                  
-              
-                     <div class="col-lg-2 col-2">
-                         <div class="small-box bg-info">
-                             <div class="inner"><h5><b>Payout </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div>
 
 
-                              <div class="col-lg-2 col-2">
-                                  
-                                  <div class="small-box bg-warning">
-                                      <div class="inner"><h5><b>Collections </b><sup style="font-size: 20px;"></sup></h5> 
-                                      <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
-                                      <div class="icon"><i class="ion ion-person-add"></i></div>
-                                       <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                       </div>
-                                       </div> 
-                                       <div class="col-lg-3 col-3">
-                                           <div class="small-box bg-danger">
-                                               <div class="inner"><h5><b>Credits</b><sup style="font-size: 20px;"></sup>
-                                               </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
-                                               </div> 
-                                               <div class="icon"><i class="ion ion-pie-graph"></i>
-                                               </div> 
-                                               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                                               </div>
-                                               </div>
-                                                      
-                                                      
-                                            
-                                            
-<!--                                             
-                                                      <div class="col-sm-2 col-3">
-                                                         <div class="small-box bg-primary">
-                                                             <div class="inner"><h5><b>Expenses</b><sup style="font-size: 20px;"></sup></h5> 
-                                                             <h5>  <b>{{ (currencydetails) }} {{formatPrice(todayspayouttotal)}}</b></h5>
-                                                             </div> 
-                                                             <div class="icon"><i class="ion ion-pie-graph"></i>
-                                                             </div> 
-                                                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                                             </div>
-                                                             </div>
-                                                              -->
-
-
-
-                         <!-- <div class="col-lg-3 col-3">
-                         <div class="small-box bg-success">
-                             <div class="inner"><h5><b>Net Collections </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance+todayscashintotal - todayscashouttotal-todaysexpensestotal-todayspayouttotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div> -->
-
-<!-- 
-      </div> -->
-    
     
  <div>
 
@@ -337,7 +171,7 @@ th {
         
            <button type="button"  class="add-newm" @click="correctdatereportdaily" >Auto Correct Date Records </button>
 
-                <table style="width:100%"  >
+             <table class="table"  >
                   <thead>
                     <tr>
                     <th> # </th>
@@ -475,12 +309,20 @@ th {
        <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
 
    <div class="row">
-      <div class="col-lg-4 col-2">
+  
+  
+  
+  
+  
+  
+  
+<div class="col-lg-4 col-2" >
             <!-- small box -->
-            <div class="small-box bg-success">
+         <div class="small-box bg-pnne">
               <div class="inner">
-                <h3>INVESTMENT</h3>
+                <h3>INVESTMENT  </h3>
 
+         
            <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
               </div>
               <div class="icon">
@@ -489,27 +331,16 @@ th {
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-           <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>COLLECTIONS</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-  <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>TOTAL EXPENSES</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIONS  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -519,51 +350,48 @@ th {
           </div>
 
 
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>TOTAL EXPENSES  </h3>
 
-          
-      
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+        
         
     
           
           
         </div>
    
-     <!-- <div v-if="selecteddatetotalsales < 1 ">
-       <h1> No Records found for this selection </h1>
-     </div> -->
-                   
-      <!-- <div v-if="selecteddatetotalsales > 0 "> -->
- <!-- <div id="axiosForm">
-     <div class="loader" v-if="loading">
-       
-       <div class="spinner-border"  style="width: 10rem; height: 10rem;" role="status">
-  <span class="sr-only">Loading...</span>
-</div></div>
-        <h4 class="font-weight-semibold mb-4">Create a new Post</h4>
-            <form class="contact-form" @submit.prevent="storePost" method="POST" novalidate="novalidate">
-                <fieldset :disabled="loading">
-            
-
-         
-                <div class="form-row">
-                    <div class="form-group col">
-                        <input type="text" placeholder="Post Title" value="" maxlength="100" class="form-control"  name="title">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <textarea maxlength="5000" placeholder="Body"  rows="5" class="form-control" name="body" required="" ></textarea>
-                     </div>
-                </div>
-                </fieldset>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <input type="submit" value="Send Message" class="btn btn-primary btn-lg mb-5">
-                    </div>
-                </div>
-            </form>
-        </div>   -->
-
+   
+   
 
    
 
@@ -573,7 +401,7 @@ th {
     </div>
 
            
-             <table style="width:100%"  >
+           <table class="table"  >
                   <thead>
                     <tr> 
                      <th>#</th>
@@ -868,13 +696,26 @@ th {
        <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
 
    <div class="row">
-      <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>INVESTMENT</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>INVESTMENT  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -882,13 +723,16 @@ th {
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-           <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>COLLECTIONS</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
+
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIONS  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -896,13 +740,16 @@ th {
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-  <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>TOTAL EXPENSES</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>TOTAL EXPENSES  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -910,6 +757,22 @@ th {
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -932,7 +795,7 @@ th {
                 <div class="loader" v-if="loading">
        
     </div>
-             <table style="width:100%"  >
+             <table class="table"  >
                   <thead>
                     <tr> 
                      <th>#</th>
@@ -1204,53 +1067,72 @@ th {
 <div class="row">
 
 
-      <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b> Capital Contribution</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong> Capital xx: {{currencydetails}} {{formatPrice(expensefrominvestmentmonth) }}</strong></span>
-           
-</button>
-                           </div>
-             
+
+
+
+<div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>CAPITAL  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} {{formatPrice(expensefrominvestmentmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-          </div>       
-          
-      
-      <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong> Collections :{{currencydetails}} {{formatPrice(expensefromcollectionmonth) }}</strong></span>
-           
-</button>
-                           </div>
-             
+          </div>
+
+
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIONS  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} {{formatPrice(expensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
+          </div>
+
+
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>TOTAL EXPENSES  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} {{formatPrice(expensefrominvestmentmonth+expensefromcollectionmonth ) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
           </div>
 
 
 
-  <div class="col-md-4 col-sm-6 col-12">
-            <div class="">
-          
-<!-- <button type="button" class="btn btn-block btn-info btn-flat"><b>TOTAL EXPENSES</b></button> -->
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-info btn-flat"> 
-                    <span class="sss"><strong> Total Expenses : {{currencydetails}} {{formatPrice(expensefrominvestmentmonth+expensefromcollectionmonth ) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
-          </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1281,7 +1163,7 @@ th {
                 <div class="loader" v-if="loading">
        
     </div> 
-             <table class="table">
+           <table class="table">
                   <thead>
                     <tr> 
                                       
@@ -1445,12 +1327,16 @@ th {
        <div class="bethapa-reportheader-header" >DAILY BRANCH EXPENSES REPORT :  STARTING <i>{{ selecteddailyexpensesreport|myDate2 }} </i>ENDING <i>{{selecteddailyexpensesreport2|myDate2}} </i></div> 
 
    <div class="row">
-      <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>INVESTMENT</h3>
 
+
+
+      <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>INVESTMENT  </h3>
+
+         
            <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth) }}</b> </h5>
               </div>
               <div class="icon">
@@ -1459,27 +1345,16 @@ th {
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-           <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>COLLECTIONS</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-  <div class="col-lg-4 col-2">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>TOTAL EXPENSES</h3>
 
-           <h5>   <b> {{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIONS  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefromcollectionmonth) }}</b> </h5>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -1488,6 +1363,27 @@ th {
             </div>
           </div>
 
+
+           <div class="col-lg-4 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>TOTAL EXPENSES  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} : {{formatPrice(branchmonthexpensefrominvestmentmonth+branchmonthexpensefromcollectionmonth) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+    
+    
+         
 
 
           
@@ -1506,7 +1402,7 @@ th {
                 <div class="loader" v-if="loading">
        
     </div>
-             <table style="width:100%"  >
+             <table class="table">
                   <thead>
                     <tr> 
                      <th>#</th>
