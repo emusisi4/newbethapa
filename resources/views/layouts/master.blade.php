@@ -71,8 +71,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
-            <img src="images/SREE-Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            BigBet Sports Betting and Casino
+            <img src="images/SREE-Logo.png" width="60" height="60" class="d-inline-block align-top" alt="">
+          
           </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

@@ -17,7 +17,7 @@
 
 
 
-
+ <div class="bethapa-table-header"></div>
 
         <!-- the HGeaders -->
         <br>
@@ -29,7 +29,9 @@
             <div class="small-box bg-pnne">
               <div class="inner">
                 <h3>COLLECTIONS ACCOUNT</h3>
+      <div >
    <h5>   <b> Available Cash : {{currencydetails}} {{formatPrice(collectionsaccountcurrentbalance) }}</b> </h5>
+      </div>
         
               </div>
               <div class="icon">
@@ -44,9 +46,11 @@
               
                      <div class="col-lg-3 col-3">
                          <div class="small-box bg-pnne">
-                             <div class="inner"><h5><b>TODAYS COLLECTIONS </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
+                             <div class="inner">
+                        <h3><b>TODAYS COLLECTIONS </b><sup style="font-size: 20px;"></sup></h3>
+                         <h5>   <b> Available Cash : {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
                              </div> 
+                         
                              <div class="icon"><i class="ion ion-stats-bars"></i>
                              </div> 
                              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
@@ -57,7 +61,9 @@
                               <div class="col-lg-3 col-3">
                                   
                                   <div class="small-box bg-pnne">
-                                      <div class="inner"><h5><b>TODAYS CREDITS </b><sup style="font-size: 20px;"></sup></h5> 
+                                      <div class="inner">
+                                        <h3><b>TODAYS CREDITS </b><sup style="font-size: 20px;"></sup></h3>
+                                      
                                       <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
                                       <div class="icon"><i class="ion ion-person-add"></i></div>
                                        <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
@@ -65,8 +71,9 @@
                                        </div> 
                                        <div class="col-lg-3 col-3">
                                            <div class="small-box bg-pnne">
-                                               <div class="inner"><h5><b>EXPENSES</b><sup style="font-size: 20px;"></sup>
-                                               </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
+                                               <div class="inner">
+                                                  <h3><b>EXPENSES </b><sup style="font-size: 20px;"></sup></h3>
+                                               <h5>   <b> Available Cash : {{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
                                                </div> 
                                                <div class="icon"><i class="ion ion-pie-graph"></i>
                                                </div> 
@@ -83,7 +90,7 @@
 
       </div>
     
-
+ <div class="bethapa-table-header"></div>
    
         <!-- end of Headers -->
 
