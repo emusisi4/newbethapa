@@ -3949,7 +3949,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     min-height: 1px;
     padding: 0.25rem;
 	background-color: #ffffff;
-	background-image: url(/images/pattern.png);
+	/* background-image: url(/images/pattern.png); */
   
 }
 .card-title {
