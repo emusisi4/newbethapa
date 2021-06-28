@@ -1,95 +1,4 @@
-<style scoped>
-tr:nth-child(even) {
-  background-color: #96af9c;
-  font-size: 20px;
-}
-tr:nth-child(odd) {
-  background-color: #d1dbb9;
- font-size: 20px;
- 
-}
-.sss{
 
-    font-weight: 900;
-    font-size: 29px;
-    color: white;
-
-}
-.info-payots {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #dc3545;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-collections {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #33a2b8;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-profit {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #3f8a30;
-;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-.info-salesdetails {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: 26.25rem;
-    background: #6c757d;;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 1rem; */
-    min-height: 80px;
-        padding: 1.5rem;
-    position: relative;
-    width: 100%;
-}
-th {
-  background-color: #8c9765;
-  font-size: 23px;
-}
-#axiosForm{  /* Components Root Element ID */
-    position: relative;
-}
-.loader{  /* Loader Div Class */
-    position: absolute;
-    top:0px;
-    right:0px;
-    width:100%;
-    height:100%;
-    background-color:#eceaea;
-    background-image: url('/images/load.gif');
-    background-size: 200px;
-    background-repeat:no-repeat;
-    background-position:center;
-    z-index:10000000;
-    opacity: 0.4;
-    filter: alpha(opacity=40);
-}
-
-</style>
 
 <template>
 
@@ -102,7 +11,7 @@ th {
  <div  v-if="genrealfishreportsAccess > 0 ">
  <div class="bethapa-component-header" > </div>    
 
-   <div class="bethapa-component-header" >FISH REPORTS </div>    
+   <div class="bethapa-component-header" >SYSTEM REPORTS </div>    
  
  
  <div>
@@ -462,7 +371,7 @@ th {
        
     </div>
             
-              <table style="width:100%"  >
+              <table class="table"  >
                   <thead>
                     <tr> 
                      <th>#</th>
@@ -839,7 +748,7 @@ th {
        
     </div>
          
-             <table class="table">
+              <table class="table"  >
                   <thead>
                     <tr> 
                                       

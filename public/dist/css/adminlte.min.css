@@ -1503,6 +1503,8 @@ pre code {
 	border-top:1px solid #dee2e6;
 	font-weight: bold;
     text-align: center;
+	border: 1px solid #10111345;
+    background-color: #41fae024;
 }
 .table thead th {
 	vertical-align: bottom;
@@ -3947,6 +3949,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     min-height: 1px;
     padding: 0.25rem;
 	background-color: #ffffff;
+	background-image: url(/images/pattern.png);
   
 }
 .card-title {
