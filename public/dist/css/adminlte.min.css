@@ -1507,7 +1507,7 @@ pre code {
 .table thead th {
 	vertical-align: bottom;
     border-bottom: 5px solid #0f053a;
-	background-color: #825c1e;
+	background-color: #ea5b31a6;
 	font-size: 18px;
 }
 .table tbody+tbody {
@@ -1521,7 +1521,7 @@ pre code {
 }
 .table-bordered td,.table-bordered th {
 	border: 1px solid #10111345;
-	background-color: #00190740;
+	background-color: #41fae024;
 }
 .table-bordered thead td,.table-bordered thead th {
 	border-bottom-width:2px
@@ -3490,6 +3490,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 	flex-wrap:wrap;
 	padding-left:0;
 	margin-bottom:0;
+	
 	list-style:none
 }
 
@@ -3967,7 +3968,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 }
 .card-header:first-child {
 	border-radius:calc(.25rem - 0) calc(.25rem - 0) 0 0;
-	background: #0d2614bd;
+	/* background: #0d2614bd; */
     color: white;
 }
 .card-header+.list-group .list-group-item:first-child {

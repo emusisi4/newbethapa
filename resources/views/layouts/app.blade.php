@@ -47,7 +47,7 @@
     margin-top: 259px;
     -ms-flex-pack: center !important;
     justify-content: center !important;
-
+}
 
       
         </style>

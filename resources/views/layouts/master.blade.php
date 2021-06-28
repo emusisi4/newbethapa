@@ -28,6 +28,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Custom styles -->
     <link href="css/sree-code.css" rel="stylesheet" />
     <link href="css/sree-main.css" rel="stylesheet" />
+    <style>
+            html, body {
+               
+                background-image: url("images/pattern.png");
+            }
+
+          .card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    
+     background-color: #242ae726;
+    
+
+}
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  /* background-color: #e76224; */
+  background-color: #2b2d72;
+}
+.justify-content-center {
+    -webkit-box-pack: center !important;
+    align-content: center;
+    margin-top: 259px;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+}
+
+      
+        </style>
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper" id="app">
@@ -36,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
             <img src="images/SREE-Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            MUSIKEZ
+            BigBet Sports Betting and Casino
           </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

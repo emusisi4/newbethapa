@@ -1,18 +1,18 @@
 <style scoped>
 
 tr:nth-child(even) {
-  background-color: #96af9c;
+  background-color: #007bff6b;
   font-size: 20px;
 }
 tr:nth-child(odd) {
-  background-color: #d1dbb9;
+  background-color: #41fae024;
  font-size: 20px;
  
 }
 .sss{
 
     font-weight: 900;
-    font-size: 29px;
+    font-size: 30px;
     color: white;
 
 }
@@ -40,6 +40,7 @@ tr:nth-child(odd) {
     min-height: 80px;
         padding: 1.5rem;
     position: relative;
+    background-color: #41fae024;
     width: 100%;
 }
 .info-profit {
