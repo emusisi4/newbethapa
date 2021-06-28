@@ -744,88 +744,93 @@ th {
 <div class="row">
 
 
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }}</strong></span>
-           
-</button>
-                           </div>
-             
+      <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>SALES  </h3>
+
+         
+           <h5>   <b> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-          </div>       
-          
-      
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong>   {{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
           </div>
 
-
-
-  <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
+ 
+     
+     
           
-<button type="button" class="btn btn-block btn-info btn-flat"><b>GGR</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-warning btn-flat"> 
-                    <span class="sss"><strong> {{currencydetails}}  {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }}</strong></span>
-           
-</button>
-                           </div>
-             
+        <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>PAYOUT  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
           </div>
 
+       <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>GGR  </h3>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}}  {{formatPrice(totalmonthlycollectionsselectedreport ) }}</strong></span>
-           
-</button>
-                           </div>
-              <!-- /.info-box-content -->
+         
+           <h5>   <b>{{currencydetails}}  {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <!-- /.info-box -->
           </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+      <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIONS  </h3>
+
+         
+           <h5>   <b>{{currencydetails}}  {{formatPrice(totalmonthlycollectionsselectedreport ) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+ 
+
+
+
+
+
+
+
           
 </div>
         </div>
