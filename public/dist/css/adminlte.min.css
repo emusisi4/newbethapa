@@ -3921,7 +3921,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 	flex-direction:column;
 	min-width:0;
 	word-wrap:break-word;
-	background-color:#fff;
+	background-color: #ceccc6;
 	background-clip:border-box;
 	border:0 solid rgba(0,0,0,.125);
 	border-radius:.25rem
@@ -3944,7 +3944,8 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     flex: 1 1 auto;
     min-height: 1px;
     padding: 0.25rem;
-    background-color: #ceccc6;
+	background-color: #ffffff;
+  
 }
 .card-title {
 	margin-bottom:.75rem

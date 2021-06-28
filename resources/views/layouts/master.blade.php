@@ -40,8 +40,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem;
-    
-     background-color: #242ae726;
+    background-color: #ffffff;
+     /* background-color: #242ae726; */
     
 
 }
@@ -52,8 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   /* background-color: #e76224; */
-  background-color: #2b2d72;
-}
+ background-color: #2b2d72;
+} */
 .justify-content-center {
     -webkit-box-pack: center !important;
     align-content: center;

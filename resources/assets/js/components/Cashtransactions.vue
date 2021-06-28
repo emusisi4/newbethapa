@@ -1,6 +1,5 @@
 
 
-
 <template>
 
     <div>
@@ -152,7 +151,7 @@
 
                 </ul>
               </div>
-              <div class="card-body">
+              <div>
 
 
 
