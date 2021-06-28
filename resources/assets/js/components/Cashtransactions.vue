@@ -69,7 +69,7 @@ tr:nth-child(odd) {
     width: 100%;
 }
 th {
-  background-color: #8c9765;
+  /* background-color: #8c9765; */
   font-size: 23px;
 }
 #axiosForm{  /* Components Root Element ID */
