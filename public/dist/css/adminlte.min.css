@@ -1507,7 +1507,7 @@ pre code {
 .table thead th {
 	vertical-align: bottom;
     border-bottom: 5px solid #0f053a;
-	background-color: #cf5a51;
+	background-color: #ea5b319e;
 	font-size: 18px;
 }
 .table tbody+tbody {
@@ -21229,6 +21229,10 @@ blockquote.quote-gray-dark h1,blockquote.quote-gray-dark h2,blockquote.quote-gra
 }
 .bg-warning,.bg-warning>a {
 	color:#1f2d3d!important
+}
+.bg-pnne,.bg-pnne>a {
+	color:#1f2d3d!important;
+	background-color:#a0a2f159;
 }
 .bg-warning.btn:hover {
 	border-color:#d39e00;

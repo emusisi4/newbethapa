@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav ">
-      <li class="nav-item active">
+      <li class="nav-item">
       <router-link to="/dashboard" class="nav-link"> Home </router-link>
       </li>
 

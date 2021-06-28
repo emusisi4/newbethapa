@@ -26,7 +26,7 @@
             <div class="col-lg-3 col-3" v-if="allowedtoviewcollectionsccount > 0 "  >
 
             <!-- small box -->
-            <div class="small-box bg-danger">
+            <div class="small-box bg-pnne">
               <div class="inner">
                 <h3>COLLECTIONS ACCOUNT</h3>
    <h5>   <b> Available Cash : {{currencydetails}} {{formatPrice(collectionsaccountcurrentbalance) }}</b> </h5>
@@ -43,7 +43,7 @@
                   
               
                      <div class="col-lg-3 col-3">
-                         <div class="small-box bg-success">
+                         <div class="small-box bg-pnne">
                              <div class="inner"><h5><b>TODAYS COLLECTIONS </b><sup style="font-size: 20px;"></sup></h5>
                               <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
                              </div> 
@@ -56,7 +56,7 @@
 
                               <div class="col-lg-3 col-3">
                                   
-                                  <div class="small-box bg-warning">
+                                  <div class="small-box bg-pnne">
                                       <div class="inner"><h5><b>TODAYS CREDITS </b><sup style="font-size: 20px;"></sup></h5> 
                                       <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
                                       <div class="icon"><i class="ion ion-person-add"></i></div>
@@ -64,7 +64,7 @@
                                        </div>
                                        </div> 
                                        <div class="col-lg-3 col-3">
-                                           <div class="small-box bg-info">
+                                           <div class="small-box bg-pnne">
                                                <div class="inner"><h5><b>EXPENSES</b><sup style="font-size: 20px;"></sup>
                                                </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
                                                </div> 
