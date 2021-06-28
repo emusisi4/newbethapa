@@ -100,85 +100,11 @@ th {
 
 <!-- general component access -->
  <div  v-if="genrealfishreportsAccess > 0 ">
-
+ <div class="bethapa-component-header" > </div>    
 
    <div class="bethapa-component-header" >FISH REPORTS </div>    
-  <!-- <div class="row">
-            <div class="col-sm-2 col-2">
-                <div class="small-box bg-secondary">
-                    <div class="inner"><h4><strong> Sales </strong></h4> 
-                    <h5><b> {{ (currencydetails) }} {{formatPrice(selecteddatetotalsales)}}</b></h5></div>
-                     <div class="icon"><i class="ion ion-bag"></i></div> 
-                     <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a></div>
-                     </div> 
-                  
-                  
-              
-                     <div class="col-lg-2 col-2">
-                         <div class="small-box bg-info">
-                             <div class="inner"><h5><b>Payout </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div>
-
-
-                              <div class="col-lg-2 col-2">
-                                  
-                                  <div class="small-box bg-warning">
-                                      <div class="inner"><h5><b>Collections </b><sup style="font-size: 20px;"></sup></h5> 
-                                      <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
-                                      <div class="icon"><i class="ion ion-person-add"></i></div>
-                                       <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                       </div>
-                                       </div> 
-                                       <div class="col-lg-3 col-3">
-                                           <div class="small-box bg-danger">
-                                               <div class="inner"><h5><b>Credits</b><sup style="font-size: 20px;"></sup>
-                                               </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
-                                               </div> 
-                                               <div class="icon"><i class="ion ion-pie-graph"></i>
-                                               </div> 
-                                               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                                               </div>
-                                               </div>
-                                                      
-                                                      
-                                            
-                                            
-<!--                                             
-                                                      <div class="col-sm-2 col-3">
-                                                         <div class="small-box bg-primary">
-                                                             <div class="inner"><h5><b>Expenses</b><sup style="font-size: 20px;"></sup></h5> 
-                                                             <h5>  <b>{{ (currencydetails) }} {{formatPrice(todayspayouttotal)}}</b></h5>
-                                                             </div> 
-                                                             <div class="icon"><i class="ion ion-pie-graph"></i>
-                                                             </div> 
-                                                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                                             </div>
-                                                             </div>
-                                                              -->
-
-
-
-                         <!-- <div class="col-lg-3 col-3">
-                         <div class="small-box bg-success">
-                             <div class="inner"><h5><b>Net Collections </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance+todayscashintotal - todayscashouttotal-todaysexpensestotal-todayspayouttotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div> -->
-
-<!-- 
-      </div> -->
-    
-    
+ 
+ 
  <div>
 
 
@@ -186,7 +112,8 @@ th {
         <!-- end of Headers -->
 
         <!-- Start of the -->
-     
+   
+
 <div class="col-12 col-sm-12 col-lg-12">
             <div class="card card-primary card-outline card-tabs">
               <div class="card-header p-0 pt-1 border-bottom-0">
@@ -420,52 +347,86 @@ th {
  <div class="row">
 
 
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>Sales</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}}  {{formatPrice(dailytotalsales) }}</strong></span>
-           
-</button>
-                           </div>
-             
+
+
+
+
+
+
+
+
+    <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>SALES  </h3>
+
+         
+           <h5>   <b>{{currencydetails}}  {{formatPrice(dailytotalsales) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-          </div>       
-          
+          </div>
+
+ <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>PAYOUT  </h3>
+
+         
+           <h5>   <b>{{currencydetails}} {{formatPrice(dailytotalpayout) }}</b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+    
+          <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>GROSS PROFIT  </h3>
+
+         
+           <h5>   <b>{{currencydetails}}   {{formatPrice(dailytotalsales- dailytotalpayout ) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+ 
       
-      <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>PAYOUT</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-danger btn-flat"> 
-                    <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailytotalpayout) }}</strong></span>
-           
-</button>
-                           </div>
-             
+      
+
+
+
+
+          <div class="col-lg-3 col-2" >
+            <!-- small box -->
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>COLLECTIION  </h3>
+
+         
+           <h5>   <b> {{currencydetails}} {{formatPrice(dailycollection ) }} </b> </h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-          </div>
-
-
-
-  <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>GROSS PROFIT</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-secondary btn-flat"> 
-                    <span class="sss"><strong>   {{currencydetails}}   {{formatPrice(dailytotalsales- dailytotalpayout ) }}</strong></span>
-           
-</button>
-                           </div>
-             
-            </div>
-            
           </div>
 
 
@@ -486,22 +447,7 @@ th {
 
 
 
-
-
-
-            <div class="col-md-3 col-sm-6 col-12">
-            <div class="">
-          
-<button type="button" class="btn btn-block btn-info btn-flat"><b>COLLECTIONS</b></button>
-              <div class="info-box-contentmycontent">
-                <button type="button" class="btn btn-block btn-success btn-flat"> <span class="sss"><strong>  {{currencydetails}} {{formatPrice(dailycollection ) }}</strong></span>
-           
-</button>
-                           </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
+     
           
 </div>
         
