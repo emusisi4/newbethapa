@@ -9,14 +9,6 @@
 
 <!-- general component access -->
 <div  v-if="gencomponentaccessCahtransactions > 0 "> 
-
-
-
-
-
-
-
-
  <div class="bethapa-table-header"></div>
 
         <!-- the HGeaders -->

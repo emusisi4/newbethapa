@@ -6,100 +6,12 @@
     <div>
 
 
-
+<div class="bethapa-table-header"></div>
 
 <!-- general component access -->
 <div  v-if="gencomponentaccessExpenses > 0 "> 
 
 
-
-
-
-
-
-
-
-
-        <!-- the HGeaders -->
-        <br>
-        <!-- <div class="row">
-            <div class="col-sm-2 col-2">
-                <div class="small-box bg-secondary">
-                    <div class="inner"><h4><strong> OPENNING </strong></h4> 
-                    <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance)}}</b></h5></div>
-                     <div class="icon"><i class="ion ion-bag"></i></div> 
-                     <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a></div>
-                     </div> 
-                  
-                  
-              
-                     <div class="col-lg-2 col-2">
-                         <div class="small-box bg-info">
-                             <div class="inner"><h5><b>CASH IN </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div>
-
-
-                              <div class="col-lg-2 col-2">
-                                  
-                                  <div class="small-box bg-warning">
-                                      <div class="inner"><h5><b>CASHOUT </b><sup style="font-size: 20px;"></sup></h5> 
-                                      <h5> <b>{{ (currencydetails) }} {{formatPrice(todayscashouttotal)}}</b></h5></div> 
-                                      <div class="icon"><i class="ion ion-person-add"></i></div>
-                                       <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                       </div>
-                                       </div> 
-                                       <div class="col-lg-2 col-2">
-                                           <div class="small-box bg-danger">
-                                               <div class="inner"><h5><b>EXPENSES</b><sup style="font-size: 20px;"></sup>
-                                               </h5> <h5><b>{{ (currencydetails) }} {{formatPrice(todaysexpensestotal)}}</b></h5>
-                                               </div> 
-                                               <div class="icon"><i class="ion ion-pie-graph"></i>
-                                               </div> 
-                                               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                                               </div>
-                                               </div>
-                                                      
-                                                      
-                                            
-                                            
-                                            
-                                                      <div class="col-sm-2 col-3">
-                                                         <div class="small-box bg-primary">
-                                                             <div class="inner"><h5><b>PAYOUT</b><sup style="font-size: 20px;"></sup></h5> 
-                                                             <h5>  <b>{{ (currencydetails) }} {{formatPrice(todayspayouttotal)}}</b></h5>
-                                                             </div> 
-                                                             <div class="icon"><i class="ion ion-pie-graph"></i>
-                                                             </div> 
-                                                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                                                             </div>
-                                                             </div>
-                                                             
-
-
-
-                         <div class="col-lg-2 col-2">
-                         <div class="small-box bg-success">
-                             <div class="inner"><h5><b>CASH AT HAND </b><sup style="font-size: 20px;"></sup></h5>
-                              <h5><b> {{ (currencydetails) }} {{formatPrice(shopopenningpalance+todayscashintotal - todayscashouttotal-todaysexpensestotal-todayspayouttotal)}}</b></h5>
-                             </div> 
-                             <div class="icon"><i class="ion ion-stats-bars"></i>
-                             </div> 
-                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                             </div>
-                             </div>
-
-
-                                                             </div>
-     -->
-
-   
-        <!-- end of Headers -->
 
         <!-- Start of the -->
  <div class="bethapa-component-header" >EXPENSES </div>        
