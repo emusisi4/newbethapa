@@ -120,11 +120,22 @@
                      aria-controls="custom-tabs-two-settings" aria-selected="false">BRANCH EXPENSES</a>
                   </li>
 <!--  -->
+<!-- v-if="cashcreditaccessSetting > 0 " -->
+      <li class="nav-item" v-if="shopbalancingaccessSettings > 0 ">
+                    <a class="nav-link" id="custom-tabs-two-intermidiary-tab" data-toggle="pill"
+                     href="#custom-tabs-two-intermidiary" role="tab" @click="loadintermShopbalancingrecords()" 
+                     aria-controls="custom-tabs-two-three" aria-selected="false">INTERMIDIARY BALANCING</a>
+                  </li>
+
+
+
                    <li class="nav-item" v-if="shopbalancingaccessSettings > 0 ">
                     <a class="nav-link" id="custom-tabs-two-three-tab" data-toggle="pill"
                      href="#custom-tabs-two-three" role="tab" @click="loadShopbalancingrecords()" 
                      aria-controls="custom-tabs-two-three" aria-selected="false">SHOP BALANCING</a>
                   </li>
+
+           
 
 <!-- -->
                     <li class="nav-item"  v-if="cashcollectionaccessSetting > 0 " >
@@ -873,7 +884,122 @@
                     
                         </div>
 
+<!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
+                   <div class="tab-pane fade" id="custom-tabs-two-intermidiary" role="tabpanel" aria-labelledby="custom-tabs-two-intermidiary-tab">
+                  
+                  
+                   <!-- <form @submit.prevent="SaveRoletoaddcomponent()">
+                  
+                  
+                    <div class="form-group">
+                  <label>Role</label>
+                    <select name ="mycpmponentto" v-model="form.mycpmponentto" id ="mycpmponentto" v-on:change="myClickEventroletoaddcomponent"  :class="{'is-invalid': form.errors.has('mycpmponentto')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
 
+                    </select>
+                       <input type="text" name="inone" value="roletoaddcomponent" hidden
+                    class="form-control">
+
+                                <has-error :form="form" field="mycpmponentto"></has-error>
+
+                             
+                             
+
+                                
+                                </div>
+                                  <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtnroledd" class="btn btn-primary btn-sm">Saveit</button>
+                                </form> -->
+
+              <div class="bethapa-table-header">
+                   
+       
+                    SHOP INTERMIDIARY BALANCING   
+                     
+                     <button type="button"  class="add-newm" @click="newintermidiaryshopbalancing" >CHECK NOW </button>
+                     </div>
+
+
+             <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                   
+                    <th>#</th>
+                       <th>DATE</th>
+                        <th>USER</th>
+                      <th>BRANCH</th>
+                     
+                      <th>OPENNING</th>
+                      <th v-if=" soccergameproduct > 0  ">S-SALES</th>
+                      <th v-if=" soccergameproduct > 0  "> S-PAYOUT</th>
+                      <th v-if=" virtualgameproduct > 0  ">V-SALES</th>
+                      <th v-if=" virtualgameproduct > 0  ">V- CANCELLED</th>
+                      <th v-if=" virtualgameproduct > 0  ">V-REDEEMED</th>
+                      <th v-if=" virtualgameproduct > 0  ">V-PROFIT</th>
+                      <th v-if=" fishgameproduct > 0  ">FISH SALES</th>
+                      <th v-if=" fishgameproduct > 0  ">FISH PAYOUT</th>
+                      <th v-if=" fishgameproduct > 0  ">FISH INCOME</th>
+                      <th>CASH-IN</th>
+                      <th>CASH-OUT</th>
+                      
+                      
+                      <!-- <th>AMOUNT TO COLLECT ({{currencydetails}})</th>
+                      -->
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+
+                  <tr v-for="shobalrecs in intermshopbalancingdatarecords.data" :key="shobalrecs.id">
+                      
+                  <td>{{shobalrecs.id}}</td>
+                     <td>{{shobalrecs.datedone}}</td>
+                      <td>   <template v-if="shobalrecs.userbalancing_branch">	{{shobalrecs.userbalancing_branch.name}}</template></td>
+                    
+                       <td>    <template v-if="shobalrecs.branchin_balance">	{{shobalrecs.branchin_balance.branchname}}</template></td>
+                         
+                               <td>{{currencydetails }} {{formatPrice(shobalrecs.opbalance)}}</td>
+                               <td v-if=" soccergameproduct > 0  ">{{currencydetails }}  {{formatPrice(shobalrecs.scsales)}}</td>
+                       <td v-if=" soccergameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.scpayout)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vsales)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vcan)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vpay)}}</td>
+                       
+                    <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.vprof))}}</td>
+
+                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishsales)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishpayout)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishincome))}}  </td>
+
+<!-- ({{ ((( ((shobalrecs.fishpayout*500) /(shobalrecs.fishsales*500) | round))))*100}}%) -->
+
+                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashin))}}</td>
+                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashout))}}</td>
+                     <!-- <td>{{formatPrice((shobalrecs.fishincome+shobalrecs.cashin))}}  </td>
+             -->
+                          
+
+                        
+                    </tr>
+              
+                     
+                  </tbody>
+              
+ 
+                                   </table>
+   
+   
+                      <div class="card-footer">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <pagination :data="allowedrolecomponentsObject" @pagination-change-page="paginationroleAuthorisedcomponents"></pagination>
+                </ul>
+              </div>
+                     
+                 
+                    </div>
+ 
+ <!-- tab one end -->
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
                    <div class="tab-pane fade" id="custom-tabs-two-three" role="tabpanel" aria-labelledby="custom-tabs-two-three-tab">
                   
@@ -1012,6 +1138,407 @@
 
 
 <!-- Modal add menu -->
+<div class="modal fade" id="addnewintermidiarybalancing">
+        <div class="modal-dialog modal-dialog-top modal-xl">
+        <div  class="modal-content">
+            <div  class="modal-header">
+                <h4  v-show="!editmode"    class="modal-title">INTERMIDIARY SHOP BALANCING</h4> 
+                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
+                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
+   <form class="form-horizontal" @submit.prevent="editmode ? updatebranchpayout():createshopintermidiarybalancing()"> 
+
+                    <div  class="modal-body">
+              
+            <form @submit.prevent="Saveintermidiarybalancing()">  
+
+
+                   <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Date </label>
+                              <div class="col-sm-6">
+                            <input v-model="form.datedone" type="date" name="datedone"
+                     class="form-control" :class="{ 'is-invalid': form.errors.has('datedone') }">
+                       <has-error :form="form" field="datedone"></has-error>
+                              </div>
+                 
+                        </div>
+
+                    
+          
+
+                           <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Branch </label>
+                              <div class="col-sm-6">
+                          <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEventsavennn" class="form-control" :class="{'is-invalid': form.errors.has('branchnametobalance')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in mybrancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.branchname }}</option>
+                 
+                    </select>
+                    <button type="submit" id="submit" hidden="hidden" name= "submit" ref="btnForshopbalancing" class="btn btn-primary btn-sm">Saveit</button>
+                    <has-error :form="form" field="branchnametobalance"></has-error>
+                              </div>
+
+                        </div>
+                
+                      
+                <div class="form-group">
+                         <label><b>BRANCH &nbsp; : </b></label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.0em;" right > <b> {{ (shopbalancngname) }}  </b></span></span>
+                    <label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OPENNING     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    
+                  <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.5em;" center > {{ (currencydetails) }} {{formatPrice(shopopenningbalance)}}  </span></span> 
+                      <label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;CASH-IN  &nbsp;     : 
+                        &nbsp;&nbsp;&nbsp;</label>
+                    
+                     <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.5em;" center > {{ (currencydetails) }}  {{ formatPrice(totaldayscashin) }}  </span></span>
+                    <hr>
+                  </div>
+ 
+   <div class="form-group">
+                       
+                   <label> CASH-OUT     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    : &nbsp;&nbsp;</label>
+                    
+                     <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.5em;" center > {{ (currencydetails) }} {{ formatPrice(totalcashout) }}  </span></span>
+
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPENSES     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                      <span style="font-size:1.5em;" center > {{ (currencydetails) }}  {{ formatPrice(totalexpenses) }}  </span></span> 
+
+                          <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                          PAYOUT      &nbsp;    : &nbsp;&nbsp;&nbsp;</label>
+                    
+                     <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.5em;" center > {{currencydetails}} {{ (totalpayout) }}  </span></span>
+                    <hr>
+                  </div>
+
+
+
+
+
+
+
+
+                  </form>
+
+<div v-if=" soccergameproduct > 0  ">
+  <div class ="bethapa-table-header">SOCCER DETAILS</div>
+                
+                  <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Sales </label>
+                              <div class="col-sm-6">
+                            <input v-model="form.scsales" type="text" name="scsales"
+            class="form-control" :class="{ 'is-invalid': form.errors.has('scsales') }">
+          <has-error :form="form" field="scsales"></has-error>
+                              </div>
+                 
+                        </div>
+                      
+                      
+  <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Tickets </label>
+                              <div class="col-sm-6">
+                            <input v-model="form.sctkts" type="text" name="sctkts"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('sctkts') }">
+      <has-error :form="form" field="sctkts"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                    </div>
+
+<!-- end of soccer -->
+
+<div v-if=" virtualgameproduct > 0  ">
+
+<div class ="bethapa-table-header">VIRTUAL DETAILS</div>
+                       
+ <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">SALES </label>
+                              <div class="col-sm-6">
+                             <input v-model="form.vsales" type="text" name="vsales"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('vsales') }">
+      <has-error :form="form" field="vsales"></has-error>
+                              </div>
+                 
+                        </div>
+                         <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Cancelled </label>
+                              <div class="col-sm-6">
+                          <input v-model="form.vcan" type="text" name="vcan"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('vcan') }">
+      <has-error :form="form" field="vcan"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+   <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Redeemed / Payout </label>
+                              <div class="col-sm-6">
+                              <input v-model="form.vpay" type="text" name="vpay"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('vpay') }">
+      <has-error :form="form" field="vpay"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                          <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Tickets </label>
+                              <div class="col-sm-6">
+                         <input v-model="form.vtkts" type="number" name="vtkts"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('vtkts') }">
+      <has-error :form="form" field="vtkts"></has-error>
+                              </div>
+                 
+                        </div>
+
+</div> 
+<!-- end of virtual -->
+
+<div v-if=" fishgameproduct > 0  ">
+
+
+<div class ="bethapa-table-header">Fish Hunting Details {{fishmachinestotal}} </div>
+
+ 
+ <div v-if=" fishmachinestotal == 1">
+ <div class ="bethapa-table-miniheader">Machine one</div>
+ <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Openning Code </label>
+                              <div class="col-sm-6">
+
+         <b>  {{(machineoneopenningcode)}} </b>
+                              </div>
+                 
+                        </div>
+                         <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Current Code </label>
+                              <div class="col-sm-6">
+
+
+                                
+      <input v-model="form.machineonecurrentcode" type="number"  readonly 
+      class="form-control" name="machineonecurrentcode" id="machineonecurrentcode" 
+      :class="{ 'is-invalid': form.errors.has('machineonecurrentcode') }">
+      <has-error :form="form" field="machineonecurrentcode"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+
+
+   <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Sales </label>
+                              <div class="col-sm-6">
+                                 <input :value="form.machineonesales" @keyup="updatemachineoneSales" @keypress="updatemachineoneSales" 
+                                  type="number" class="form-control" :class="{ 'is-invalid': form.errors.has('machineonesales') }" name="machineonesales
+                                  " id="machineonesales" >
+                              
+      <has-error :form="form" field="machineonesales"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                          <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Payout </label>
+                              <div class="col-sm-6">
+
+
+                       <input :value="form.machineonepayout" @keyup="updatemachineonePayout" @keypress="updatemachineonePayout"
+                        type="number" step="any" class="form-control"  
+                        :class="{ 'is-invalid': form.errors.has('machineonesales') }" name="machineonepayout" id="machineonepayout" placeholder="Rate">
+      <has-error :form="form" field="machineonepayout"></has-error>
+                              </div>
+                 
+                        </div>
+   
+
+<!-- <div id="el">
+ 
+  <input :value="form.machineonepayout" @change="updatemachineonePayout" type="number" step="any" class="form-control" name="machineonepayout" id="machineonepayout" placeholder="Rate">
+  <input v-model="form.machineonecurrentcode" type="number" step="any" class="form-control" name="machineonecurrentcode" id="machineonecurrentcode" placeholder="Total Price">
+</div> -->
+ </div>
+
+<!-- end of machine 2 -->
+
+<div v-if=" fishmachinestotal == 2  ">
+  <div class ="bethapa-table-miniheader">Machine one</div>
+ <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Openning Code </label>
+                              <div class="col-sm-6">
+                             <input v-model="form.machineoneopenningcode" readonly type="text" name="machineoneopenningcode"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machineoneopenningcode') }">
+      <has-error :form="form" field="machineoneopenningcode"></has-error>
+                              </div>
+                 
+                        </div>
+                         <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Current Code </label>
+                              <div class="col-sm-6">
+                          <input v-model="form.machineonecurrentcode" type="text" name="machineonecurrentcode"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machineonecurrentcode') }">
+      <has-error :form="form" field="machineonecurrentcode"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+   <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Sales </label>
+                              <div class="col-sm-6">
+                              <input v-model="form.vpay" type="text" name="machineonesales"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machineonesales') }">
+      <has-error :form="form" field="machineonesales"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                          <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Payout </label>
+                              <div class="col-sm-6">
+                         <input v-model="form.machineonepayout" type="number" name="machineonepayout"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machineonepayout') }">
+      <has-error :form="form" field="machineonepayout"></has-error>
+                              </div>
+                 
+                        </div>
+     <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Float </label>
+                              <div class="col-sm-6">
+                         <input v-model="form.machineonefloat" type="number" name="machineonefloat"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machineonefloat') }">
+      <has-error :form="form" field="machineonefloat"></has-error>
+                              </div>
+                 
+                        </div>
+
+                        <!-- end of machine 1 -->
+ <div class ="bethapa-table-miniheader">Machine Two</div>
+ <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Openning Code </label>
+                              <div class="col-sm-6">
+                             <input v-model="form.machinetwoopenningcode" readonly type="number" name="machinetwoopenningcode"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machinetwoopenningcode') }">
+      <has-error :form="form" field="machinetwoopenningcode"></has-error>
+                              </div>
+                 
+                        </div>
+                         <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Current Code </label>
+                              <div class="col-sm-6">
+                          <input v-model="form.machinetwocurrentcode" type="text" name="machinetwocurrentcode"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machinetwocurrentcode') }">
+      <has-error :form="form" field="machinetwocurrentcode"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+   <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Sales </label>
+                              <div class="col-sm-6">
+                              <input v-model="form.machinetwosales" type="text" name="machinetwosales"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machinetwosales') }">
+      <has-error :form="form" field="machinetwosales"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                          <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Payout </label>
+                              <div class="col-sm-6">
+                         <input v-model="form.machinetwopayout" type="number" name="machinetwopayout"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('machinetwopayout') }">
+      <has-error :form="form" field="machinetwopayout"></has-error>
+                              </div>
+                 
+                        </div>
+  
+
+
+ </div>
+
+<!-- end of machine 2-->
+
+
+                    
+
+                    </div>
+
+<!-- if fish product exists end -->
+                  
+
+
+
+
+                
+                 
+                 </div>
+                 
+                  <div  class="modal-footer">
+                    <div  v-if="branchbalancedforthisdate < 1" >
+                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
+                    </div>
+                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
+                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
+                        </div>
+                 </form>
+                       </div>
+                          </div>
+</div>
+
+
+
+
+
+
+<!-- jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj -->
+
+
+
+
+
 <div class="modal fade" id="addnewshopbalancingrecord">
         <div class="modal-dialog modal-dialog-top modal-xl">
         <div  class="modal-content">
@@ -1447,26 +1974,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 
                  
                  </div>
@@ -1481,6 +1988,9 @@
                  </form>
                        </div>
                           </div>
+
+
+                          
                 
 
  </div>
@@ -2544,6 +3054,7 @@
           datarecordsSubmenusauthorised:{},
           allowedrolecomponentsObject :{},
           shopbalancingdatarecords :{},
+           intermshopbalancingdatarecords :{},
            datarecordsbranchexpensesrecords :{},
           admincashindatarecords:{},
           admincashoutrecords:{},
@@ -2806,8 +3317,26 @@ paginationroleAuthorisedcomponentsfeature(page = 1) {
                       },
 
 
+      
+
+loadintermShopbalancingrecords(){
+       axios.get("api/currentintermbalancingrecords").then(({ data }) => (this.intermshopbalancingdatarecords = data));
+  axios.get("api/currentintermbalancingrecords").then(({ data }) => (this.allowedtodeleteshopBalancingRecord = data));
+       /// FISHING
+       // fish macine product in the branch
+        axios.get("api/fishgameproduct").then(({ data }) => (this.fishgameproduct = data));
+        axios.get("api/virtualgameproduct").then(({ data }) => (this.virtualgameproduct = data));
+        axios.get("api/soccergameproduct").then(({ data }) => (this.soccergameproduct = data));
        
- 
+ /// checking for the Number of fish macines
+
+         axios.get("api/fishmachinestotal").then(({ data }) => (this.fishmachinestotal = data));
+          axios.get("api/machineoneopenningcode").then(({ data }) => (this.machineoneopenningcode = data));
+
+
+
+  }, 
+
 
 loadShopbalancingrecords(){
        axios.get("api/currentbalancingrecords").then(({ data }) => (this.shopbalancingdatarecords = data));
@@ -3043,6 +3572,13 @@ newsubmenuaccess(){
                     
 
 
+ newintermidiaryshopbalancing(){
+        this.editmode = false;
+        this.form.clear();
+        this.form.reset();
+     
+     $('#addnewintermidiarybalancing').modal('show');
+            },
  newshopbal(){
         this.editmode = false;
         this.form.clear();
@@ -3519,6 +4055,28 @@ if (result.isConfirmed) {
          
     }, // end of create
 
+ Saveintermidiarybalancing (){
+
+  
+this.form.post('api/branchintermidiarybalance');
+          axios.get("api/branchtobalance").then(({ data }) => (this.clcash = data));
+          axios.get("api/branchalreadybalanced").then(({ data }) => (this.branchbalancedforthisdate = data));
+         // axios.get("api/pendingcashin").then(({ data }) => (this.pendingtransfer = data));
+          axios.get("api/getbranchopenningb").then(({ data }) => (this.shopopenningbalance = data));
+          axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
+         
+          axios.get("api/getdaycashoutbranch").then(({ data }) => (this.totalcashout = data));
+          axios.get("api/getdayexpensesbranch").then(({ data }) => (this.totalexpenses = data));
+          axios.get("api/getdaypayoutbranch").then(({ data }) => (this.totalpayout = data));
+          axios.get("api/getdaycashinbranch").then(({ data }) => (this.totaldayscashin = data));
+axios.get("api/machineoneopenningcode").then(({ data }) => (this.machineoneopenningcode = data));
+axios.get("api/fishgameproduct").then(({ data }) => (this.fishgameproduct = data));
+ axios.get("api/fishmachinestotal").then(({ data }) => (this.fishmachinestotal = data));
+axios.get("api/virtualgameproduct").then(({ data }) => (this.virtualgameproduct = data));
+        axios.get("api/soccergameproduct").then(({ data }) => (this.soccergameproduct = data));
+
+            },
+
   SaveRecordbranch (){
 
   
@@ -3981,6 +4539,27 @@ createSubmenuaccess(){
 });
         this.$Progress.finish();
 axios.get("api/authorisedcomponents").then(({ data }) => (this.allowedrolecomponentsObject = data));
+        })
+        .catch(()=>{
+          
+        })
+         
+    },
+    
+      createshopintermidiarybalancing(){
+      this.$Progress.start();
+        this.form.post('api/currentintermbalancingrecords')
+        .then(()=>{
+
+         
+    $('#addnewintermidiarybalancing').modal('hide');
+ //   Fire.$emit('AfterAction');
+  Toast.fire({
+  icon: 'success',
+  title: 'Component Authorised'
+});
+        this.$Progress.finish();
+axios.get("api/currentintermbalancingrecords").then(({ data }) => (this.intermshopbalancingdatarecords = data));
         })
         .catch(()=>{
           

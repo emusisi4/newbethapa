@@ -329,8 +329,12 @@ Route::get('rolesaccessSettings', 'APIController@rolesaccessSettings');
 Route::get('mainmenuaccessSettings', 'APIController@mainmenuaccessSettings');
 Route::get('submenuaccessSettings', 'APIController@submenuaccessSettings');
 Route::apiResources(['branchtobalance' => 'API\BranchbalacingController']);
+
+Route::apiResources(['branchintermidiarybalance' => 'API\BranchintermbalacingController']);
 Route::get('shopbalancingaccessSettings', 'APIController@shopbalancingaccessSettings');
 Route::apiResources(['currentbalancingrecords' => 'API\CurrentShopbalancingContoller']);
+Route::apiResources(['currentintermbalancingrecords' => 'API\CurrentShopintermbalancingContoller']);
+
 Route::get('branchpayoutaccessSettings', 'APIController@branchpayoutaccessSettings');
 Route::get('branchexpensesaccessSetting', 'APIController@branchexpensesaccessSetting');
 
