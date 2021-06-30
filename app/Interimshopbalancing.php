@@ -21,7 +21,7 @@ class Interimshopbalancing extends Authenticatable
     protected $fillable = [
         'datedone', 'branch', 'opbalance','ucret','vsales','vpay','vtkts','vprof','vcan',
         'scsales','scpayout','expenses','cashin','cashout','reportedcash','clcash','shopdiff',
-        'expenses','sctkts','comment','fishincome','fishsales','fishpayout'
+        'expenses','sctkts','comment','fishincome','fishsales','fishpayout','collection'
     ];
     
 

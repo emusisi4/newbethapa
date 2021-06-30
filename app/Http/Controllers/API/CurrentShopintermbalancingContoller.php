@@ -187,6 +187,7 @@ $bxn = $request['branchnametobalance'];
      $todayssales = $machineonesales - $latestsalescode;
      $todayspayout = $machineonepayout - $latestpayoutcode;
      DB::table('interimshopbalancings')->where('branch', $bxn)->delete();
+     $colf = $fishincome + $totalcashin;
     Interimshopbalancing::Create([
            'fishincome' => $fishincome,
            'fishsales' => $todayssales,
@@ -208,6 +209,7 @@ $bxn = $request['branchnametobalance'];
            'opbalance'    => $openningbalance,
            'clcash'    => $closingbalance,
            'reportedcash'   =>'0',
+           'collection'   =>$colf,
            'comment'    => '0',
          
            'ucret' => $userid,

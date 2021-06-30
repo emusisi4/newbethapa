@@ -943,8 +943,8 @@
                       <th>CASH-OUT</th>
                       
                       
-                      <!-- <th>AMOUNT TO COLLECT ({{currencydetails}})</th>
-                      -->
+                      <th>AMOUNT TO COLLECT ({{currencydetails}})</th>
+                     
                     
                     </tr>
                   </thead>
@@ -976,8 +976,8 @@
 
                      <td >{{currencydetails }} {{formatPrice((shobalrecs.cashin))}}</td>
                      <td >{{currencydetails }} {{formatPrice((shobalrecs.cashout))}}</td>
-                     <!-- <td>{{formatPrice((shobalrecs.fishincome+shobalrecs.cashin))}}  </td>
-             -->
+                   <td>{{formatPrice((shobalrecs.collection))}}  </td>
+          
                           
 
                         
