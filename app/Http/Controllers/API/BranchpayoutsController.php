@@ -59,7 +59,7 @@ $userrole =  auth('api')->user()->type;
        ->paginate(13);
      }
 
-     if($userrole == '100')
+     if($userrole != '101')
      {
     //  $this->authorize('isAdmin'); 
       return   Branchpayout::with(['ExpenseTypeconnect','expenseCategory','payingUserdetails'])->latest('datepaid')
@@ -93,12 +93,7 @@ $userrole =  auth('api')->user()->type;
       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         //
@@ -129,7 +124,7 @@ if($userrole == '101')
         //'amount'   => 'sometimes |min:0'
      ]);
 
-
+$amo = $request['amount'];
      $userid =  auth('api')->user()->id;
      $userbranch =  auth('api')->user()->branch;
    //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
@@ -138,7 +133,7 @@ if($userrole == '101')
   $datepaid = date('Y-m-d');
      
   //       $dats = $id;
-       return Branchpayout::Create([
+       Branchpayout::Create([
       'receiptno' => $request['receiptno'],
       'bpaying' =>  $userbranch,
       'datemade' => $request['datemade'],
@@ -151,9 +146,15 @@ if($userrole == '101')
       'ucret' => $userid,
     
   ]);
-
+  $amounttoupdate = $amo;
+  $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $userbranch )->value('outstanding');
+ 
+  
+  $newbal = $thewalletbalance-$amo;
+  $result009 = \DB::table('branchcashstandings')->where('branch', $userbranch)->update(['outstanding' =>  $newbal]);
+        
        }/// closing the if
-       if($userrole == '100')
+       if($userrole != '101')
        {
               $this->validate($request,[
                'receiptno'   => 'required | String |max:191',
@@ -165,12 +166,12 @@ if($userrole == '101')
                //'amount'   => 'sometimes |min:0'
             ]);
        
-       
+       $inactionbranch = $request['branch'];
             $userid =  auth('api')->user()->id;
             $userbranch =  auth('api')->user()->branch;
           //  $id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
           //  $hid = $id1+1;
-       
+            
          $datepaid = date('Y-m-d');
             
          //       $dats = $id;
@@ -187,6 +188,13 @@ if($userrole == '101')
              'ucret' => $userid,
            
          ]);
+         //////////////////////////////////////////////////////
+         $amounttoupdate = $request['amount'];
+ $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $inactionbranch )->value('outstanding');
+
+ 
+ $newbal = $thewalletbalance-$amounttoupdate;
+ $result2 = \DB::table('branchcashstandings')->where('branch', $inactionbranch)->update(['outstanding' =>  $newbal]);
        
               }/// closing the if
        
@@ -195,12 +203,7 @@ if($userrole == '101')
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         //
@@ -217,13 +220,7 @@ if($userrole == '101')
  
     }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //
@@ -241,25 +238,44 @@ if($userrole == '101')
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
-    
-    
-    
+  
     
      public function destroy($id)
     {
-        //
-     //   $this->authorize('isAdmin'); 
+      
 
-        $user = Branchpayout::findOrFail($id);
-        $user->delete();
-       // return['message' => 'user deleted'];
+      $userid =  auth('api')->user()->id;
+      $userbranch =  auth('api')->user()->branch;
+      $userrole =  auth('api')->user()->type;
+/// gettinyg the transaction details
+      $branchthatpaid = \DB::table('branchpayouts')->where('id', $id)->value('bpaying');
+      $amountpaidout = \DB::table('branchpayouts')->where('id', $id)->value('amount');
+    //  $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+      //$walletofexpense = \DB::table('madeexpenses')->where('id', $id )->value('walletexpense');
+    //  if($approvalstate == '1')
+      {
+       $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $branchthatpaid )->value('outstanding');
+       
+       $newbal = $thewalletbalance+$amountpaidout;
+       $result2 = \DB::table('branchcashstandings')->where('branch', $branchthatpaid)->update(['outstanding' =>  $newbal]);
+       $user = Branchpayout::findOrFail($id);
+       $user->delete();
+      }
+     
+    //   if($approvalstate != '1')
+    //   {
+    //    // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+    //    // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+    //    // $newbal = $thewalletbalance+$expenseamount;
+    //    // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+    //    $user = Madeexpense::findOrFail($id);
+    //    $user->delete();
+    //   }
+    //  //   $this->authorize('isAdmin'); 
+
+    //     $user = Branchpayout::findOrFail($id);
+    //     $user->delete();
+    //    // return['message' => 'user deleted'];
 
     }
 }

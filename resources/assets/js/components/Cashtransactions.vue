@@ -39,6 +39,18 @@
                      <div class="col-lg-3 col-3">
                          <div class="small-box bg-pnne">
                              <div class="inner">
+                        <h3><b>MY BRANCH BALANCE </b><sup style="font-size: 20px;"></sup></h3>
+                         <h5>   <b>  {{formatPrice(mybranchwalletbalance)}} {{ (currencydetails) }}</b></h5>
+                             </div> 
+                         
+                             <div class="icon"><i class="ion ion-stats-bars"></i>
+                             </div> 
+                             <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+                             </div>
+                             </div>
+                     <div class="col-lg-3 col-3">
+                         <div class="small-box bg-pnne">
+                             <div class="inner">
                         <h3><b>TODAYS COLLECTIONS </b><sup style="font-size: 20px;"></sup></h3>
                          <h5>   <b> Available Cash : {{ (currencydetails) }} {{formatPrice(todayscashintotal)}}</b></h5>
                              </div> 
@@ -121,7 +133,7 @@
                   </li>
 <!--  -->
 <!-- v-if="cashcreditaccessSetting > 0 " -->
-      <li class="nav-item" v-if="shopbalancingaccessSettings > 0 ">
+      <li class="nav-item" v-if="shopbalancingaccessSettings > 100 ">
                     <a class="nav-link" id="custom-tabs-two-intermidiary-tab" data-toggle="pill"
                      href="#custom-tabs-two-intermidiary" role="tab" @click="loadintermShopbalancingrecords()" 
                      aria-controls="custom-tabs-two-three" aria-selected="false">INTERMIDIARY BALANCING</a>
@@ -368,7 +380,7 @@
                        <td> <template v-if="cinshopt.approved_userdetails">	{{cinshopt.approved_userdetails.name}}</template></td>
                        <td> <template v-if="cinshopt.status_name">	{{cinshopt.status_name.name}}</template></td>
                      <td>
-                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  credit </button>
+                       <button v-show="cinshopt.status < 1" type="button"   class="btn  bg-gradient-secondary btn-xs"  @click="confirmCashouttransfer(cinshopt.id)"> Confirm  Cash Recieved </button>
                        <button v-show="cinshopt.status === 1" type="button"   class="btn  bg-gradient-success btn-xs"  > Confirmed  </button>
                    
 
@@ -576,7 +588,7 @@
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">New Payout Registration</h4> 
+                <h4  v-show="!editmode"    class="modal-title"><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">New Payout</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
                  <form class="form-horizontal" @submit.prevent="editmode ? updatepayout():createNewpayout()"> 
@@ -785,7 +797,7 @@
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">New Expense Request FORM</h4> 
+                <h4  v-show="!editmode"    class="modal-title"><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">New Expense Request FORM</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
                  <form class="form-horizontal" @submit.prevent="editmode ? updateexpenserecord():createNewexpensebranch()"> 
@@ -800,7 +812,7 @@
                               <div class="col-sm-6">
                         <select name ="expense" v-model="form.expense" id ="expense" class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
 <option value=" ">  </option>
-<option v-for='data in expenseslist' v-bind:value='data.expenseno'>{{ data.expensename }}</option>
+<option v-for='data in expenseslist' v-bind:value='data.id'>{{ data.expensename }}</option>
 
 </select>
             <has-error :form="form" field="expense"></has-error>
@@ -820,7 +832,7 @@
                               <div class="col-sm-6">
                               <select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
 <option value=" ">  </option>
-<option v-for='data in mybrancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
+<option v-for='data in mybrancheslist' v-bind:value='data.branchno'>{{ data.branchname }}</option>
 
 </select>
             <has-error :form="form" field="branch"></has-error>
@@ -929,18 +941,22 @@
                         <th>USER</th>
                       <th>BRANCH</th>
                      
-                      <th>OPENNING</th>
-                      <th v-if=" soccergameproduct > 0  ">S-SALES</th>
-                      <th v-if=" soccergameproduct > 0  "> S-PAYOUT</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-SALES</th>
-                      <th v-if=" virtualgameproduct > 0  ">V- CANCELLED</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-REDEEMED</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-PROFIT</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH SALES</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH PAYOUT</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH INCOME</th>
-                      <th>CASH-IN</th>
-                      <th>CASH-OUT</th>
+                      <th>OPENNING ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  ">S-SALES ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  "> S-PAYOUT ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  ">DEPOSITS ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  ">WITHDRAWS ({{currencydetails }}) </th>
+
+                      <th v-if=" virtualgameproduct > 0  ">V-SALES ({{currencydetails }}) </th>
+
+                      <th v-if=" virtualgameproduct > 0  ">V- CANCELLED ({{currencydetails }}) </th>
+                      <th v-if=" virtualgameproduct > 0  ">V-REDEEMED ({{currencydetails }}) </th>
+                      <th v-if=" virtualgameproduct > 0  ">V-PROFIT ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH SALES ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH PAYOUT ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH INCOME ({{currencydetails }}) </th>
+                      <th>CASH-IN ({{currencydetails }}) </th>
+                      <th>CASH-OUT ({{currencydetails }}) </th>
                       
                       
                       <th>AMOUNT TO COLLECT ({{currencydetails}})</th>
@@ -959,23 +975,25 @@
                     
                        <td>    <template v-if="shobalrecs.branchin_balance">	{{shobalrecs.branchin_balance.branchname}}</template></td>
                          
-                               <td>{{currencydetails }} {{formatPrice(shobalrecs.opbalance)}}</td>
-                               <td v-if=" soccergameproduct > 0  ">{{currencydetails }}  {{formatPrice(shobalrecs.scsales)}}</td>
-                       <td v-if=" soccergameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.scpayout)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vsales)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vcan)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vpay)}}</td>
+                       <td>{{formatPrice(shobalrecs.opbalance)}}</td>
+                       <td v-if=" soccergameproduct > 0  "> {{formatPrice(shobalrecs.scsales)}}</td>
+                       <td v-if=" soccergameproduct > 0  ">{{formatPrice(shobalrecs.scpayout)}}</td>
+                       <td v-if=" soccergameproduct > 0  "> {{formatPrice(shobalrecs.onlinedeposits)}}</td>
+                       <td v-if=" soccergameproduct > 0  ">{{formatPrice(shobalrecs.onlinewithdraws)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vsales)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vcan)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vpay)}}</td>
                        
-                    <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.vprof))}}</td>
+                    <td v-if=" virtualgameproduct > 0  ">{{formatPrice((shobalrecs.vprof))}}</td>
 
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishsales)*500)}}</td>
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishpayout)*500)}}</td>
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishincome))}}  </td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishsales)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishpayout)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishincome))}}  </td>
 
 <!-- ({{ ((( ((shobalrecs.fishpayout*500) /(shobalrecs.fishsales*500) | round))))*100}}%) -->
 
-                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashin))}}</td>
-                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashout))}}</td>
+                     <td >{{formatPrice((shobalrecs.cashin))}}</td>
+                     <td >{{formatPrice((shobalrecs.cashout))}}</td>
                    <td>{{formatPrice((shobalrecs.collection))}}  </td>
           
                           
@@ -1046,21 +1064,24 @@
                       <th>BRANCH</th>
                      
                       <th>OPENNING</th>
-                      <th v-if=" soccergameproduct > 0  ">S-SALES</th>
-                      <th v-if=" soccergameproduct > 0  "> S-PAYOUT</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-SALES</th>
-                      <th v-if=" virtualgameproduct > 0  ">V- CANCELLED</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-REDEEMED</th>
-                      <th v-if=" virtualgameproduct > 0  ">V-PROFIT</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH SALES</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH PAYOUT</th>
-                      <th v-if=" fishgameproduct > 0  ">FISH INCOME</th>
-                      <th>CASH-IN</th>
-                      <th>CASH-OUT</th>
-                      <th>EXPENSES</th>
+                      <th v-if=" soccergameproduct > 0  ">S-SALES ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  "> S-PAYOUT ({{currencydetails }}) </th>
+                       <th v-if=" soccergameproduct > 0  ">DEPOSITS ({{currencydetails }}) </th>
+                      <th v-if=" soccergameproduct > 0  ">WITHDRAWS ({{currencydetails }}) </th>
+
+                      <th v-if=" virtualgameproduct > 0  ">V-SALES ({{currencydetails }}) </th>
+                      <th v-if=" virtualgameproduct > 0  ">V- CANCELLED ({{currencydetails }}) </th>
+                      <th v-if=" virtualgameproduct > 0  ">V-REDEEMED ({{currencydetails }}) </th>
+                      <th v-if=" virtualgameproduct > 0  ">V-PROFIT ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH SALES ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH PAYOUT ({{currencydetails }}) </th>
+                      <th v-if=" fishgameproduct > 0  ">FISH INCOME ({{currencydetails }}) </th>
+                      <th>CASH-IN ({{currencydetails }}) </th>
+                      <th>CASH-OUT ({{currencydetails }}) </th>
+                      <th>EXPENSES ({{currencydetails }}) </th>
                       
-                      <th>CLOSING</th>
-                       <th>SHORTAGE</th>
+                      <th>CLOSING ({{currencydetails }}) </th>
+                       <th>SHORTAGE ({{currencydetails }}) </th>
                      <th >  </th>
                     </tr>
                   </thead>
@@ -1075,37 +1096,39 @@
                     
                        <td>    <template v-if="shobalrecs.branchin_balance">	{{shobalrecs.branchin_balance.branchname}}</template></td>
                          
-                               <td>{{currencydetails }} {{formatPrice(shobalrecs.opbalance)}}</td>
-                               <td v-if=" soccergameproduct > 0  ">{{currencydetails }}  {{formatPrice(shobalrecs.scsales)}}</td>
-                       <td v-if=" soccergameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.scpayout)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vsales)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vcan)}}</td>
-                       <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice(shobalrecs.vpay)}}</td>
+                               <td>{{formatPrice(shobalrecs.opbalance)}}</td>
+                               <td v-if=" soccergameproduct > 0  "> {{formatPrice(shobalrecs.scsales)}}</td>
+                       <td v-if=" soccergameproduct > 0  ">{{formatPrice(shobalrecs.scpayout)}}</td>
+                        <td v-if=" soccergameproduct > 0  "> {{formatPrice(shobalrecs.onlinedeposits)}}</td>
+                       <td v-if=" soccergameproduct > 0  ">{{formatPrice(shobalrecs.onlinewithdraws)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vsales)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vcan)}}</td>
+                       <td v-if=" virtualgameproduct > 0  ">{{formatPrice(shobalrecs.vpay)}}</td>
                        
-                    <td v-if=" virtualgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.vprof))}}</td>
+                    <td v-if=" virtualgameproduct > 0  ">{{formatPrice((shobalrecs.vprof))}}</td>
 
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishsales)*500)}}</td>
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishpayout)*500)}}</td>
-                    <td v-if=" fishgameproduct > 0  ">{{currencydetails }} {{formatPrice((shobalrecs.fishincome))}}  </td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishsales)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishpayout)*500)}}</td>
+                    <td v-if=" fishgameproduct > 0  ">{{formatPrice((shobalrecs.fishincome))}}  </td>
 
 <!-- ({{ ((( ((shobalrecs.fishpayout*500) /(shobalrecs.fishsales*500) | round))))*100}}%) -->
 
-                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashin))}}</td>
-                     <td >{{currencydetails }} {{formatPrice((shobalrecs.cashout))}}</td>
-                     <td >{{currencydetails }} {{((shobalrecs.expenses))}}</td>
-                     <td >{{currencydetails }} {{formatPrice((shobalrecs.clcash))}}</td>
+                     <td >{{formatPrice((shobalrecs.cashin))}}</td>
+                     <td >{{formatPrice((shobalrecs.cashout))}}</td>
+                     <td >{{((shobalrecs.expenses))}}</td>
+                     <td >{{formatPrice((shobalrecs.clcash))}}</td>
                           
 
                             <td>
                               <div v-if="((shobalrecs.clcash)-(shobalrecs.reportedcash)) > 0">
                                 <span class="cell" style="color:maroon ;">  
    
-                    <span style="font-size:1.0em;" center >  {{currencydetails }} {{formatPrice((shobalrecs.clcash)-(shobalrecs.reportedcash))}} </span></span>
+                    <span style="font-size:1.0em;" center >  {{formatPrice((shobalrecs.clcash)-(shobalrecs.reportedcash))}} </span></span>
                               </div>
                                <div v-if="((shobalrecs.clcash)-(shobalrecs.reportedcash)) < 1">
                                 <span class="cell" style="color:green ;">  
    
-                    <span style="font-size:1.0em;" center >  {{currencydetails }} {{formatPrice((shobalrecs.clcash)-(shobalrecs.reportedcash))}} </span></span>
+                    <span style="font-size:1.0em;" center >  {{formatPrice((shobalrecs.clcash)-(shobalrecs.reportedcash))}} </span></span>
                               </div>
                              </td>
                          
@@ -1543,7 +1566,7 @@
         <div class="modal-dialog modal-dialog-top modal-xl">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">Shop Balancing</h4> 
+                <h4  v-show="!editmode"    class="modal-title"><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">SHOP BALANCING</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
    <form class="form-horizontal" @submit.prevent="editmode ? updatebranchpayout():createBalancingrecord()"> 
@@ -1573,7 +1596,7 @@
                               <div class="col-sm-6">
                           <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEventsavennn" class="form-control" :class="{'is-invalid': form.errors.has('branchnametobalance')}">
                     <option value=" ">  </option>
-                    <option v-for='data in mybrancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.branchname }}</option>
+                    <option v-for='data in mybrancheslist' v-bind:value='data.id'>{{ data.branchname }}</option>
                  
                     </select>
                     <button type="submit" id="submit" hidden="hidden" name= "submit" ref="btnForshopbalancing" class="btn btn-primary btn-sm">Saveit</button>
@@ -1637,7 +1660,7 @@
                   </form>
 
 <div v-if=" soccergameproduct > 0  ">
-  <div class ="bethapa-table-header">SOCCER DETAILS</div>
+  <div class ="bethapa-table-sectionheader">SOCCER DETAILS</div>
                 
                   <div class="form-group row">
 
@@ -1665,11 +1688,38 @@
 
                     </div>
 
+<div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Online Deposits </label>
+                              <div class="col-sm-6">
+                            <input v-model="form.onlinedeposits" type="text" name="onlinedeposits"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('onlinedeposits') }">
+      <has-error :form="form" field="onlinedeposits"></has-error>
+                              </div>
+                 
+                        </div>
+
+
+                 
+
+                    <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label">Online Withdraws </label>
+                              <div class="col-sm-6">
+                            <input v-model="form.onlinewithdraws" type="text" name="onlinewithdraws"
+        class="form-control" :class="{ 'is-invalid': form.errors.has('onlinewithdraws') }">
+      <has-error :form="form" field="onlinewithdraws"></has-error>
+                              </div>
+                 
+                      
+
+
+                    </div>
 <!-- end of soccer -->
 
 <div v-if=" virtualgameproduct > 0  ">
 
-<div class ="bethapa-table-header">VIRTUAL DETAILS</div>
+  <div class ="bethapa-table-sectionheader">VIRTUAL DETAILS</div>
                        
  <div class="form-group row">
 
@@ -1722,7 +1772,7 @@
 <div v-if=" fishgameproduct > 0  ">
 
 
-<div class ="bethapa-table-header">Fish Hunting Details {{fishmachinestotal}} </div>
+  <div class ="bethapa-table-sectionheader">Fish Hunting Details {{fishmachinestotal}} Machine </div>
 
  
  <div v-if=" fishmachinestotal == 1">
@@ -2026,7 +2076,7 @@
                                 </form> -->
                   
                        <div class="bethapa-table-header">
-                    CASH COLLECTION DETAILS <button v-if="allowedtoaddnewcashcollection > 0" type="button" class="add-newm" @click="newCashcollection" >Make COllection </button>
+                    CASH COLLECTION DETAILS <button v-if="allowedtoaddnewcashcollection > 0" type="button" class="add-newm" @click="newCashcollection" >Make Cash Collection </button>
                      </div>
 
 
@@ -2071,7 +2121,7 @@
                         <td>
                           
       <button type="button" v-if="allowedtoeditadmincashcollection > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editBranchexpenserecord(alladmincashcollection)">Edit</button>
-      <button type="button" v-if="allowedtodeleteadmincashcollection > 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteBranchexpenserecord(alladmincashcollection.id)"> DEl </button>
+      <button type="button" v-if="allowedtodeleteadmincashcollection > 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashinrecord(alladmincashcollection.id)"> Delete Cashin  </button>
 
 
 
@@ -2104,127 +2154,6 @@
 
 
 <!-- Modal add menu -->
-<div class="modal fade" id="addnewcashcollection">
-        <div class="modal-dialog modal-dialog-top modal-lg">
-        <div  class="modal-content">
-            <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">CASH  COLLECTION</h4> 
-                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
-                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
-                 <form class="form-horizontal" @submit.prevent="editmode ? updatebranchpayout():CreateNewcashcollection()"> 
-
-                    <div  class="modal-body">
-              
-              
-               <form @submit.prevent="SavetheCollectionbranch()">
-  
-  
-   <div class="form-group">
-
-
-                
-  
-  
-                   <div class="form-group">
-                         <label><b>BRANCH&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
-                    
-                      <span class="cell" style="color:maroon ;">  
-   
-                   <span style="font-size:1.0em;" right > <b> {{ (shopbalancngname) }}  </b></span></span>
-                 
-                    <hr>
-                       <label><b>B/F &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
-                    
-                      <span class="cell" style="color:maroon ;">  
-   
-                   <span style="font-size:1.0em;" right > <b> {{currencydetails}} {{ formatPrice(shopopenningbalancecacollectpoint) }}   </b></span></span>
-                 
-                    <hr>
-                  </div>
-
-                    
-                   
-
-                   
-                          </div>
-
-
-
-
-<div class ="bethapa-table-header">COLLECTION</div>
-                  
-   <div class="form-group row">
-                   <label class="col-sm-2 col-form-label">Branch </label>
-                              <div class="col-sm-6">
-                        <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEventdddd" class="form-control" :class="{'is-invalid': form.errors.has('branchnametobalance')}">
-                    <option value=" ">  </option>
-                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-                    </select>
-                    <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn89" class="btn btn-primary btn-sm">Saveit</button>
-
-                                <has-error :form="form" field="branchnametobalance"></has-error>
-                              </div>
-
-                        </div>
-  
-  
-  
-  
-  
-               
- 
-</form>
-
-                                  
-                 <div class="form-group row">
-                   <label class="col-sm-2 col-form-label">Date </label>
-                              <div class="col-sm-6">
-                           <input v-model="form.transferdate" type="date" name="transferdate"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('transferdate') }">
-                       <has-error :form="form" field="transferdate"></has-error>
-                              </div>
-
-                        </div>
-  
-                      
-               <div class="form-group row">
-                   <label class="col-sm-2 col-form-label">Amount </label>
-                              <div class="col-sm-6">
-                          <input v-model="form.amount" type="number" name="amount"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
-                              </div>
-
-                        </div>
-  <div class="form-group row">
-                   <label class="col-sm-2 col-form-label">Comment </label>
-                              <div class="col-sm-6">
-                          <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
-                              </div>
-
-                        </div>
-                      
-                      
-                
-                 
-                 </div>
-                 
-                  <div  class="modal-footer">
-                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
-                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
-                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
-                        </div>
-                 </form>
-                       </div>
-                          </div>
-                
-                  
-                  
-                  
-                  </div>
 
 <!-- End of pane -->
 
@@ -2304,7 +2233,7 @@
                         <td>
                           
       <button type="button" v-if="allowedtoeditadmincashcredit > 0 "   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editcashcredit(alladmincashouts)">Edit</button>
-      <button type="button" v-if="allowedtodeleteadmincashcredit> 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcredit(alladmincashouts.id)"> DEl </button>
+      <button type="button" v-if="allowedtodeleteadmincashcredit> 0 " class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcredit(alladmincashouts.id)"> Delete Credit </button>
 
 
 
@@ -2553,11 +2482,7 @@
                        <div v-if="allowedtodeletecollection > 0">
                            <button type="button"  class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcoll.id)"> Delete Collection </button>
                        </div>
-                       <!-- <button type="button"  v-show="fishcoll.status < 1"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editfishcollection(fishcollectionrecords)">Edit</button>
-                             <button type="button"  v-show="fishcoll.status < 1" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletecashcollection(fishcollectionrecords.id)"> DEl </button> -->
-
-
-
+                       
                        </td>
                   
                      
@@ -2584,8 +2509,8 @@
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">CASH  COLLECTION</h4> 
-                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
+                <h4  v-show="!editmode"    class="modal-title"><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">CASH  COLLECTION</h4> 
+                <h4  v-show="editmode" class="modal-title" ><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
                  <form class="form-horizontal" @submit.prevent="editmode ? updatebranchpayout():CreateNewcashcollection()"> 
 
@@ -3003,11 +2928,12 @@
                 currencydetails:null,
                 shopopenningpalance:null,
                 todayscashintotal:null,
+                mybranchwalletbalance:null,
                 todayscashouttotal:null,
                 todaysexpensestotal:null,
                 todayspayouttotal:null,
                 shopbalancngname: null,
-                todayscashintotal:null,
+         
                 shopopenningbalance:null,
                 shopopenningbalancecacollectpoint:null,
                  totalcashout: null,
@@ -3802,6 +3728,7 @@ balancescheck(){
          axios.get("api/allowedtoviewcollectionsccount").then(({ data }) => (this.allowedtoviewcollectionsccount = data));
          axios.get("api/allowedtodeletecredit").then(({ data }) => (this.allowedtodeletecredit = data));   
                axios.get("api/allowedtodeletecollection").then(({ data }) => (this.allowedtodeletecollection = data));       
+                  axios.get("api/mybranchwalletbalance").then(({ data }) => (this.mybranchwalletbalance = data));   
 
   },
 
@@ -3898,6 +3825,52 @@ if (result.isConfirmed) {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   deletecashinrecord(id){
+   Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes'
+}).then((result) => {
+
+/// send request ti
+if (result.isConfirmed) {
+  this.form.delete('api/cashindetails/'+id).then(()=>{
+  
+                        Swal.fire(
+                          'Deleted!',
+                          'Your Record has been deleted.',
+                          'success'
+                        )
+                   
+     axios.get("api/cashindetails").then(({ data }) => (this.admincashindatarecords = data));
+     axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+     axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
+     axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
+     axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
+     axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+
+  }).catch(()=>{
+     Swal.fire({  
+         icon: 'error',
+        title: 'Failed',
+       text: "Transaction was Not successfull. Contact the Administrator for More Assistance",});
+
+  });
+
+
+}                  
+
+
+
+})
+
+            },
+
             deleteBranchexpenserecord(id){
    Swal.fire({
   title: 'Are you sure?',
@@ -4576,7 +4549,7 @@ axios.get("api/currentintermbalancingrecords").then(({ data }) => (this.intermsh
  //   Fire.$emit('AfterAction');
   Toast.fire({
   icon: 'success',
-  title: 'Component Authorised'
+  title: 'Balancing Added'
 });
         this.$Progress.finish();
 axios.get("api/currentbalancingrecords").then(({ data }) => (this.shopbalancingdatarecords = data));

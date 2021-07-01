@@ -188,48 +188,72 @@ $user->update($request->all());
         //
      //   $this->authorize('isAdmin'); 
      $userid =  auth('api')->user()->id;
+     //   $this->authorize('isAdmin'); 
+/////////////////////////////////////////////////////////////////////////////////////////////
+$approvalstate = \DB::table('cintransfers')->where('id', $id )->value('status');
+$walletdeducted = \DB::table('cintransfers')->where('id', $id )->value('branchto');
+if($approvalstate == '1')
+{
+ $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $walletdeducted )->value('outstanding');
+ $amount = \DB::table('cintransfers')->where('id', $id)->value('amount');
+ $newbal = $thewalletbalance+$amount;
+ $result2 = \DB::table('branchcashstandings')->where('branch', $walletdeducted)->update(['outstanding' =>  $newbal]);
+ $user = Cintransfer::findOrFail($id);
+ $user->delete();
+}
+
+if($approvalstate != '1')
+{
+ // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+ // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+ // $newbal = $thewalletbalance+$expenseamount;
+ // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+ $user = Cintransfer::findOrFail($id);
+ $user->delete();
+}
+ 
+}
    
-   
-     $approvalstate = \DB::table('cintransfers')->where('id', $id )->value('status');
-     $usercreates = \DB::table('cintransfers')->where('id', $id )->value('ucret');
-     $walletrecieved = \DB::table('users')->where('id', $usercreates )->value('mywallet');
-     if($approvalstate == '1')
-     {
-      $thewalletbalance = \DB::table('expensewalets')->where('id', $walletrecieved )->value('bal');
-      $amountthatwasrecieved = \DB::table('cintransfers')->where('id', $id)->value('amount');
-      $newbal = $thewalletbalance-$amountthatwasrecieved;
+//      $approvalstate = \DB::table('cintransfers')->where('id', $id )->value('status');
+//      $usercreates = \DB::table('cintransfers')->where('id', $id )->value('ucret');
+//      $walletrecieved = \DB::table('users')->where('id', $usercreates )->value('mywallet');
+//      if($approvalstate == '1')
+//      {
+//       $thewalletbalance = \DB::table('expensewalets')->where('id', $walletrecieved )->value('bal');
+//       $amountthatwasrecieved = \DB::table('cintransfers')->where('id', $id)->value('amount');
+//       $newbal = $thewalletbalance-$amountthatwasrecieved;
 
-      $transactionno = \DB::table('cintransfers')->where('id', $id)->value('transactionno');
-/// deleting the account transaction
-DB::table('accounttransactions')->where('transactionno', $transactionno)->delete();
-      /// getting the latest balance for this account 
-      $latest = \DB::table('accounttransactions')->where('walletinaction', $walletrecieved)->orderBy('id', 'Desc')->limit(1)->value('accountresult');
-      $latestid = \DB::table('accounttransactions')->where('walletinaction', $walletrecieved)->orderBy('id', 'Desc')->limit(1)->value('id');
-      $newresultant = $latest-$amountthatwasrecieved;
-/// Updating the resultant
-$uoopsj = \DB::table('accounttransactions')->where('id', $latestid)->update(['accountresult' =>  $newresultant]);
-
+//       $transactionno = \DB::table('cintransfers')->where('id', $id)->value('transactionno');
+// /// deleting the account transaction
+// DB::table('accounttransactions')->where('transactionno', $transactionno)->delete();
+//       /// getting the latest balance for this account 
+//       $latest = \DB::table('accounttransactions')->where('walletinaction', $walletrecieved)->orderBy('id', 'Desc')->limit(1)->value('accountresult');
+//       $latestid = \DB::table('accounttransactions')->where('walletinaction', $walletrecieved)->orderBy('id', 'Desc')->limit(1)->value('id');
+//       $newresultant = $latest-$amountthatwasrecieved;
+// /// Updating the resultant
+// $uoopsj = \DB::table('accounttransactions')->where('id', $latestid)->update(['accountresult' =>  $newresultant]);
 
 
 
 
-      $result2 = \DB::table('expensewalets')->where('id', $walletrecieved)->update(['bal' =>  $newbal]);
-      $user = Cintransfer::findOrFail($id);
-      $user->delete();
-     }
+
+//       $result2 = \DB::table('expensewalets')->where('id', $walletrecieved)->update(['bal' =>  $newbal]);
+//       $user = Cintransfer::findOrFail($id);
+//       $user->delete();
+//      }
     
-     if($approvalstate != '1')
-     {
-      // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
-      // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
-      // $newbal = $thewalletbalance+$expenseamount;
-      // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
-      $user = Cintransfer::findOrFail($id);
-      $user->delete();
-     }
+//      if($approvalstate != '1')
+//      {
+//       // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+//       // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+//       // $newbal = $thewalletbalance+$expenseamount;
+//       // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+//       $user = Cintransfer::findOrFail($id);
+//       $user->delete();
+//      }
       
       
-       // return['message' => 'user deleted'];
+//        // return['message' => 'user deleted'];
 
     }
 }

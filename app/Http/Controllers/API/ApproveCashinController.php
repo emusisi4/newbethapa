@@ -14,12 +14,8 @@ use App\Cintransfer;
 use App\Branchcashstanding;
 class ApproveCashinController extends Controller
 {
-    /**
-     * nnnnnnnnnnnnnn
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+  
     public function __construct()
     {
        $this->middleware('auth:api');
@@ -150,7 +146,7 @@ $user->update($request->all());
         $userid =  auth('api')->user()->id;
         $userbranch =  auth('api')->user()->branch; 
       
-        $mywallet =  auth('api')->user()->mywallet;
+        $mywallet =  auth('api')->user()->branch;
 /////// checking if the branch exists in the cash details
 
 $branchinact = \DB::table('cintransfers')->where('id', '=', $id)->value('branchto');
@@ -183,11 +179,17 @@ DB::table('cintransfers')
 ->update(['status' => '1', 'comptime' => $currentdate, 'ucomplete' => $userid]);
 $transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
 // getting the users wallet balance 
-$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+// $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+// $newbalance = $currentbalance+$transferamount;
+// DB::table('expensewalets')
+// ->where('id', $mywallet)
+// ->update(['bal' => $newbalance]);
+$currentwalletbalance  = \DB::table('branchcashstandings')->where('id', '=', $mywallet)->value('outstanding');
 $newbalance = $currentbalance+$transferamount;
-DB::table('expensewalets')
-->where('id', $mywallet)
-->update(['bal' => $newbalance]);
+DB::table('branchcashstandings')
+->where('branch', $mywallet)
+->update(['outstanding' => $newbalance]);
+
 
 }
 
@@ -211,11 +213,16 @@ DB::table('cintransfers')
 // return['message' => 'user deleted'];
 $transferamount  = \DB::table('cintransfers')->where('id', '=', $id)->value('amount');
 // getting the users wallet balance 
-$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
-$newbalance = $currentbalance+$transferamount;
-DB::table('expensewalets')
-->where('id', $mywallet)
-->update(['bal' => $newbalance]);
+// $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+// $newbalance = $currentbalance+$transferamount;
+// DB::table('expensewalets')
+// ->where('id', $mywallet)
+// ->update(['bal' => $newbalance]);
+$currentwalletbalance  = \DB::table('branchcashstandings')->where('id', '=', $mywallet)->value('outstanding');
+$newbalance = $currentbalance-$transferamount;
+DB::table('branchcashstandings')
+->where('branch', $mywallet)
+->update(['outstanding' => $newbalance]);
 }
 
 if($newbalance < 0)

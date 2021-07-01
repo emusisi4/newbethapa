@@ -81,19 +81,128 @@ class CurrentShopbalancingContoller extends Controller
       $userid =  auth('api')->user()->id;
       $userbranch =  auth('api')->user()->branch;
       $userrole =  auth('api')->user()->type;
-      $branchforaction = $request['branchnametobalance'];
+
+      /// geting the branch in question
+      
+      $branchforaction = \DB::table('branchtobalances')->where('ucret', '=', $userid)->value('branchnametobalance');
+   
 
     ////////////////////////////////////////////////////////
 
+$doesthebranchhavevirtual = \DB::table('branchandproducts')->where('branch', '=', $branchforaction)->where('sysname', '=', $virtual)->count();
+$doesthebranchhavesoccer = \DB::table('branchandproducts')->where('branch', '=', $branchforaction)->where('sysname', '=', $soccer)->count();
+$doesthebranchhavefish = \DB::table('branchandproducts')->where('branch', '=', $branchforaction)->where('sysname', '=', $fishgame)->count();
 
-$doesthebranchhavefish = \DB::table('branchandproducts')->where('branch', $branchforaction )->where('sysname', $fishgame )->count();
-$doesthebranchhavesoccer = \DB::table('branchandproducts')->where('branch', $branchforaction )->where('sysname', $soccer )->count();
-$doesthebranchhavevirtual = \DB::table('branchandproducts')->where('branch', $branchforaction )->where('sysname', $virtual )->count();
+ //////////////////////////////////THE BRANCH SALES SOCCER AND VIRTUAL ONLY ONLY i.e No fish 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if($doesthebranchhavefish < 1 and $doesthebranchhavesoccer > 0 and $doesthebranchhavevirtual > 0)
+ {
+ 
+$this->validate($request,[
+  'datedone'   => 'required  |max:191',
+  'branchnametobalance'   => 'required',
+  'scsales'   => 'required',
+  'reportedcash' => 'required',
+  'sctkts'   => 'required',
+  'scsales'   => 'required',
+
+  
+  'onlinewithdraws'   => 'required',
+  'bio' => 'required',
+  'machineonecurrentcode'  => 'required',
+
+  'onlinedeposits'  => 'required',
+  
+  'vsales'=> 'required',
+  'vcan'=> 'required',
+  'vpay'=> 'required',
+  'vtkts'=> 'required'
+
+ ]);
+         
+            $userid =  auth('api')->user()->id;
+                   $datepaid = date('Y-m-d');
+                   $inpbranch = \DB::table('branchtobalances')->where('ucret', '=', $userid)->value('branchnametobalance');
+                   $dateinq =  $request['datedone'];
+ $onlinedeposits = $request['onlinedeposits'];
+ $onlinewithdraw = $request['onlinewithdraws'];
+   ///////////////
+      /// getting the expenses
+$totalexpense = \DB::table('madeexpenses')->where('datemade', '=', $dateinq)->where('branch', '=', $inpbranch)->where('explevel', '=', 1)->where('approvalstate', '=', 1)->sum('amount');
+$totalcashin = \DB::table('couttransfers')->where('transferdate', '=', $dateinq)->where('branchto', '=', $inpbranch)->where('status', '=', 1)->sum('amount');
+$totalcashout = \DB::table('cintransfers')->where('transferdate', '=', $dateinq)->where('branchto', '=', $inpbranch)->where('status', '=', 1)->sum('amount');
+$totalpayout = \DB::table('branchpayouts')->where('datepaid', '=', $dateinq)->where('branch', '=', $inpbranch)->sum('amount');
+
+ $branchinbalanced  = \DB::table('shopbalancingrecords')->where('branch', '=', $inpbranch) ->count();
+
+///getting the openning balance
+if($branchinbalanced > 0)
+{
+$openningbalance  = Shopbalancingrecord::where('branch', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('clcash');
+}
+if($branchinbalanced < 1)
+{
+$openningbalance  = Branch::where('branchno', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('openningbalance');
+}
+
+/// working on fish sales and codes
+//gitting the days code from sles and payout
+
+$dateinact = $request['datedone'];
+$yearmade = date('Y', strtotime($dateinact));
+$monthmade = date('m', strtotime($dateinact));
+$soccersales = $request['scsales'];
+  $virtualsales = $request['vsales'];
+  $virtualpayout = $request['vpay'];
+  $virtualcancelled = $request['vcan'];
+ $virtualprofit = $virtualsales-$virtualcancelled-$virtualpayout;
+ $closingbalance = $openningbalance + $soccersales + $virtualprofit + $totalcashin + $onlinedeposits  - $totalcashout -$totalexpense -$totalpayout - $onlinewithdraw;
+/////////////////////////////////////////////////////////////////
+Shopbalancingrecord::Create([
+ // 'fishincome' => $fishincome,
+ // 'fishsales' => $todayssales,
+ // 'fishpayout' => $todayspayout,
+  'datedone' => $request['datedone'],
+  'branch' => $request['branchnametobalance'],
+  'scpayout' => $totalpayout,
+  'scsales' =>$request['scsales'],
+  'sctkts' => $request['sctkts'],
+  'vsales' => $request['vsales'],
+  'vcan' => $request['vcan'],
+  'vprof' => $virtualprofit,
+  'vpay' => $request['vpay'],
+  'vtkts' => $request['vtkts'],
+  'comment' => $request['comment'],
+  'expenses' => $totalexpense,
+  'cashin'    => $totalcashin,
+  'cashout'   => $totalcashout,
+  'onlinewithdraws'    => $onlinewithdraw,
+  'onlinedeposits'   => $onlinedeposits,
+  'opbalance'    => $openningbalance,
+  'clcash'    => $closingbalance,
+  'reportedcash'    => $request['reportedcash'],
+  'comment'    => $request['bio'],
+
+  'ucret' => $userid,
+
+]);
+ //////////////////////////////////////////////////////////// updating the wallet with sales , online deposits, withdraws 
+ $amounttoupdate = $soccersales+$onlinedeposits-$onlinewithdraw+$virtualsales-$virtualpayout-$virtualcancelled;
+ $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $branchforaction )->value('outstanding');
+
+ 
+ $newbal = $thewalletbalance+$amounttoupdate;
+ $result2 = \DB::table('branchcashstandings')->where('branch', $branchforaction)->update(['outstanding' =>  $newbal]);
+ 
+ 
+ 
+ 
+ //////////////////// CLOSING THE VIRUTUAL AND SOCCER ONLY
 
 
-if($doesthebranchhavefish > 0 && $doesthebranchhavesoccer < 1 && $doesthebranchhavevirtual < 1)
+ // //////////////////////////////////THE BRANCH SALES FISH ONLY i.e No virtual and no Soccer 
+
+if($doesthebranchhavefish >0 && $doesthebranchhavesoccer < 1 && $doesthebranchhavevirtual < 1)
 {
 
 /// total fish
@@ -324,50 +433,7 @@ DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedon
     
     ]);
 
-//// checking if the branch exists in the monthlyreport view
-// //$branchinmonthlyreport = \DB::table('mlyrpts')->where('branch', $branchforaction)->where('yeardone', $yearmade)->where('monthdone', $monthmade)->count();
-// //if($branchinmonthlyreport > 0)
-// {
-// /// update query
-// $brancchssjh = $request['branchnametobalance'];
-
-// // extracting the new sales figure for the  month
-// $newsalesfigure = \DB::table('dailyreportcodes')
-// ->where('monthmade', '=', $monthmade)
-// ->where('yearmade', '=', $yearmade)
-// ->where('branch', '=', $brancchssjh)
-// ->sum('daysalesamount');
-// /// new payout figure
-// $newspayoutfigure = \DB::table('dailyreportcodes')
-// ->where('monthmade', '=', $monthmade)
-// ->where('yearmade', '=', $yearmade)
-// ->where('branch', '=', $brancchssjh)
-// ->sum('daypayoutamount');
-
-// /// new collections figure
-// $newcollectionsfigure = \DB::table('cintransfers')
-// ->where('monthmade', '=', $monthmade)
-// ->where('yearmade', '=', $yearmade)
-// ->where('branchto', '=', $brancchssjh)
-// ->where('status', '=', 1)
-// ->sum('amount');
-// /// new credits figure
-// $newcreditsfigure = \DB::table('couttransfers')
-// ->where('monthmade', '=', $monthmade)
-// ->where('yearmade', '=', $yearmade)
-// ->where('branchto', '=', $brancchssjh)
-// ->where('status', '=', 1)
-// ->sum('amount');
-// /// new expenses figure
-// $newexpensesfigure = \DB::table('madeexpenses')
-// ->where('monthmade', '=', $monthmade)
-// ->where('yearmade', '=', $yearmade)
-// ->where('branchto', '=', $brancchssjh)
-// ->where('status', '=', 1)
-// ->sum('amount');
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// }
+    
 
 //if($branchinmonthlyreport < 1)
 {
@@ -489,105 +555,18 @@ Daysummarry::Create([
       'ucret' => $userid,
     
     ]);
-//// updatind the branch statement 
-// $currentclosingbalance = \DB::table('branchstatements')->where('branchname', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('closingbalance');
-// Salesdetail::Create([
- 
-//   'datedone'       => $request['datedone'],
-//   'branchname'         => $request['branchnametobalance'],
-  
-//   'previoussalesfigure' => $previoussalesfigure,
-//   'previouspayoutfigure' => $previouspayoutfigure,
 
-//   'currentsalesfigure'   =>    $machineonesales,
-//   'currentpayoutfigure'   =>   $machineonepayout,
-
-//   'salesamount'    =>    ($machineonesales - $machineonepayout)*500,
-//   'salesfigure'    =>    $machineonesales - $machineonepayout,
-
-//   'monthmade'    => $monthmade,
-//   'yearmade'    => $yearmade,
-  
-  
-//   'ucret' => $userid,
-
-// ]);
 }// closing if the machine was not reset 
 
         }/// closing if its one Machine
-
+      }
 }//closing if the branch sales a product fish only
 
-/////////////////////////////////////////tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt/////////////////////////////
-// if($doesthebranchhavefish = 1 && $doesthebranchhavesoccer = 1 && $doesthebranchhavevirtual = 1)
-// {
 
-// /// total fish
-//         $branchforaction = $request['branchnametobalance'];
-//         $totalfishmacinesinthebranch = \DB::table('branchesandmachines')->where('branchname', '=', $branchforaction)->count();
 
-//         if($totalfishmacinesinthebranch = 1)
-//         {
-//           $this->validate($request,[
-            
-//             'datedone'   => 'required  |max:191',
-//             'branchnametobalance'   => 'required',
-//             'reportedcash' => 'required',
-//             'bio' => 'required',
-//             'machineonecurrentcode'  => 'required',
-//             'machineonesales'  => 'required',
-//             'machineonepayout'  => 'required',
-//             'machineonefloat'  => 'required'
-          
-//            ]);
 
-//            $userid =  auth('api')->user()->id;
-//                   $datepaid = date('Y-m-d');
-//                   $inpbranch = $request['branchnametobalance'];
-//                   $dateinq =  $request['datedone'];
 
-//   /// checking if the machine was reset
-//   $machineresetstatus = \DB::table('machineresets')->where('branch', $inpbranch)->where('machine', '101')->orderBy('id', 'Desc')->limit(1)->value('resetdate');
-//   if( $machineresetstatus  != $dateinq)
-// {
-
-//             /// getting the expenses
-//             $totalexpense = \DB::table('madeexpenses')->where('datemade', '=', $dateinq)->where('branch', '=', $inpbranch)->where('explevel', '=', 1)
-//             ->where('approvalstate', '=', 1)
-//             ->sum('amount');
-     
-//         /// getting the cashin
-//            $totalcashin = \DB::table('couttransfers')->where('transferdate', '=', $dateinq)->where('branchinact', '=', $inpbranch)->where('status', '=', 1)
-//      ->sum('amount');
-//       /// getting the cashout
-//             $totalcashout = \DB::table('cintransfers')->where('transferdate', '=', $dateinq)->where('branchinact', '=', $inpbranch)->where('status', '=', 1)->sum('amount');
-     
-//       /// getting the payout
-//             $totalpayout = \DB::table('branchpayouts')->where('datepaid', '=', $dateinq)->where('branch', '=', $inpbranch)->sum('amount');
-     
-     
-//       /// checking if a record exists for balancing
-//              $branchinbalanced  = \DB::table('shopbalancingrecords')->where('branch', '=', $inpbranch) ->count();
-     
-//      ///getting the openning balance
-//      if($branchinbalanced > 0)
-//      {
-//      $openningbalance  = Shopbalancingrecord::where('branch', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('clcash');
-//      }
-//      if($branchinbalanced < 1)
-//      {
-//      $openningbalance  = Branch::where('branchno', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('openningbalance');
-//      }
-   
-//      /// working on fish sales and codes
-//      //gitting the days code from sles and payout
-
-//      $dateinact = $request['datedone'];
-//      $yearmade = date('Y', strtotime($dateinact));
-//      $monthmade = date('m', strtotime($dateinact));
-
-//     $machineoneopenningcode = \DB::table('currentmachinecodes')->where('branch', $inpbranch)->where('machineno', '101')->orderBy('id', 'Desc')->limit(1)->value('machinecode');
-      
+//////////////////// CLOSING THE FISH ONLY SECTION
 
 
 
@@ -595,200 +574,27 @@ Daysummarry::Create([
 
 
 
-//     $machineonecurrentcode = $request['machineonecurrentcode'];
-//     $machineonesales = $request['machineonesales'];
-//     $machineonepayout = $request['machineonepayout'];
-//     $machineonefloat = $request['machineonefloat'];
-    
-    
-//      $machineoneclosingcode = $machineonecurrentcode;
-//      $fishincome = ($machineoneclosingcode - $machineoneopenningcode)*500;
-//      $closingbalance = $openningbalance + $fishincome + $totalcashin - $totalcashout -$totalexpense -$totalpayout;
-//     Shopbalancingrecord::Create([
-//            'fishincome' => $fishincome,
-//            'fishsales' => $machineonesales,
-//            'fishpayout' => $machineonepayout,
-//            'datedone' => $request['datedone'],
-//            'branch' => $request['branchnametobalance'],
-//            'scpayout' => 0,
-//            'scsales' =>0,
-//            'sctkts' => 0,
-//            'vsales' => 0,
-//            'vcan' => 0,
-//            'vprof' => 0,
-//            'vpay' => 0,
-//            'vtkts' => 0,
-//            'comment' => $request['comment'],
-//            'expenses' => $totalexpense,
-//            'cashin'    => $totalcashin,
-//            'cashout'   => $totalcashout,
-//            'opbalance'    => $openningbalance,
-//            'clcash'    => $closingbalance,
-//            'reportedcash'    => $request['reportedcash'],
-//            'comment'    => $request['bio'],
-         
-//            'ucret' => $userid,
-         
-//        ]);
-//        //// Saving the current machinecodes
-//        Currentmachinecode::Create([
-//         'machineno' => '101',
-//         'datedone' => $request['datedone'],
-//         'branch' => $request['branchnametobalance'],
-//         'machinecode' => $machineoneclosingcode,
-//         'ucret' => $userid,
-      
-//     ]);
-//     //ooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-// /// working and Updating the daily Codes
-//     /////////////////////////////////////////// checking if there is a sale or payout
-//     $existpreviouswork = \DB::table('dailyreportcodes')->where('branch', '=', $inpbranch)->where('machineno', '=', 101)->count();
-//    //  //latest sales
-   
-//    //    $resetcodestatus = \DB::table('dailyreportcodes')->where('branch', '=', $inpbranch)
-//    //      ->where('machineno', '=', 101)
-//    //      ->where('resetstatus', '=', 1)
-//    //      ->count();
-//        if($existpreviouswork > 0)
-//        {
-//       $previoussalesfigure = \DB::table('dailyreportcodes')->where('branch', $inpbranch)->where('machineno', '101')->orderBy('id', 'Desc')->limit(1)->value('salescode');
-//       $previouspayoutfigure = \DB::table('dailyreportcodes')->where('branch', $inpbranch)->where('machineno', '101')->orderBy('id', 'Desc')->limit(1)->value('payoutcode');
-//        }
-//        if($existpreviouswork < 1)
-//        {
-//          $previoussalesfigure = 0;
-//          $previouspayoutfigure = 0;
-//        }
-//    //      if($resetcodestatus > 0)
-//    //        $previoussalesfigure = 0;
-//    //    $previouspayoutfigure = 0;
- 
-    
-//    //  if($existpreviouswork < 1)
-//    //  {
-//    //    $previoussalesfigure = 0;
-//    //    $previouspayoutfigure = 0;
-    
-//    //  }
-//     //00000000000000000000000000000000000000000000000000000000000000000
-
-
-// /// calculating the current or dayz sales and payout
-// $todayssaes1 = $machineonesales - $previoussalesfigure;
-// $todayspayout11 = $machineonepayout - $previouspayoutfigure;
-// if($todayssaes1 >= 0)
-// {
-// $todayssaes = $todayssaes1;
-// }
-// if($todayssaes1 < 0)
-// {
-// $todayssaes = $machineonesales;
-// }
-// //
-// if($todayspayout11 >= 0)
-// {
-// $todayspayout = $todayspayout11;
-// }
-// if($todayspayout11 < 0)
-// {
-// $todayspayout = $machineonepayout;
-// }
-// ///// getting the branch order
-// $dorder = \DB::table('branches')->where('id', '=', $userbranch)->count('dorder');
-// /// deleting the existing record
-// $bxn = $request['branchnametobalance'];
-// $datedonessd = $request['datedone'];
-// DB::table('dailyreportcodes')->where('branch', $bxn)->where('datedone', $datedonessd)->where('machineno', 101)->delete();
-
-
-//     /// working and Updating the daily Codes
-//     Dailyreportcode::Create([
-//       'machineno'    => '101',
-//       'datedone'     => $request['datedone'],
-//       'branch'       => $request['branchnametobalance'],
-//       'closingcode'  => $machineoneclosingcode,
-    
-//       'openningcode' =>    $machineoneopenningcode,
-//       'salescode'    =>    $machineonesales,
-//       'payoutcode'   =>    $machineonepayout,
-//       'profitcode'   =>    $machineonesales-$machineonepayout,
-//       'previoussalesfigure'  =>    $previoussalesfigure,
-//       'previouspayoutfigure' =>    $previouspayoutfigure,
-//       'currentpayoutfigure'  =>    $todayspayout,
-//       'currentsalesfigure'   =>    $todayssaes,
-//       'dorder'  =>    $dorder,
-//       'ucret'   => $userid,
-//       'monthmade'    => $monthmade,
-//       'yearmade'     => $yearmade,
-    
-//     ]);
-    
-   
-    
-//     Salesdetail::Create([
-//       'machineno'      => '101',
-//       'datedone'       => $request['datedone'],
-//       'branch'         => $request['branchnametobalance'],
-      
-//       'previoussalesfigure' => $previoussalesfigure,
-//       'previouspayoutfigure' => $previouspayoutfigure,
-    
-//       'currentsalesfigure'   =>    $machineonesales,
-//       'currentpayoutfigure'   =>   $machineonepayout,
-    
-//       'salesamount'    =>    ($machineonesales - $machineonepayout)*500,
-//       'salesfigure'    =>    $machineonesales - $machineonepayout,
-    
-//       'monthmade'    => $monthmade,
-//       'yearmade'    => $yearmade,
-      
-      
-//       'ucret' => $userid,
-    
-//     ]);
-// //// updatind the branch statement 
-// // $currentclosingbalance = \DB::table('branchstatements')->where('branchname', $inpbranch)->orderBy('id', 'Desc')->limit(1)->value('closingbalance');
-// // Salesdetail::Create([
- 
-// //   'datedone'       => $request['datedone'],
-// //   'branchname'         => $request['branchnametobalance'],
-  
-// //   'previoussalesfigure' => $previoussalesfigure,
-// //   'previouspayoutfigure' => $previouspayoutfigure,
-
-// //   'currentsalesfigure'   =>    $machineonesales,
-// //   'currentpayoutfigure'   =>   $machineonepayout,
-
-// //   'salesamount'    =>    ($machineonesales - $machineonepayout)*500,
-// //   'salesfigure'    =>    $machineonesales - $machineonepayout,
-
-// //   'monthmade'    => $monthmade,
-// //   'yearmade'    => $yearmade,
-  
-  
-// //   'ucret' => $userid,
-
-// // ]);
-// }// closing if the machine was not reset 
-
-//         }/// closing if its one Machine
-
-// }//closing if the branch sales a product fish only
 
 
 
 
 
-////////////////////////////////ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt//////////////////////////////////
 
 
 
 
 
-           
-      
-    
-    
+
+
+
+
+
+
+
+
+
+
+
     }// store close
 
 

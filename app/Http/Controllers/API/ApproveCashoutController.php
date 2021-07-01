@@ -120,7 +120,7 @@ $user->update($request->all());
         $userid =  auth('api')->user()->id;
         $userbranch =  auth('api')->user()->branch;
       $userrole =  auth('api')->user()->mmaderole;
-      $mywallet =  auth('api')->user()->mywallet;
+      $mywallet =  auth('api')->user()->branch;
       
         //
      //   $this->authorize('isAdmin'); 
@@ -129,22 +129,29 @@ $transactionno = Str::random(20);
      
 $amountrecieved = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
 $transactiondate = \DB::table('couttransfers')->where('id', '=', $id)->value('transferdate');
+$branchinaction = \DB::table('couttransfers')->where('id', '=', $id)->value('branchto');
+$approvalsatatus = \DB::table('couttransfers')->where('id', '=', $id)->value('status');
 $currentdate = date("Y-m-d H:i:s");
 
-
-$gettintthewalletbalance = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
-if($gettintthewalletbalance >= $amountrecieved)
+$gettintthewalletbalance = \DB::table('branchcashstandings')->where('branch', '=', $branchinaction)->value('outstanding');
+if($approvalsatatus != '1')
 {
 
   DB::table('couttransfers')->where('id', $id)->update(['status' => '1', 'comptime' => $currentdate, 'transactionno' => $transactionno, 'ucomplete' => $userid]);
 /////////////////////////////////////////
 $transferamount  = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
 $newtrans = \DB::table('couttransfers')->where('id', '=', $id)->value('transactionno');
-$currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
-$newbalance = $currentwalletbalance-$transferamount;
-DB::table('expensewalets')
-->where('id', $mywallet)
-->update(['bal' => $newbalance]);
+
+$currentwalletbalance  = \DB::table('branchcashstandings')->where('branch', '=', $branchinaction)->value('outstanding');
+$newbalance = $currentwalletbalance+$transferamount;
+DB::table('branchcashstandings')
+->where('branch', $branchinaction)
+->update(['outstanding' => $newbalance]);
+// $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
+// $newbalance = $currentwalletbalance-$transferamount;
+// DB::table('expensewalets')
+// ->where('id', $mywallet)
+// ->update(['bal' => $newbalance]);
 
 /// Updating the transaction
 Accounttransaction::Create([
@@ -163,6 +170,13 @@ Accounttransaction::Create([
 ]);
 }
 
+
+
 }
+
+
+
+
+
 
 }

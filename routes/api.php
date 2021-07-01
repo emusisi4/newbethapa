@@ -217,7 +217,7 @@ Route::get('pettycashaccountcurrentbalance', 'APIController@pettycashaccountcurr
 Route::get('bankaccountcurrentbalance', 'APIController@bankaccountcurrentbalance'); 
 Route::get('collectionsaccountcurrentbalance', 'APIController@collectionsaccountcurrentbalance'); 
 
-
+Route::get('mybranchwalletbalance', 'APIController@mybranchwalletbalance'); 
 
 
 

@@ -375,160 +375,63 @@ $user->update($request->all());
     {
         //
      //   $this->authorize('isAdmin'); 
-
-
-
-
-
-
-
      $userid =  auth('api')->user()->id;
-   
-   
-     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+     $userrole =  auth('api')->user()->mmaderole;
      $walletofexpense = \DB::table('madeexpenses')->where('id', $id )->value('walletexpense');
-   
-   
-  
      $transamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+     $explevel = \DB::table('madeexpenses')->where('id', $id)->value('explevel');
+     if($explevel != '1')
+     {
+     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
      $currentaccountbalancespending = \DB::table('expensewalets')->where('id', $walletofexpense)->value('bal');
+     if($approvalstate != '1')
+     {
+       if($currentaccountbalancespending >= $transamount)
+       {
+         $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+         $newwalletamountrecieving = $currentaccountbalancespending-$transamount;
+         $updatingthegivingaccount = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newwalletamountrecieving]);
+ 
+       }
+     
+ 
+     }
+     
+ }
+ 
+ 
+ 
+   if($explevel == '1')
+    {
+    $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+    $currentaccountbalancespending = \DB::table('branchcashstandings')->where('branch', $walletofexpense)->value('outstanding');
+    if($approvalstate != '1')
+    {
+      if($currentaccountbalancespending >= $transamount)
+      {
+        $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+        $newwalletamountrecieving = $currentaccountbalancespending-$transamount;
+        $updatingthegivingaccount = \DB::table('branchcashstandings')->where('branch', $walletofexpense)->update(['outstanding' =>  $newwalletamountrecieving]);
 
-if($approvalstate == 0 )
-{
-   if($currentaccountbalancespending >= $transamount)
-   {
-    $newwalletamountrecieving = $currentaccountbalancespending-$transamount;
-    $updatingthegivingaccount = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newwalletamountrecieving]);
-    $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
-
-//// working on the monthly expenses report
-
-$branchinact = \DB::table('madeexpenses')->where('id', $id)->value('branch');
-$monthmade = \DB::table('madeexpenses')->where('id', $id)->value('monthmade');
-$yearmade = \DB::table('madeexpenses')->where('id', $id)->value('yearmade');
-$datemade = \DB::table('madeexpenses')->where('id', $id)->value('datemade');
-$category = \DB::table('madeexpenses')->where('id', $id)->value('category');
-$exptype = \DB::table('madeexpenses')->where('id', $id)->value('exptype');
-$walletofexpense = \DB::table('madeexpenses')->where('id', $id)->value('walletexpense');
-///
-$totalbranchexpensesfotthemonth = \DB::table('madeexpenses')
-->where('monthmade', '=', $monthmade)
-->where('yearmade', '=', $yearmade)
-->where('branch', '=', $branchinact)
-->where('approvalstate', '=', 1)
-->sum('amount');
-/// deleting the record
-DB::table('expmothlyexpensereports')->where('branch', $branchinact)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
-/// inserting back the record
-Expmothlyexpensereport::Create([
-  'branch'      => $branchinact,
-  
-  'amount'         => $totalbranchexpensesfotthemonth,
-  'monthname'         => $monthmade,
-  'yearname'         => $yearmade,
+      }
     
-  'ucret' => $userid,
-
-]);
-/////
-$totalbranchexpensesfotthemonthcategory = \DB::table('madeexpenses')
-->where('monthmade', '=', $monthmade)
-->where('yearmade', '=', $yearmade)
-->where('category', '=', $category)
-->where('approvalstate', '=', 1)
-->sum('amount');
-/// deleting the record
-DB::table('expmonthlyexpensesreportbycategories')->where('expensecategory', $category)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
-/// inserting back the record
-Expmonthlyexpensesreportbycategory::Create([
-  'expensecategory'      => $category,
-  // 'branch'      => $branchinact,
-  'amount'         => $totalbranchexpensesfotthemonthcategory,
-  'monthname'         => $monthmade,
-  'yearname'         => $yearmade,
-    
-  'ucret' => $userid,
-
-]);
-$totalbranchexpensesfotthemonthtypes = \DB::table('madeexpenses')
-->where('monthmade', '=', $monthmade)
-->where('yearmade', '=', $yearmade)
-->where('exptype', '=', $exptype)
-->where('approvalstate', '=', 1)
-->sum('amount');
-/// deleting the record
-DB::table('expmonthlyexpensesreportbytypes')->where('expensetype', $exptype)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
-/// inserting back the record
-Expmonthlyexpensesreportbytype::Create([
-  'expensetype'      => $exptype,
-  // 'branch'      => $branchinact,
-  'amount'         => $totalbranchexpensesfotthemonthtypes,
-  'monthname'         => $monthmade,
-  'yearname'         => $yearmade,
-    
-  'ucret' => $userid,
-
-]);
-
-$newexpensebywallettotal = \DB::table('madeexpenses')
-->where('datemade', '=', $datemade)
-//->where('monthmade', '=', $monthmade)
-//->where('yearmade', '=', $yearmade)
-->where('walletexpense', '=', $walletofexpense)
-->where('approvalstate', '=', 1)
-->sum('amount');
-DB::table('expmonthlyexpensesreportbywallets')->where('datedone', $datemade)->where('walletname', $walletofexpense)->delete();
-Expmonthlyexpensesreportbywallet::Create([
-  'ucret'   => $userid,
-  'amount'=> $newexpensebywallettotal,
-  'datedone'=> $datemade,
-  'monthname'    => $monthmade,
-  'walletname'    => $walletofexpense,
-  'yearname'     => $yearmade,
-]);
-////////////////////////////////////////
-$newexpensedailytotal = \DB::table('madeexpenses')
-->where('datemade', '=', $datemade)
-//->where('monthmade', '=', $monthmade)
-//->where('yearmade', '=', $yearmade)
-//->where('walletexpense', '=', $walletofexpense)
-//->where('approvalstate', '=', 1)
-->sum('amount');
-DB::table('expdailyreports')->where('datedone', $datemade)->delete();
-Expdailyreport::Create([
-  'ucret'   => $userid,
-  'amount'=> $newexpensedailytotal,
-  'datedone'=> $datemade,
-  // // 'monthname'    => $monthmade,
-  // // 'walletname'    => $walletofexpense,
-  // 'yearname'     => $yearmade,
-]);
-
-   }/// closing if there is enough balance 
-}     ///// closing its not 0
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //   $user = Madeexpense::findOrFail($id);
-      //   $user->delete();
-      //  // return['message' => 'user deleted'];
-
-
 
     }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+    }//// closing the store
+
+
+
 }

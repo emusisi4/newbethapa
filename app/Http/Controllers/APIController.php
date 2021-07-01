@@ -998,6 +998,19 @@ public function bankaccountcurrentbalance()
  
 }
 
+public function mybranchwalletbalance()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+ return $startdate  = \DB::table('branchcashstandings')->where('branch', $userbranch)->value('outstanding');
+  
+ 
+}
 
 public function collectionsaccountcurrentbalance()
 {
@@ -2160,42 +2173,22 @@ public function getExpensestomake()
     $userrole =  auth('api')->user()->mmaderole; 
 
 
-   if($userrole == '103') 
+   if($userrole == '101') 
    {
 $data = Expense::latest('id')
-->where('collectionswallet', 1)
+->where('branchwallet', 1)
 ->get();
     return response()->json($data);
   }
-  if($userrole == '102') 
+  if($userrole != '101') 
   {
 $data = Expense::latest('id')
-->where('pettycashwallet', 1)
+//->where('pettycashwallet', 1)
 ->get();
    return response()->json($data);
  }
 
- if($userrole == '106') 
-  {
-$data = Expense::latest('id')
-->where('capitalcashwallet', 1)
-->get();
-   return response()->json($data);
- }
- if($userrole == '100') 
- {
-$data = Expense::latest('id')
-//->where('capitalcashwallet', 1)
-->get();
-  return response()->json($data);
-}
-
-  if($userrole == '900') 
-  {
-$data = Expense::latest('id')
-//->where('collectionswallet', 1)
-->get();
-   return response()->json($data);}
+ 
 
 
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -157,20 +158,45 @@ $this->validate($request,[
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
         //
      //   $this->authorize('isAdmin'); 
+     $userid =  auth('api')->user()->id;
+     $userbranch =  auth('api')->user()->branch;
+   $userrole =  auth('api')->user()->mmaderole;
+   $mywallet =  auth('api')->user()->branch;
 
+
+   $amountrecieved = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
+   $transactiondate = \DB::table('couttransfers')->where('id', '=', $id)->value('transferdate');
+   $branchinaction = \DB::table('couttransfers')->where('id', '=', $id)->value('branchto');
+   $status = \DB::table('couttransfers')->where('id', '=', $id)->value('status');
+
+   $gettintthewalletbalance = \DB::table('branchcashstandings')->where('branch', '=', $branchinaction)->value('outstanding');
+
+if($status == '1')
+{
+  $transferamount  = \DB::table('couttransfers')->where('id', '=', $id)->value('amount');
+$newtrans = \DB::table('couttransfers')->where('id', '=', $id)->value('transactionno');
+
+$currentwalletbalance  = \DB::table('branchcashstandings')->where('branch', '=', $branchinaction)->value('outstanding');
+$newbalance = $currentwalletbalance-$transferamount;
+DB::table('branchcashstandings')
+->where('branch', $branchinaction)
+->update(['outstanding' => $newbalance]);
+
+////////
+$user = Couttransfer::findOrFail($id);
+$user->delete();
+}
+if($status != '1')
+{
         $user = Couttransfer::findOrFail($id);
         $user->delete();
        // return['message' => 'user deleted'];
+}
 
     }
 

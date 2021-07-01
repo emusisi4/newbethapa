@@ -70,7 +70,7 @@ class CashCollectionController extends Controller
 
 
        $this->validate($request,[
-        'branchnametobalance'   => 'required | String |max:191',
+        'branchnametobalance'   => 'required',
         'description'   => 'required',
         'amount'  => 'required',
         'transferdate'  => 'required',
@@ -113,13 +113,6 @@ class CashCollectionController extends Controller
         //
     }
    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -138,21 +131,33 @@ $this->validate($request,[
 $user->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
      //   $this->authorize('isAdmin'); 
-
-        $user = Cintransfer::findOrFail($id);
-        $user->delete();
-       // return['message' => 'user deleted'];
-
+/////////////////////////////////////////////////////////////////////////////////////////////
+$approvalstate = \DB::table('cintransfers')->where('id', $id )->value('status');
+     $walletdeducted = \DB::table('cintransfers')->where('id', $id )->value('branchto');
+     if($approvalstate == '1')
+     {
+      $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $walletdeducted )->value('outstanding');
+      $amount = \DB::table('cintransfers')->where('id', $id)->value('amount');
+      $newbal = $thewalletbalance+$amount;
+      $result2 = \DB::table('branchcashstandings')->where('branch', $walletdeducted)->update(['outstanding' =>  $newbal]);
+      $user = Cintransfer::findOrFail($id);
+      $user->delete();
+     }
+    
+     if($approvalstate != '1')
+     {
+      // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
+      // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+      // $newbal = $thewalletbalance+$expenseamount;
+      // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
+      $user = Cintransfer::findOrFail($id);
+      $user->delete();
+     }
+      
     }
 
 

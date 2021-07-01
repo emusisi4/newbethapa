@@ -46,8 +46,8 @@ class MadeexpensesConroller extends Controller
       // return   Madeexpense::latest('id')
         ->where('del', 0)
         ->where('branch', $userbranch)
-        ->where('explevel', 8)
-       ->paginate(30);
+       // ->where('explevel', 8)
+       ->paginate(20);
       }
       if($userrole != '101')
       {
@@ -88,7 +88,7 @@ class MadeexpensesConroller extends Controller
       
 
        $this->validate($request,[
-        'expense'   => 'required | String |max:191',
+        'expense'   => 'required',
         'description'   => 'required',
         'amount'  => 'required',
         'datemade'  => 'required',
@@ -98,18 +98,18 @@ class MadeexpensesConroller extends Controller
 
 
      $userid =  auth('api')->user()->id;
-     $mywallet =  auth('api')->user()->mywallet;
+     $mywallet =  auth('api')->user()->branch;
      $dateinact = $request['datemade'];
      $yearmade = date('Y', strtotime($dateinact));
      $monthmade = date('m', strtotime($dateinact));
      //$id1  = Expense::latest('id')->where('del', 0)->orderBy('id', 'Desc')->limit(1)->value('expenseno');
      //$hid = $id1+1;
      $exp = $request['expense'];
-     $expcat = \DB::table('expenses')->where('expenseno', $exp )->value('expensecategory');
+     $expcat = \DB::table('expenses')->where('id', $exp )->value('expensecategory');
 //$expcat =  Expense::where('id', $exp)->value('expensecategory');
-     $exptyo = \DB::table('expenses')->where('expenseno', $exp)->value('expensetype');
+     $exptyo = \DB::table('expenses')->where('id', $exp)->value('expensetype');
 
-  $approvalstate = \DB::table('expenses')->where('expenseno', $exp )->value('appstate');
+  $approvalstate = \DB::table('expenses')->where('id', $exp )->value('appstate');
   if($approvalstate == '1')
 {
   $approvedstatus = 1;
@@ -120,12 +120,11 @@ if($approvalstate != '1')
 }
      $expenseamount = $request['amount'];
   //getting the wallet balance'
-  $mywalletbalance = \DB::table('expensewalets')->where('id', $mywallet )->value('bal');
+  $mywalletbalance = \DB::table('branchcashstandings')->where('branch', $mywallet )->value('outstanding');
   if($mywalletbalance >= $expenseamount)
   {
        Madeexpense::Create([
       'expense' => $request['expense'],
-     //'expenseno' => $hid,
       'description' => $request['description'],
       'amount' => $request['amount'],
       'walletexpense' => $mywallet,
@@ -145,7 +144,7 @@ if($approvalstate != '1')
   if($approvalstate == '1' )
   {
     $newwalletbalance  = $mywalletbalance-$expenseamount;
-    $result2 = \DB::table('expensewalets')->where('id', $mywallet)->update(['bal' =>  $newwalletbalance]);
+    $result2 = \DB::table('branchcashstandings')->where('branch', $mywallet)->update(['outstanding' =>  $newwalletbalance]);
 
   }
  
@@ -186,31 +185,95 @@ $user->update($request->all());
      //   $this->authorize('isAdmin'); 
      $userid =  auth('api')->user()->id;
    
-   
-     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+
+
+
+
+
      $walletofexpense = \DB::table('madeexpenses')->where('id', $id )->value('walletexpense');
-     if($approvalstate == '1')
+     $transamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
+     $explevel = \DB::table('madeexpenses')->where('id', $id)->value('explevel');
+     if($explevel != '1')
      {
-      $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
-      $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
-      $newbal = $thewalletbalance+$expenseamount;
-      $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
-      $user = Madeexpense::findOrFail($id);
-      $user->delete();
-     }
-    
+     $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+     $currentaccountbalancespending = \DB::table('expensewalets')->where('id', $walletofexpense)->value('bal');
      if($approvalstate != '1')
      {
-      // $thewalletbalance = \DB::table('expensewalets')->where('id', $walletofexpense )->value('bal');
-      // $expenseamount = \DB::table('madeexpenses')->where('id', $id)->value('amount');
-      // $newbal = $thewalletbalance+$expenseamount;
-      // $result2 = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newbal]);
-      $user = Madeexpense::findOrFail($id);
-      $user->delete();
+      //  if($currentaccountbalancespending >= $transamount)
+       {
+        //  $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+         //$newwalletamountrecieving = $currentaccountbalancespending+$transamount;
+       //  $updatingthegivingaccount = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newwalletamountrecieving]);
+         $user = Madeexpense::findOrFail($id);
+         $user->delete();
+ 
+       }
+     
+ 
      }
-      
-      
-       // return['message' => 'user deleted'];
+     if($approvalstate == '1')
+     {
+      //  if($currentaccountbalancespending >= $transamount)
+       {
+        //  $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+        $newwalletamountrecieving = $currentaccountbalancespending+$transamount;
+        $updatingthegivingaccount = \DB::table('expensewalets')->where('id', $walletofexpense)->update(['bal' =>  $newwalletamountrecieving]);
+         $user = Madeexpense::findOrFail($id);
+         $user->delete();
+ 
+       }
+     
+ 
+     }
+     
+ }
+ if($explevel == '1')
+    {
+    $approvalstate = \DB::table('madeexpenses')->where('id', $id )->value('approvalstate');
+    $currentaccountbalancespending = \DB::table('branchcashstandings')->where('branch', $walletofexpense)->value('outstanding');
+    if($approvalstate != '1')
+    {
+      // if($currentaccountbalancespending >= $transamount)
+      {
+     
+        $user = Madeexpense::findOrFail($id);
+        $user->delete();
+      }
+    
 
     }
+
+
+
+    if($approvalstate == '1')
+    {
+      // if($currentaccountbalancespending >= $transamount)
+      {
+        // $updatingthestatus = \DB::table('madeexpenses')->where('id', $id)->update(['approvalstate' => 1]);
+         $newwalletamountrecieving = $currentaccountbalancespending+$transamount;
+         $updatingthegivingaccount = \DB::table('branchcashstandings')->where('branch', $walletofexpense)->update(['outstanding' =>  $newwalletamountrecieving]);
+        $user = Madeexpense::findOrFail($id);
+        $user->delete();
+      }
+    
+
+    }
+    
+    
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+   
+   
 }
