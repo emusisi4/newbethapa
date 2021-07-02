@@ -55,18 +55,7 @@ class CurrentShopbalancingContoller extends Controller
         ->paginate(40);
       
     }
-    if($userrole == '103')
-    {
-    
-    
-    return   Shopbalancingrecord::with(['userbalancingBranch','branchinBalance'])->orderBy('datedone', 'Desc')
-    
-    // return   Shopbalancingrecord::latest('id')
-     //  return   Branchpayout::latest('id')
-     ->where('ucret', $userid)
-      ->paginate(40);
-    
-  }
+   
     }
 
    

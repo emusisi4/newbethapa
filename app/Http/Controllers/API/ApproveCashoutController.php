@@ -147,6 +147,14 @@ $newbalance = $currentwalletbalance+$transferamount;
 DB::table('branchcashstandings')
 ->where('branch', $branchinaction)
 ->update(['outstanding' => $newbalance]);
+
+/// updating the collections Account
+$collectionsaccountbalance  = \DB::table('expensewalets')->where('id', '=', 1)->value('bal');
+$newcollectionsaccountbalance = $collectionsaccountbalance-$transferamount;
+DB::table('expensewalets')
+->where('id', 1)
+->update(['bal' => $newcollectionsaccountbalance]);
+
 // $currentwalletbalance  = \DB::table('expensewalets')->where('id', '=', $mywallet)->value('bal');
 // $newbalance = $currentwalletbalance-$transferamount;
 // DB::table('expensewalets')
