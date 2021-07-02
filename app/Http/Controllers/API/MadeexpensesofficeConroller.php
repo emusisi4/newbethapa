@@ -118,7 +118,7 @@ class MadeexpensesofficeConroller extends Controller
      $monthmade = date('m', strtotime($dateinact));
        Madeexpense::Create([
       'expense' => $request['expense'],
-      'approvalstate' => 1,
+      'approvalstate' => 0,
       'description' => $request['description'],
       'amount' => $request['amount'],
       'datemade' => $request['datemade'],
@@ -133,6 +133,27 @@ class MadeexpensesofficeConroller extends Controller
     
   ]);
 $walletofexpense = $request['walletexpense'];
+
+/// Updating the expense wallet balance
+/// updating the collections Account
+// $expamt = $request['amount'];
+// $collectionsaccountbalance  = \DB::table('expensewalets')->where('id', '=', $walletofexpense)->value('bal');
+// $newwalletofexpensebalance = $collectionsaccountbalance-$expamt;
+// DB::table('expensewalets')
+// ->where('id', 1)
+// ->update(['bal' => $newwalletofexpensebalance]);
+
+
+
+
+
+
+
+
+
+
+
+
   /// updating the Monthly Expenses 
   $brancchssjh = $request['branch'];
   DB::table('expmothlyexpensereports')->where('branch', $brancchssjh)->where('yearname', $yearmade)->where('monthname', $monthmade)->delete();
