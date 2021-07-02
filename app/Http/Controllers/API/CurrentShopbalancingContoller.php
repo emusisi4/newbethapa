@@ -622,7 +622,49 @@ $user->update($request->all());
      //   $this->authorize('isAdmin'); 
      $bxn = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('branch');
      $datedonessd = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('datedone');
+///// getting the record details
 
+$branchh  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('branch');
+
+$soccersales  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('scsales');
+$onlinedeposits  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('onlinedeposits');
+$onlinewithdraw  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('onlinewithdraws');
+
+$virtualsales  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('vsales');
+$virtualpayout  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('vpay');
+$virtualcancelled  = \DB::table('shopbalancingrecords')->where('id', '=', $id)->value('vcan');
+
+
+
+
+
+
+
+$amounttoupdate = $soccersales+$onlinedeposits-$onlinewithdraw+$virtualsales-$virtualpayout-$virtualcancelled;
+ $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $branchh )->value('outstanding');
+
+ 
+ $newbal = $thewalletbalance-$amounttoupdate;
+ $result2 = \DB::table('branchcashstandings')->where('branch', $branchh)->update(['outstanding' =>  $newbal]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//$expamt = $request['amount'];
+// $collectionsaccountbalance  = \DB::table('expensewalets')->where('id', '=', $walletofexpense)->value('bal');
+// $newwalletofexpensebalance = $collectionsaccountbalance-$expamt;
+// DB::table('expensewalets')
+// ->where('id', 1)
+// ->update(['bal' => $newwalletofexpensebalance]);
         $user = Shopbalancingrecord::findOrFail($id);
         $user->delete();
 
