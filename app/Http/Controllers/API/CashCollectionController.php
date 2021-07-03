@@ -144,6 +144,14 @@ $approvalstate = \DB::table('cintransfers')->where('id', $id )->value('status');
       $amount = \DB::table('cintransfers')->where('id', $id)->value('amount');
       $newbal = $thewalletbalance+$amount;
       $result2 = \DB::table('branchcashstandings')->where('branch', $walletdeducted)->update(['outstanding' =>  $newbal]);
+
+
+/// updating the collections wallet
+$cplbal  = \DB::table('expensewalets')->where('id', 1)->value('bal');
+$newbaldddd = $cplbal-$amount;
+$reseokkl = \DB::table('expensewalets')->where('id', 1)->update(['bal' =>  $newbaldddd]);
+
+
       $user = Cintransfer::findOrFail($id);
       $user->delete();
      }
