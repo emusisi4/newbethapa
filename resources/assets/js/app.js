@@ -83,10 +83,16 @@ let routes = [
 { path: '/financereports', component: require('./components/Financereports.vue') },
 { path: '/companydetails', component: require('./components/Companydetails.vue') },
 { path: '/expensesreports', component: require('./components/Expensesreports.vue') },
+{ path: '/bethapaexpensesreports', component: require('./components/Bethapaexpensesreports.vue') },
+{ path: '/incomesdesreports', component: require('./components/Incomereports.vue') },
+
 ////////
+{ path: '/betfifancials', component: require('./components/Betfinanancials.vue')},
 { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
 { path: '/cashtransactions', component: require('./components/Cashtransactions.vue')},
 { path: '/incomes', component: require('./components/Companyincomes.vue')},
+
+
 // { path: '/shopdesdecashout', component: require('./components/Branchescashouttransactions.vue')},
   ]
   const router = new VueRouter({

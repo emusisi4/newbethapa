@@ -175,6 +175,57 @@ Shopbalancingrecord::Create([
   'ucret' => $userid,
 
 ]);
+//////////////////////////////////////////////////////
+///id, datedone, branch, machineno, openningcode, closingcode, salescode, payoutcode, profitcode, floatcode, previoussalesfigure, 
+//previouspayoutfigure, currentpayoutfigure, currentsalesfigure, totalcredits, totalcollection, resetstatus, ucret, created_at, updated_at, dorder, daysalesamount, daypayoutamount, monthmade, yearmade, bethapasoccersales,
+// bethapasoccerpayout, bethapaonlinedeposits, bethapaonlinewithdraws, bethapavirtualsales, bethapavirtualcancelled, bethapavirtualpayout
+
+
+
+ $bethapavirtualsales = \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('vsales');
+$bethapasoccersales= \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('scsales');
+ $bethapavirtualpayout = \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('vpay');
+ $bethapaonlinewithdraws = \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('onlinewithdraws');
+ $bethapaonlinedeposits = \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('onlinedeposits');
+ $bethapasoccerpayout = \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('scpayout');
+ $bethapavirtualcancelled= \DB::table('shopbalancingrecords')->where('datedone', '=', $dateinact)->where('branch', '=', $inpbranch)->sum('vcan');
+
+ DB::table('dailyreportcodes')->where('branch', $branchforaction)->where('datedone', $dateinact)->delete();
+Dailyreportcode::Create([
+ // 'machineno'    => '101',
+  'datedone'     => $request['datedone'],
+  'branch'       => $request['branchnametobalance'],
+ // 'closingcode'  => $machineoneclosingcode,
+//  'floatcode'    => $request['machineonefloat'],
+//  'openningcode' =>    $machineoneopenningcode,
+//  'salescode'    =>    $machineonesales,
+//  'payoutcode'   =>    $machineonepayout,
+//  'profitcode'   =>    $machineonesales-$machineonepayout,
+//  'previoussalesfigure'  =>    $previoussalesfigure,
+//  'previouspayoutfigure' =>    $previouspayoutfigure,
+//  'currentpayoutfigure'  =>    $todayspayout,
+//  'currentsalesfigure'   =>    $todayssaes,
+ // 'dorder'  =>    $dorder,
+  'ucret'   => $userid,
+  'totalcollection' => $totalcashout,
+  'totalcredits'=> $totalcashin,
+  'bethapavirtualpayout' =>$bethapavirtualpayout,
+  'bethapavirtualcancelled' => $bethapavirtualcancelled,
+  'bethapavirtualsales' => $bethapavirtualsales,
+  'bethapaonlinewithdraws' => $bethapaonlinewithdraws,
+  'bethapaonlinedeposits' => $bethapaonlinedeposits,
+  'bethapasoccerpayout' => $bethapasoccerpayout,
+'bethapasoccersales' => $bethapasoccersales,
+ 
+
+
+//  'daysalesamount' => $todayssaes*500,
+//  'daypayoutamount' => $todayspayout*500,
+  'monthmade'    => $monthmade,
+  'yearmade'     => $yearmade,
+
+]);
+
  //////////////////////////////////////////////////////////// updating the wallet with sales , online deposits, withdraws 
  $amounttoupdate = $soccersales+$onlinedeposits-$onlinewithdraw+$virtualsales-$virtualpayout-$virtualcancelled;
  $thewalletbalance = \DB::table('branchcashstandings')->where('branch', $branchforaction )->value('outstanding');

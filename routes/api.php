@@ -171,6 +171,8 @@ Route::apiResources(['dailyexpensesreportsummary' => 'API\Dailyexpensesreportsum
 Route::apiResources(['dailyexpensesrecords' => 'API\ExpensereportsdailyController']);
 Route::apiResources(['dailyexpensesrecordsexpcat' => 'API\ExpensesreporttoviewdetailcategoryController']);
 
+Route::apiResources(['bethapasalesreport' => 'API\BethapasalesreportController']);
+
 Route::apiResources(['salesrecs' => 'API\FishreporttoviewController']);
 Route::apiResources(['currencydetailsrecords' => 'API\CompanycurrencyController']);
 Route::apiResources(['vuecomponents' => 'API\VuecomponentsController']);
@@ -207,6 +209,20 @@ Route::get('salestotalmonthly', 'APIController@salestotalmonthly');
 Route::get('collectionsmonthly', 'APIController@collectionsmonthly'); 
 
 Route::get('dailytotalsales', 'APIController@dailytotalsales'); 
+
+Route::get('grandtotalsales', 'APIController@grandtotalsales'); 
+Route::get('grandtotalpayoutvirtualcancelled', 'APIController@grandtotalpayoutvirtualcancelled'); 
+Route::get('grandtotalpayoutvirtual', 'APIController@grandtotalpayoutvirtual'); 
+Route::get('grandtotalpayoutsoccer', 'APIController@grandtotalpayoutsoccer'); 
+Route::get('grandtotalonlinedeposits', 'APIController@grandtotalonlinedeposits'); 
+Route::get('grandtotalonlinewithdraws', 'APIController@grandtotalonlinewithdraws'); 
+Route::get('grandtotalpayoutvirtualsales', 'APIController@grandtotalpayoutvirtualsales'); 
+
+
+
+
+
+
 Route::get('dailytotalpayout', 'APIController@dailytotalpayout'); 
 Route::get('dailycollection', 'APIController@dailycollection'); 
 

@@ -1028,6 +1028,255 @@ public function collectionsaccountcurrentbalance()
 
 ////////////////////////////////////////////
 
+
+public function grandtotalonlinedeposits()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapaonlinedeposits');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapaonlinedeposits');
+        return $totalsales;
+      
+  }
+ 
+}
+public function grandtotalonlinewithdraws()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapaonlinewithdraws');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapaonlinewithdraws');
+        return $totalsales;
+      
+  }
+ 
+}
+public function grandtotalpayoutvirtualcancelled()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualcancelled');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualcancelled');
+        return $totalsales;
+      
+  }
+ 
+}
+public function grandtotalpayoutvirtualsales()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualsales');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualsales');
+        return $totalsales;
+      
+  }
+ 
+}
+
+public function grandtotalpayoutvirtual()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualpayout');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapavirtualpayout');
+        return $totalsales;
+      
+  }
+ 
+}
+
+public function grandtotalpayoutsoccer()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapasoccerpayout');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapasoccerpayout');
+        return $totalsales;
+      
+  }
+ 
+}
+
+public function grandtotalsales()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+    //  ->where('datedone', '=', $dateinquestion)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapasoccersales');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('dailyreportcodes')
+   
+       ->where('branch', '=', $branch)
+       ->whereBetween('datedone', [$startdate, $enddate])
+       ->sum('bethapasoccersales');
+        return $totalsales;
+      
+  }
+ 
+}
 public function dailytotalsales()
 {
 /// Getting the Logged in User details

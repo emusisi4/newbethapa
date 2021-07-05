@@ -14814,7 +14814,8 @@ html.maximized-card {
 		font-size:2.2rem
 	}
 	.col-lg-3 .small-box h3,.col-md-3 .small-box h3,.col-xl-3 .small-box h3 {
-		font-size:2.2rem
+		font-size:2.2rem;
+		color: #6d350f;
 	}
 }
 .small-box p {
