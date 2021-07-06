@@ -64,7 +64,7 @@ Route::apiResources(['allowedbranchanduserdatarecords' => 'API\Authorisedbrancha
 
 Route::apiResources(['correctmydaterecordsexpenses' => 'API\AutocorrectdatedetailsexpensesreportController']);
 Route::apiResources(['correctmydaterecords' => 'API\AutocorrectdatedetailsController']);
-
+Route::apiResources(['correctmydaterecordssales' => 'API\AutocorrectsalesdetailsController']);
 
 Route::apiResources(['authorisedbranchmachines' => 'API\AuthorisedbranchandmachineController']);
 Route::apiResources(['roletoaddsumenu' => 'API\RoletoaddsubmenuController']);

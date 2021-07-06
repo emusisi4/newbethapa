@@ -103,7 +103,7 @@
                  
 
          <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="900"> All </option>
+
 <option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
 
 </select>
@@ -136,8 +136,10 @@
                 </form>
                 </div>
                  
-           
+           <button type="button" v-if="allowedtoaddmainmenu > 0" class="add-newm" @click="newautocorrect" >Auto Correct Sales Details </button>
        <div class="bethapa-reportheader-header" >SALES REPORT : <i> From {{ generalreportselectedstartdate|myDate2 }} To : {{ generalreportselectedenddate|myDate2 }}</i></div> 
+         
+          
  <div class="row">
 
 
@@ -970,7 +972,7 @@
         <div class="modal-dialog modal-dialog-top modal-lg">
         <div  class="modal-content">
             <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">Correct Daily Report</h4> 
+                <h4  v-show="!editmode"    class="modal-title"><img src="images/logo.png" class="profile-user-img img-fluid img-circle" style="height: 80px; width: 80px;">CORRECT SALES DETAILS</h4> 
                 <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
                 <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
                  <form class="form-horizontal" @submit.prevent="editmode ? updatecomponentfeature():createcomponentfeature()"> 
@@ -991,7 +993,20 @@
                   </div>
                 
                 
-              
+                 <div class="form-group  row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">BRANCH</label>
+                    <div class="col-sm-6">
+               <select name ="branchname" v-model="form.branchname" id ="branchname"  class="form-control" :class="{ 'is-invalid': form.errors.has('branchname') }">
+
+<option v-for='data in brancheslist' v-bind:value='data.id'> {{ data.branchname }}</option>
+
+</select>
+                    <has-error :form="form" field="branchname"></has-error>
+                                  </div>
+                   
+      
+                  </div>
+                
 
                           
                  </div>
@@ -1370,7 +1385,7 @@ $('#addnewcomponentfeaturemodal').modal('show');
 
     createcomponentfeature(){
       this.$Progress.start();
-        this.form.post('api/correctmydaterecords')
+        this.form.post('api/correctmydaterecordssales')
         .then(()=>{
 
          
