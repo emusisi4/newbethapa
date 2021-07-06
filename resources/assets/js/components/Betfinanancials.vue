@@ -103,8 +103,8 @@
                  
 
          <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
-
-<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
+ <option value="900"> All  </option>
+<option v-for='data in brancheslist' v-bind:value='data.id'> {{ data.branchname }}</option>
 
 </select>
             <has-error :form="form" field="branchname"></has-error>
