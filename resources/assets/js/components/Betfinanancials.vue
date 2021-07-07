@@ -34,7 +34,7 @@
                       aria-controls="custom-tabs-two-home" aria-selected="true">GENERAL SALES REPORT</a>
                       <!--  v-if="dailyfishreportAccessComponent > 0" -->
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" v-if="submenuaccessComponent > 10">
                     <a class="nav-link" id="custom-tabs-two-profile-tab"
                      data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
                       @click="loadSubmenudddds()"  aria-controls="custom-tabs-two-profile" aria-selected="false">PRODUCT SALES REPORT</a>
@@ -44,7 +44,7 @@
                  
                 
                  
-                  <li class="nav-item">
+                  <li class="nav-item" v-if="submenuaccessComponent > 10" >
                     <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
                      href="#custom-tabs-two-settings" role="tab" @click="loadmonthlyperformancereport()" 
                      aria-controls="custom-tabs-two-settings" aria-selected="false">MONTHLY PERFORMANCE REPORT </a>

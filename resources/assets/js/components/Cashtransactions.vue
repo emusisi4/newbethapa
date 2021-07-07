@@ -13,7 +13,7 @@
 
         <!-- the HGeaders -->
         <br>
-    <div class="row">
+<div class="row">
       <!-- v-if="allowedtoviewcollectionsccount > 0 " -->
             <div class="col-lg-3 col-3" v-if="allowedtoviewcollectionsccount > 0 "  >
 
@@ -169,6 +169,11 @@
                    <li class="nav-item"  v-if="fishcreditaccessSetting > 0 " >
                     <a class="nav-link" id="custom-tabs-two-seven-tab" data-toggle="pill"  @click="loadfishcreditsrecords()"
                     href="#custom-tabs-two-seven" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">FISH CREDIT</a>
+                  </li>
+<!-- v-if="fishcreditaccessSetting > 0 -->
+                       <li class="nav-item" >
+                    <a class="nav-link" id="custom-tabs-two-eight-tab" data-toggle="pill"  @click="loadbranchscash()"
+                    href="#custom-tabs-two-eight" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">BRANCH STANDING</a>
                   </li>
 
                 </ul>
@@ -2625,7 +2630,7 @@
                   </div>
 
 <!-- end of tabb -->
-                    <div class="tab-pane fade" id="custom-tabs-two-seven" role="tabpanel" aria-labelledby="custom-tabs-two-seven-tab">
+ <div class="tab-pane fade" id="custom-tabs-two-seven" role="tabpanel" aria-labelledby="custom-tabs-two-seven-tab">
                     
                     
   <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
@@ -2722,6 +2727,99 @@
                     </div>
  
  <!-- tab one end -->
+ <div class="tab-pane fade" id="custom-tabs-two-eight" role="tabpanel" aria-labelledby="custom-tabs-two-eight-tab">
+                    
+                    
+  <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
+                  
+                  
+                    <div class="form-group">
+                  <label>Role</label>
+                    <select name ="roletoallow" v-model="form.roletoallow" id ="roletoallow"   :class="{'is-invalid': form.errors.has('roletoallow')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in roleslist' v-bind:value='data.id'>{{ data.id }} - {{ data.rolename }}</option>
+
+                    </select>
+                    
+
+                                <has-error :form="form" field="roletoallow"></has-error>
+
+
+                     <label>Component</label>
+                    <select name ="componentto" v-model="form.componentto" id ="componentto"   :class="{'is-invalid': form.errors.has('componentto')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in componentslist' v-bind:value='data.sysname'> ({{ data.sysname }}) - {{ data.componentname }}</option>
+
+                    </select>
+                    
+
+                                <has-error :form="form" field="componentto"></has-error>
+                       <button type="submit" id="submit" name= "submit" ref="myBtn" class="btn btn-info btn-sm">Proceed</button>
+                                    </div>
+                                </form> -->
+                  
+                       <div class="bethapa-table-header">
+                         <!-- v-if="allowedtoaddnewcashcollection > 0" -->
+                    BRANCHES CASH STANDINGS
+                     <!-- <button  type="button" class="add-newm" @click="newCashcreditfish" >Credit / Give Cash</button> -->
+                    <button type="button" class="add-newm" @click="newCashcredit" >Make Credit </button>
+                     </div>
+
+
+
+ <div class="row" v-for="cinshopt in branbalrecords.data" :key="cinshopt.id">
+ 
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+              
+
+                 <h3><b>{{cinshopt.branch_name.branchname}} </b><sup style="font-size: 20px;"></sup></h3>
+                         <h5>   <b>  {{formatPrice(mybranchwalletbalance)}} {{ (currencydetails) }}</b></h5>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        
+        </div>
+        
+                                    
+ 
+                    </div>
 
 
 <!-- Modal add menu -->
@@ -2976,6 +3074,8 @@
           shopcintransferrecords:{},
           fishcollectionrecords:{},
           fishcashcreditrecords:{},
+          branbalrecords:{},
+          branchescashstanding:{},
             allowedtoviewcollectionsccount:{},
           datarecordsSubmenusauthorised:{},
           allowedrolecomponentsObject :{},
@@ -3286,12 +3386,26 @@ loadShopbalancingrecords(){
 
 
 
+ loadbranchscash(){
+ axios.get("api/branchescashstanding").then(({ data }) => (this.branchescashstanding = data));
+     //  this.getRoles();
+     //  this.getUsertypes();
+     axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
+     axios.get("api/todayscashintotal").then(({ data }) => (this.todayscashintotal = data));
+     axios.get("api/todayscashouttotal").then(({ data }) => (this.todayscashouttotal = data));
+     axios.get("api/todaysexpensestotal").then(({ data }) => (this.todaysexpensestotal = data));
+     axios.get("api/todayspayouttotal").then(({ data }) => (this.todayspayouttotal = data));
+ },
+
+
 
 
 
 
  loadfishcreditsrecords(){
  axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
+ axios.get("api/branbalrecords").then(({ data }) => (this.branbalrecords = data));
+ 
      //  this.getRoles();
      //  this.getUsertypes();
      axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));

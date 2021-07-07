@@ -340,6 +340,9 @@ Route::apiResources(['fishcollections' => 'API\CashCollectionController']);
 // Route::apiResources(['fishcredits' => 'API\cashoutfromofficeforfish']);
 Route::apiResources(['cashoutfromofficeforfish' => 'API\CashCreditController']);
 
+Route::apiResources(['branbalrecords' => 'API\CashCollectionController']);
+
+
 Route::get('branchcashInSettings', 'APIController@branchcashInSettings');
 Route::get('rolesaccessSettings', 'APIController@rolesaccessSettings');
 Route::get('mainmenuaccessSettings', 'APIController@mainmenuaccessSettings');
