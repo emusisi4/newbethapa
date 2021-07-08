@@ -4324,6 +4324,28 @@ public function Currencysymbol()
 }
 
 }
+
+public function cashstandingaccess()
+{
+  $userid =  auth('api')->user()->id;
+  $userbranch =  auth('api')->user()->branch;
+  $userrole =  auth('api')->user()->type;
+  $assignedrole =  auth('api')->user()->mmaderole;
+
+//////////// geting the shop to balance
+//$branchto  = Branchtobalance::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branchnametobalance');
+//$dateinquestion  = Branchtobalance::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('datedone');
+$comp ='cashoutstandingcomponent';
+ $roleisallowedtoaccess = \DB::table('componentsaccesses')
+
+    ->where('componentto', '=', $comp)
+    ->where('mmaderole', '=', $assignedrole)
+    ->count();
+
+    return $roleisallowedtoaccess;
+   
+}
+
 public function branchcashInSettings()
 {
   $userid =  auth('api')->user()->id;

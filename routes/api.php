@@ -340,9 +340,9 @@ Route::apiResources(['fishcollections' => 'API\CashCollectionController']);
 // Route::apiResources(['fishcredits' => 'API\cashoutfromofficeforfish']);
 Route::apiResources(['cashoutfromofficeforfish' => 'API\CashCreditController']);
 
-Route::apiResources(['branbalrecords' => 'API\CashCollectionController']);
-
-
+Route::apiResources(['branbalrecords' => 'API\CashbalanceController']);
+Route::get('cashstandingaccess', 'APIController@cashstandingaccess');
+///axios.get("api/cashstandingaccess").then(({ data }) => (this.cashstandingaccess = data));
 Route::get('branchcashInSettings', 'APIController@branchcashInSettings');
 Route::get('rolesaccessSettings', 'APIController@rolesaccessSettings');
 Route::get('mainmenuaccessSettings', 'APIController@mainmenuaccessSettings');

@@ -170,8 +170,8 @@
                     <a class="nav-link" id="custom-tabs-two-seven-tab" data-toggle="pill"  @click="loadfishcreditsrecords()"
                     href="#custom-tabs-two-seven" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">FISH CREDIT</a>
                   </li>
-<!-- v-if="fishcreditaccessSetting > 0 -->
-                       <li class="nav-item" >
+<!--  -->
+                       <li class="nav-item" v-if="cashstandingaccess > 0">
                     <a class="nav-link" id="custom-tabs-two-eight-tab" data-toggle="pill"  @click="loadbranchscash()"
                     href="#custom-tabs-two-eight" role="tab" aria-controls="custom-tabs-two-four" aria-selected="false">BRANCH STANDING</a>
                   </li>
@@ -2727,7 +2727,7 @@
                     </div>
  
  <!-- tab one end -->
- <div class="tab-pane fade" id="custom-tabs-two-eight" role="tabpanel" aria-labelledby="custom-tabs-two-eight-tab">
+ <div class="tab-pane fade" v-if="cashstandingaccess > 0" id="custom-tabs-two-eight" role="tabpanel" aria-labelledby="custom-tabs-two-eight-tab">
                     
                     
   <!-- <form @submit.prevent="SaveRoletoaddformcomponent()">
@@ -2767,7 +2767,7 @@
 
 
 
- <div class="row" v-for="cinshopt in branbalrecords.data" :key="cinshopt.id">
+ <div class="row" v-for="ffddfdfds in branbalrecords.data" :key="ffddfdfds.id">
  
           <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -2775,8 +2775,8 @@
               <div class="inner">
               
 
-                 <h3><b>{{cinshopt.branch_name.branchname}} </b><sup style="font-size: 20px;"></sup></h3>
-                         <h5>   <b>  {{formatPrice(mybranchwalletbalance)}} {{ (currencydetails) }}</b></h5>
+                 <h3><b>{{ffddfdfds.branch_name.branchname}} </b><sup style="font-size: 20px;"></sup></h3>
+                         <h5>   <b>  {{formatPrice(ffddfdfds.outstanding)}} {{ (currencydetails) }}</b></h5>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -3056,6 +3056,7 @@
          cashcollectionaccessSetting:'',
          cashcreditaccessSetting:'',
          fishcreditaccessSetting:'',
+         cashstandingaccess:'',
          fishdebitaccessSetting:'',
          /// fish macines
          fishmachinestotal:'',
@@ -3387,7 +3388,8 @@ loadShopbalancingrecords(){
 
 
  loadbranchscash(){
- axios.get("api/branchescashstanding").then(({ data }) => (this.branchescashstanding = data));
+ axios.get("api/branbalrecords").then(({ data }) => (this.branbalrecords = data));
+  axios.get("api/cashstandingaccess").then(({ data }) => (this.cashstandingaccess = data));
      //  this.getRoles();
      //  this.getUsertypes();
      axios.get("api/shopopenningpalance").then(({ data }) => (this.shopopenningpalance = data));
@@ -3405,6 +3407,7 @@ loadShopbalancingrecords(){
  loadfishcreditsrecords(){
  axios.get("api/cashoutfromofficeforfish").then(({ data }) => (this.fishcashcreditrecords = data));
  axios.get("api/branbalrecords").then(({ data }) => (this.branbalrecords = data));
+   axios.get("api/cashstandingaccess").then(({ data }) => (this.cashstandingaccess = data));
  
      //  this.getRoles();
      //  this.getUsertypes();
@@ -3830,6 +3833,9 @@ $('#addnewcashcollection').modal('show');
 ///////////////////////
 
 balancescheck(){
+  
+   axios.get("api/branbalrecords").then(({ data }) => (this.branbalrecords = data));
+ axios.get("api/cashstandingaccess").then(({ data }) => (this.cashstandingaccess = data));
        axios.get("api/getWalletlist").then(({ data }) => (this.walletlist = data));
        axios.get("api/capitalaccountcurrentbalance").then(({ data }) => (this.capitalaccountcurrentbalance = data));
     axios.get("api/pettycashaccountcurrentbalance").then(({ data }) => (this.pettycashaccountcurrentbalance = data));

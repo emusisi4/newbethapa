@@ -10,8 +10,8 @@ use App\Submheader;
 use App\Expense;
 use App\Expensescategory;
 use App\Cintransfer;
-use App\Couttransfer;
-class CashCollectionController extends Controller
+use App\Branchcashstanding;
+class CashbalanceController extends Controller
 {
    
     public function __construct()
@@ -27,33 +27,15 @@ class CashCollectionController extends Controller
     $userrole =  auth('api')->user()->mmaderole;
      
     
-     if($userrole == '101')
-     {      
-        return   Couttransfer::with(['branchName','branchNamefrom','ceratedUserdetails','approvedUserdetails', 'statusName'])->latest('id')
-       //  return   Cintransfer::latest('id')
-      // return   Madeexpense::latest('id')
-      ->where('branchto', $userbranch)
-       ->paginate(20);
-     }
-
-     if($userrole == '103')
-     {      
-        return   Cintransfer::with(['branchName','branchNamefrom','ceratedUserdetails','approvedUserdetails', 'statusName'])->latest('id')
-       //  return   Cintransfer::latest('id')
-      // return   Madeexpense::latest('id')
-      ->where('ucret', $userid)
-       ->paginate(20);
-     }
+    
      
-     
-     if($userrole != '101' && $userrole != '103')
-     {      
-        return   Cintransfer::with(['branchName','branchNamefrom','ceratedUserdetails','approvedUserdetails', 'statusName'])->latest('id')
-       //  return   Cintransfer::latest('id')
+    
+       // return   Cintransfer::with(['branchName','branchNamefrom','ceratedUserdetails','approvedUserdetails', 'statusName'])->latest('id')
+       return   Branchcashstanding::with(['branchName'])->latest('id')
       // return   Madeexpense::latest('id')
       // ->where('branchto', $userbranch)
        ->paginate(25);
-     }
+     
     
      
 

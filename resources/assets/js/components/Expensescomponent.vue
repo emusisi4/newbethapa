@@ -147,6 +147,7 @@
 
 
 <!-- Modal add menu -->
+
 <div class="modal fade" id="addnewExpensecategorymodal">
         <div class="modal-dialog modal-dialog-centered modal-xl">
         <div  class="modal-content">

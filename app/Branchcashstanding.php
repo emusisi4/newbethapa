@@ -15,11 +15,11 @@ class Branchcashstanding extends Authenticatable
     protected $fillable = [
         'branch','outstanding','walletexpense','category','exptype', 'amount', 'datemade','ucret','branch','description','approvalstate',
     ];
-    public function branchBalance(){
+  
+    public function branchName(){
         // creating a relationship between the students model 
         return $this->belongsTo(Branch::class, 'branch'); 
     }
-
     
     
     protected $hidden = [

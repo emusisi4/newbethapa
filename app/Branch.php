@@ -25,9 +25,10 @@ class Branch extends Authenticatable
 
 
 
-    public function branchBalance(){
-      // creating a relationship between the students model 
-      return $this->hasMany(Branchcashstanding::class, 'branchname', 'id'); 
+  
+  public function branchShopbalance(){
+    // creating a relationship between the students model 
+    return $this->hasMany(Branchcashstanding::class, 'branch', 'id'); 
   }
   
   public function branchnameDailycodes(){
@@ -53,6 +54,10 @@ public function branchNamebettingproducts(){
 public function branchcintranfers(){
   // creating a relationship between the students model 
   return $this->hasMany(Cintransfer::class, 'branchno', 'branchto'); 
+}
+public function shopoutstanding(){
+  // creating a relationship between the students model 
+  return $this->hasMany(Branchcashstanding::class, 'branchno', 'branch'); 
 }
 public function branchcintranferfrom(){
   // creating a relationship between the students model 
