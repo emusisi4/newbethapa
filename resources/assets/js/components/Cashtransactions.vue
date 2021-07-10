@@ -1,4 +1,12 @@
 
+<script> 
+window.onload = function(){
+    var button = document.getElementById('clickButton');
+    button.click();
+}
+</script> 
+
+
 
 <template>
 
@@ -93,6 +101,8 @@
 
 
       </div>
+
+      
     
  <div class="bethapa-table-header"></div>
    
@@ -266,6 +276,15 @@
  
  <!-- tab one end -->
 
+  
+                  
+    <form @submit.prevent="SavetheCollectionbranch()">
+  
+  <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn89" class="btn btn-primary btn-sm">Saveit</button>
+
+                         <!-- allowedtoviewcollectionsccount -->
+
+</form>
 
 <!-- Modal add menu -->
 <div class="modal fade" id="addnewBranchmodal">
@@ -1055,7 +1074,7 @@
        
                      BRANCH BALANCING RECORD   
                      
-                     <button type="button"  class="add-newm" @click="newshopbal" >BALANCE NOW </button>
+                     <button type="button" id="clickButton" class="add-newm" @click="newshopbal" >BALANCE NOW </button>
                      </div>
 
 
@@ -2333,7 +2352,66 @@
                                 <has-error :form="form" field="branchnametobalance"></has-error>
                               </div>
 
+                        </div>  <form @submit.prevent="SavetheCollectionbranch()">
+  
+  
+   <div class="form-group">
+
+
+                
+  
+  
+                   <div class="form-group">
+                         <label><b>BRANCH&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.0em;" right > <b> {{ (shopbalancngname) }}  </b></span></span>
+                 
+                    <hr>
+                       <label><b>B/F &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></label>
+                    
+                      <span class="cell" style="color:maroon ;">  
+   
+                   <span style="font-size:1.0em;" right > <b> {{currencydetails}} {{ formatPrice(shopopenningbalancecacollectpoint) }}   </b></span></span>
+                 
+                    <hr>
+                  </div>
+
+                    
+                   
+
+                   
+                          </div>
+
+
+
+
+<div class ="bethapa-table-header">Credit Details</div>
+                  
+   <div class="form-group row">
+                   <label class="col-sm-2 col-form-label">Branch </label>
+                              <div class="col-sm-6">
+                        <select name ="branchnametobalance" v-model="form.branchnametobalance" id ="branchnametobalance" v-on:change="myClickEventdddd" class="form-control" :class="{'is-invalid': form.errors.has('branchnametobalance')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
+
+                    </select>
+                    <button type="submit" id="submit" hidden="hidden" name= "submit" ref="myBtn89" class="btn btn-primary btn-sm">Saveit</button>
+
+                                <has-error :form="form" field="branchnametobalance"></has-error>
+                              </div>
+
                         </div>
+  
+  
+  
+  
+  
+               
+ 
+</form>
+
   
   
   
@@ -2820,7 +2898,7 @@
                                     
  
                     </div>
-
+<!-- v-if="allowedtoviewcollectionsccount > 0 "  -->
 
 <!-- Modal add menu -->
 <div class="modal fade" id="addnewcashCreditfish">

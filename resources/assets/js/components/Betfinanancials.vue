@@ -218,10 +218,10 @@
                 <h3>Gross Gamming Revenue  </h3>
                 <!--  <h6><b>  Soccer : {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}}</b> </h6> -->
 <hr>
-  <h6><b>  Soccer : {{formatPrice(grandtotalsales) }} {{currencydetails}}</b> </h6>
+  <h6><b>  Soccer : {{formatPrice(grandtotalsales - grandtotalpayoutsoccer) }} {{currencydetails}}</b> </h6>
   <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
 <hr>
-           <h3>Total :  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </h3>
+           <h3>Total :  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws-grandtotalpayoutsoccer) }} {{currencydetails}} </h3>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
