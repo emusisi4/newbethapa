@@ -126,7 +126,7 @@
                 <h3>Gross Gamming Revenue (GGR) </h3>
                 <!--  <h6><b>  Soccer : {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}}</b> </h6> -->
 <hr>
-  <h6><b>  Soccer : {{formatPrice(grandtotalsales) }} {{currencydetails}}</b> </h6>
+  <h6><b>  Soccer : {{formatPrice(grandtotalsales - grandtotalpayoutsoccer) }} {{currencydetails}}</b> </h6>
   <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
 <hr>
            <h3><b>Total Revenue:  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </b></h3>
