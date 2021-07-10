@@ -129,7 +129,7 @@
   <h6><b>  Soccer : {{formatPrice(grandtotalsales - grandtotalpayoutsoccer) }} {{currencydetails}}</b> </h6>
   <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
 <hr>
-           <h3><b>Total Revenue:  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </b></h3>
+           <h3><b>Total Revenue:  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutsoccer-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </b></h3>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
