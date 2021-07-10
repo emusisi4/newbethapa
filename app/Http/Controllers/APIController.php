@@ -1134,6 +1134,81 @@ public function grandtotalpayoutvirtualcancelled()
   }
  
 }
+
+
+
+public function totalcapitalexpenses()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('madeexpenses')
+    ->where('exptype', '=', 1)
+       ->where('approvalstate', '=', 1)
+       ->whereBetween('datemade', [$startdate, $enddate])
+       ->sum('amount');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('madeexpenses')
+       ->where('exptype', '=', 1)
+       ->where('branch', '=', $branch)
+       ->where('approvalstate', '=', 1)
+       ->whereBetween('datemade', [$startdate, $enddate])
+       ->sum('amount');
+        return $totalsales;
+      
+  }
+ 
+}
+public function totaloperationalexpenses()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  $startdate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+  $enddate  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+  $branch  = \DB::table('sortlistreportaccesses')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('branch');
+  if($branch == "900")
+  {
+    $totalsales = \DB::table('madeexpenses')
+    ->where('exptype', '=', 2)
+       ->where('approvalstate', '=', 1)
+       ->whereBetween('datemade', [$startdate, $enddate])
+       ->sum('amount');
+     
+        return $totalsales;
+      
+  }
+  if($branch != "900")
+  {
+    $totalsales = \DB::table('madeexpenses')
+       ->where('exptype', '=', 2)
+       ->where('branch', '=', $branch)
+       ->where('approvalstate', '=', 1)
+       ->whereBetween('datemade', [$startdate, $enddate])
+       ->sum('amount');
+        return $totalsales;
+        
+  }
+ 
+}
 public function grandtotalpayoutvirtualsales()
 {
 /// Getting the Logged in User details
@@ -1311,6 +1386,33 @@ public function dailytotalsales()
   }
  
 }
+
+
+public function bankaccountbalance()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  return $collectionsbalance  = \DB::table('expensewalets')->where('id', 4)->value('bal');
+
+}
+public function collectionsaccountbalance()
+{
+/// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+
+     
+  $currentdate = date('Y-m-d');
+  return $collectionsbalance  = \DB::table('expensewalets')->where('id', 1)->value('bal');
+
+}
+
 public function dailytotalpayout()
 {
 /// Getting the Logged in User details

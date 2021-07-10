@@ -218,8 +218,10 @@ Route::get('grandtotalonlinedeposits', 'APIController@grandtotalonlinedeposits')
 Route::get('grandtotalonlinewithdraws', 'APIController@grandtotalonlinewithdraws'); 
 Route::get('grandtotalpayoutvirtualsales', 'APIController@grandtotalpayoutvirtualsales'); 
 
-
-
+Route::get('totaloperationalexpenses', 'APIController@totaloperationalexpenses'); 
+Route::get('totalcapitalexpenses', 'APIController@totalcapitalexpenses'); 
+Route::get('bankaccountbalance', 'APIController@bankaccountbalance'); 
+Route::get('collectionsaccountbalance', 'APIController@collectionsaccountbalance'); 
 
 
 

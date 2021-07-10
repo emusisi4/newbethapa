@@ -11,7 +11,7 @@
  <div  v-if="genrealfishreportsAccess > 0 ">
  <div class="bethapa-component-header" > </div>    
 
-   <div class="bethapa-component-header" >SYSTEM REPORTS </div>    
+   <div class="bethapa-component-header" >INCOME REPORTS </div>    
  
  
  <div>
@@ -31,36 +31,13 @@
                     <a class="nav-link active" id="custom-tabs-two-home-tab"  
                      data-toggle="pill" href="#custom-tabs-two-home" role="tab" 
                       @click="loadSubmenus()"
-                      aria-controls="custom-tabs-two-home" aria-selected="true">GENERAL SALES REPORT</a>
+                      aria-controls="custom-tabs-two-home" aria-selected="true">COMPANY INCOMES SUMMARY</a>
                       <!--  v-if="dailyfishreportAccessComponent > 0" -->
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab"
-                     data-toggle="pill" href="#custom-tabs-two-profile" role="tab"
-                      @click="loadSubmenudddds()"  aria-controls="custom-tabs-two-profile" aria-selected="false">PRODUCT SALES REPORT</a>
-                      <!--  v-if="submenuaccessComponent > 0" -->
-                  </li>
+              
                  
                  
-                
-                 
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
-                     href="#custom-tabs-two-settings" role="tab" @click="loadmonthlyperformancereport()" 
-                     aria-controls="custom-tabs-two-settings" aria-selected="false">MONTHLY PERFORMANCE REPORT </a>
-                     <!-- v-if="formfeaturesaccessComponent > 0 " -->
-                  </li>
-
-                  
-
-
-                 
-                  
-
-                   
-
-
-
+              
                 </ul>
               </div>
 
@@ -137,28 +114,22 @@
                 </div>
                  
            
-       <div class="bethapa-reportheader-header" >SALES REPORT : <i> From {{ generalreportselectedstartdate|myDate2 }} To : {{ generalreportselectedenddate|myDate2 }}</i></div> 
+       <div class="bethapa-reportheader-header" >Income Report  : <i> From {{ generalreportselectedstartdate|myDate2 }} To : {{ generalreportselectedenddate|myDate2 }}</i></div> 
  <div class="row">
 
 
 
-
-
-
-
-
-
-    <div class="col-lg-3 col-2" >
+ <div class="col-lg-4 col-4" >
             <!-- small box -->
          <div class="small-box bg-pnne">
               <div class="inner">
-                <h3>Sales Summary  </h3>
+                <h3>Gross Gamming Revenue (GGR) </h3>
                 <!--  <h6><b>  Soccer : {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}}</b> </h6> -->
 <hr>
   <h6><b>  Soccer : {{formatPrice(grandtotalsales) }} {{currencydetails}}</b> </h6>
-  <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales - grandtotalpayoutvirtualcancelled) }} {{currencydetails}} </b>  </h6>
+  <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
 <hr>
-           <h3>Total :  {{formatPrice(grandtotalsales+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}} </h3>
+           <h3><b>Total Revenue:  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </b></h3>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -166,20 +137,25 @@
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+    
 
- <div class="col-lg-3 col-2" >
+
+
+
+
+    <div class="col-lg-4 col-4" >
             <!-- small box -->
          <div class="small-box bg-pnne">
               <div class="inner">
-                <h3>Payout Summary  </h3>
+                <h3>Expenses  </h3>
+                <!--  <h6><b>  Soccer : {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}}</b> </h6> -->
 <hr>
-  <h6><b>  Soccer : {{formatPrice(grandtotalpayoutsoccer) }} {{currencydetails}}</b> </h6>
-  <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
+
+  <!-- <h6><b>  Soccer : {{formatPrice(grandtotalsales) }} {{currencydetails}}</b> </h6> -->
+  <h6> <b>  Operational  : {{formatPrice(totaloperationalexpenses) }} {{currencydetails}} </b>  </h6>
+   <h6> <b>  Capital  Exp.   : {{formatPrice(totalcapitalexpenses) }} {{currencydetails}} </b>  </h6>
 <hr>
-           <h3>Total :  {{formatPrice(grandtotalpayoutsoccer+grandtotalpayoutvirtual) }} {{currencydetails}} </h3>
-         
-          
-          
+            <h3><b>Total Expenses :  {{formatPrice(totaloperationalexpenses+totalcapitalexpenses) }} {{currencydetails}} </b></h3>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -188,8 +164,29 @@
             </div>
           </div>
 
+ <div class="col-lg-4 col-4" >
+          
+         <div class="small-box bg-pnne">
+              <div class="inner">
+                <h3>NET INCOMES   </h3>
+                      <hr>
+                        <h6><b>  Collections Account : {{formatPrice(collectionsaccountbalance) }} {{currencydetails}}</b> </h6>
+                        <h6> <b>  Bank Account       : {{formatPrice(bankaccountbalance) }} {{currencydetails}} </b>  </h6>
+                      <hr>
+                        <h3><b>Net Revenue / Profit :  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws-totaloperationalexpenses-totalcapitalexpenses) }} {{currencydetails}} </b></h3>
+ 
+      
+          
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+<!-- 
 <div class="col-lg-3 col-2" >
-            <!-- small box -->
+      
          <div class="small-box bg-pnne">
               <div class="inner">
                 <h3>Online  </h3>
@@ -207,27 +204,9 @@
               </div>
               <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div> -->
 
-    <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>Gross Gamming Revenue  </h3>
-                <!--  <h6><b>  Soccer : {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }} {{currencydetails}}</b> </h6> -->
-<hr>
-  <h6><b>  Soccer : {{formatPrice(grandtotalsales) }} {{currencydetails}}</b> </h6>
-  <h6> <b>  Virtual : {{formatPrice(grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual) }} {{currencydetails}} </b>  </h6>
-<hr>
-           <h3>Total :  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled-grandtotalpayoutvirtual-grandtotalonlinewithdraws) }} {{currencydetails}} </h3>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-    
+   
      
 
  
@@ -252,65 +231,11 @@
        
     </div>
             
-              <table class="table"  >
-                  <thead>
-                    <tr> 
-                     <th>#</th>
-                      <th>Date</th>
-                        <th>Branch</th>
-                        <th>Soccer Sales ({{currencydetails}} )</th>
-
-                         <th>Soccer Payout ({{currencydetails}} )</th>
-                           <th>Soccer Profit ({{currencydetails}} )</th>
-                              <th>Deposits ({{currencydetails}} )</th>
-                                 <th>Withdraws ({{currencydetails}} )</th>
-                                    <th>Virtual sales ({{currencydetails}} )</th>
-                                      
-                                     <th>Virtual Payout ({{currencydetails}} )</th>
-                                      <th>Virtual Profit ({{currencydetails}} )</th>
-                                         <!-- <th>GROSS LINE PROFIT ({{currencydetails}} )</th> -->
-                        
-                      </tr>
-                    
-                  </thead>
-                 
-                  <tbody>
-                    <tr>
-                       <tr v-for="submenuinfo in salesdetailsrecords.data" :key="submenuinfo.id">
-                       <td>{{submenuinfo.id}}</td>                            
-                    <td>{{submenuinfo.datedone}}</td>
-                     <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{formatPrice(submenuinfo.bethapasoccersales)}}</td>
-                        <td>{{formatPrice(submenuinfo.bethapasoccerpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapasoccersales - submenuinfo.bethapasoccerpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapaonlinedeposits)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapaonlinewithdraws)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualsales - submenuinfo.bethapavirtualcancelled)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualsales - submenuinfo.bethapavirtualcancelled -  submenuinfo.bethapavirtualpayout)}}</td>
-                         <!-- <td>{{formatPrice(submenuinfo.bethapasoccersales-submenuinfo.bethapasoccerpayout)}}</td> -->
-                   <!-- <td>{{formatPrice(submenuinfo.bethapasoccersales-bethapasoccerpayout+submenuinfo.bethapaonlinedeposits-bethapaonlinewithdraws-submenuinfo.bethapaonlinewithdraws
-                           +submenuinfo.bethapavirtualsales-submenuinfo.bethapavirtualpayout-bethapavirtualcancelled)}}</td>
-                                      
-               -->
-  </tr>
-                    
-                  </tbody>
-                  <tfoot>
-                        <tr>
-                      
-                    </tr>
-                  </tfoot>
-                </table>
+            
                   </div>
                   <!-- close of No records -->
 
-    <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="salesdetailsrecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
-                </ul>
-              </div>
-                     
+   
                  
                     </div>
                   <!-- closure of loading image -->
@@ -323,645 +248,12 @@
 
       <!-- End of Modal for -->
 <!--  -->
-  <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                   
-                   
-    <!-- tab one start -->
-  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                 
-                 <div class="bethapa-table-header">
-                 
-                 
-                       <form @submit.prevent="savedatetoseesalesreportbydate()">
-                 
-                      <div class="form-group">
-                    <label for="exampleInputEmail1">From :</label>
-                    <input v-model="form.startdate" type="date" name="startdate" :class="{ 'is-invalid': form.errors.has('startdate') }">
-                     <has-error :form="form" field="startdate"></has-error>
-       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
-      <label for="exampleInputEmail1">To :</label>
-                    <input v-model="form.enddate" type="date" name="enddate"  :class="{ 'is-invalid': form.errors.has('enddate') }">
-                     <has-error :form="form" field="enddate"></has-error>
-        <label for="exampleInputEmail1">Branch :</label>
-                 
-                 
 
-         <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="900"> All </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branchname"></has-error>
-
-
-
-    <!-- <label for="exampleInputEmail1">Order by :</label>
-              
-                 <select name ="sortby" v-model="form.sortby" id ="sortby" v-on:change="myClickEventtosavesalesreportbydate" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="">  </option>
-<option v-for='data in orderlistfordatesalesreport' v-bind:value='data.sysname'> {{ data.sortname }}</option>
-
-</select>
-            <has-error :form="form" field="sortby"></has-error> -->
-
-                              
-             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontosabemonthlyreportvie" class="btn btn-primary btn-sm">Saveit</button>         
-
-                                
-                     
-       
-       
-                   
-          </div>
-
-
-        
-
-                </form>
-                </div>
-                 
-           
-       <div class="bethapa-reportheader-header" >SALES REPORT BY PRODUCT : <i> From {{ generalreportselectedstartdate|myDate2 }} To : {{ generalreportselectedenddate|myDate2 }}</i></div> 
- <div class="row">
-
-
-
-
-
-
-
-
-
-    <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>SALES  </h3>
-
-
-        
-           <h5>   <b>{{currencydetails}}  {{formatPrice(grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) }}</b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
- <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>PAYOUT  </h3>
-
-         
-           <h5>   <b>{{currencydetails}} {{formatPrice(grandtotalpayoutsoccer+grandtotalpayoutvirtual+grandtotalonlinewithdraws) }}</b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
-
-
-    
-          <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>GROSS PROFIT  </h3>
-
-         
-           <h5>   <b>{{currencydetails}}   {{formatPrice( (grandtotalsales+grandtotalonlinedeposits+grandtotalpayoutvirtualsales-grandtotalpayoutvirtualcancelled) - (grandtotalpayoutsoccer+grandtotalpayoutvirtual+grandtotalonlinewithdraws) ) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
- 
-      
-      
-
-
-
-
-          <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>COLLECTIION  </h3>
-
-         
-           <h5>   <b> {{currencydetails}} {{formatPrice(dailycollection ) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-          
-</div>
-        
-               
-     <!-- <div v-if="selecteddatetotalsales < 1 ">
-       <h1> No Records found for this selection </h1>
-     </div> -->
-                   
-      <!-- <div v-if="selecteddatetotalsales > 0 "> -->
-<div id="axiosForm"> 
-                <div class="loader" v-if="loading">
-       
-    </div>
-            
-              <table class="table"  >
-                  <thead>
-                    <tr> 
-                     <th>#</th>
-                      <th>Date</th>
-                        <th>Branch</th>
-                        <th>Soccer Sales ({{currencydetails}} )</th>
-
-                         <th>Soccer Payout ({{currencydetails}} )</th>
-                           <th>Soccer Profit ({{currencydetails}} )</th>
-                              <th>Deposits ({{currencydetails}} )</th>
-                                 <th>Withdraws ({{currencydetails}} )</th>
-                                    <th>Virtual sales ({{currencydetails}} )</th>
-                                      
-                                     <th>Virtual Payout ({{currencydetails}} )</th>
-                                      <th>Virtual Profit ({{currencydetails}} )</th>
-                        
-                      </tr>
-                    
-                  </thead>
-                 
-                  <tbody>
-                    <tr>
-                       <tr v-for="submenuinfo in salesdetailsrecords.data" :key="submenuinfo.id">
-                       <td>{{submenuinfo.id}}</td>                            
-                    <td>{{submenuinfo.datedone}}</td>
-                     <td>   <template v-if="submenuinfo.branchname_dailycodes">	{{submenuinfo.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{formatPrice(submenuinfo.bethapasoccersales)}}</td>
-                        <td>{{formatPrice(submenuinfo.bethapasoccerpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapasoccersales - submenuinfo.bethapasoccerpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapaonlinedeposits)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapaonlinewithdraws)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualsales - submenuinfo.bethapavirtualcancelled)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualpayout)}}</td>
-                         <td>{{formatPrice(submenuinfo.bethapavirtualsales - submenuinfo.bethapavirtualcancelled -  submenuinfo.bethapavirtualpayout)}}</td>
-                        
-                  
-                                        </tr>
-              
-                    
-                  </tbody>
-                  <tfoot>
-                        <tr>
-                      
-                    </tr>
-                  </tfoot>
-                </table>
-                  </div>
-                  <!-- close of No records -->
-
-    <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="salesdetailsrecords" @pagination-change-page="paginationResultsSubmenus"></pagination>
-                </ul>
-              </div>
-                     
-                 
-                    </div>
- 
- <!-- tab one end -->
-
-
-<!-- Modal add menu -->
-<div class="modal fade" id="activatesalesdate">
-        <div class="modal-dialog modal-dialog-top modal-lg">
-        <div  class="modal-content">
-            <div  class="modal-header">
-                <h4  v-show="!editmode"    class="modal-title">ADD NEW RECORD</h4> 
-                <h4  v-show="editmode" class="modal-title" >UPDATE RECORD</h4> 
-                <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button></div> 
-                 <form class="form-horizontal" @submit.prevent="editmode ? updateSubmenu():createSubmenu()"> 
-
-                    <div  class="modal-body">
-              
-                
-                
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sub Menu</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.submenuname" type="text" name="submenuname"
-                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('submenuname') }">
-                    <has-error :form="form" field="submenuname"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Main menu</label>
-                    <div class="col-sm-6">
-                 <select name ="mainheadercategory" v-model="form.mainheadercategory" id ="mainheadercategory" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('mainheadercategory')}">
-<option value="">  </option>
-<option v-for='data in mainmenulist' v-bind:value='data.id'>{{ data.id }}. {{ data.mainmenuname }}</option>
-
-</select>
-            <has-error :form="form" field="mainheadercategory"></has-error>
-
-                                  </div>
-                   
-      
-                  </div>
-                 
-               
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Route</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.linkrouterre" type="text" name="linkrouterre"
-                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('linkrouterre') }">
-                    <has-error :form="form" field="linkrouterre"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-
-                    
-          
-                  <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Display Order</label>
-                    <div class="col-sm-6">
-                 <input v-model="form.dorder" type="number" name="dorder"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('dorder') }">
-      <has-error :form="form" field="dorder"></has-error>
-                                  </div>
-                   
-      
-                  </div>
-      <div class="form-group  row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
-                    <div class="col-sm-6">
-                <textarea v-model="form.description" type="text" name="description"
-                class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-              <has-error :form="form" field="description"></has-error>
-                                                 </div>
-                         
-                  </div>
-                          
-                 </div>
-                 
-                  <div  class="modal-footer">
-                    <button  v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button> 
-                      <button v-show="editmode" type="submit" class="btn btn-success btn-sm" >Update</button>
-                        <button  type="button" data-dismiss="modal" class="btn btn-danger btn-sm">Close</button >
-                        </div>
-                 </form>
-                       </div>
-                          </div>
-              
-
-
-                  </div>
-
-
-
-
-
-
-                  </div>
   
 
 
 <!-- mmmmmmmmmmmmmmmmmmmmmmmmmmm --><!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
 
-                  <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
-                    
-                    <div class="bethapa-table-header">
-   <form @submit.prevent="savethemonthlyreportforallbranches()">
-                 
-                      <div class="form-group">
-              
-
-       <input v-model="form.actionaidsalesreportbydate" type="hidden" readonly="" name="actionaidsalesreportbydate">
-    
-
-
- <label for="exampleInputEmail1">Month :</label>
-                 
-                 
-
-         <select name ="monthname" v-model="form.monthname" id ="monthname"  :class="{'is-invalid': form.errors.has('monthname')}">
-<option value="">  </option>
-<option v-for='data in montheslist' v-bind:value='data.monthno'> {{ data.monthname }}</option>
-
-</select>
-            <has-error :form="form" field="monthname"></has-error>
-
- <label for="exampleInputEmail1">Year  :</label>
-                 
-                 
-
-         <select name ="yearname" v-model="form.yearname" id ="yearname"  :class="{'is-invalid': form.errors.has('yearname')}">
-<option value="">  </option>
-<option v-for='data in yearslist' v-bind:value='data.id'> {{ data.yearname }}</option>
-
-</select>
-            <has-error :form="form" field="yearname"></has-error>
-
-  <label for="exampleInputEmail1">Branch :</label>
-                 
-                 
-
-         <select name ="branchname" v-model="form.branchname" id ="branchname" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortby')}">
-<option value="900"> All </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'> {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branchname"></has-error>
-<!--       
-    <label for="exampleInputEmail1">Sort by</label>
-              
-                 <select name ="sortreportby" v-model="form.sortreportby" id ="sortreportby" v-on:change="myClickEventtosavemonthlyreportallbranches" :class="{'is-invalid': form.errors.has('sortreportby')}">
-<option value="">  </option>
-<option v-for='data in monthreportslist2' v-bind:value='data.sysname'> {{ data.sortname }}</option>
-
-</select>
-            <has-error :form="form" field="sortreportby"></has-error> -->
-
-                              
-             <button type="submit" id="submit" hidden="hidden" name= "submit" ref="theButtontotosalesreportmonthly" class="btn btn-primary btn-sm">Saveit</button>         
-
-                                
-                     
-       
-       
-                   
-          </div>
-
-
-        
-
-                </form>                     </div>
-
-          
-             <!-- <div v-if="selectedmonthlyreport < 1 ">
-       <h1> No Records found for this selection </h1>
-     </div> -->
-        <!-- axios.get("api/selectedreporttype").then(({ data }) => (this.selectedreporttype = data));             -->
-      <!-- <div v-if="selectedreporttype =='salesreport' "> -->
-        <div>
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '01'" > BRANCHES MONTHLY REPORT : January - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '02'" > BRANCHES MONTHLY REPORT : Febuary - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '03'" > BRANCHES MONTHLY REPORT : March - {{mothlyreportyear}} </div>   
- <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '04'" > BRANCHES MONTHLY REPORT : April - {{mothlyreportyear}} </div>   
-
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '05'" > BRANCHES MONTHLY REPORT : May - {{mothlyreportyear}} </div>    
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '06'" > BRANCHES MONTHLY REPORT : June - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '07'" > BRANCHES MONTHLY REPORT : July - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '08'" > BRANCHES MONTHLY REPORT : August - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '09'" > BRANCHES MONTHLY REPORT : September - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '10'" > BRANCHES MONTHLY REPORT : October - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '11'" > BRANCHES MONTHLY REPORT : November - {{mothlyreportyear}} </div>   
-  <div class="bethapa-reportheader-header" v-if="mothlyreportmonth == '12'" > BRANCHES MONTHLY REPORT : December - {{mothlyreportyear}} </div>   
-  <div>
-<div class="row">
-
-
-      <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>SALES  </h3>
-
-         
-           <h5>   <b> {{currencydetails}} {{formatPrice(totalmonthlysalesselectedreport) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
- 
-     
-     
-          
-        <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>PAYOUT  </h3>
-
-         
-           <h5>   <b>{{currencydetails}} {{formatPrice(totalmonthlypayoutselectedreport) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
-       <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>GGR  </h3>
-
-         
-           <h5>   <b>{{currencydetails}}  {{formatPrice(totalmonthlysalesselectedreport-totalmonthlypayoutselectedreport ) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
- 
-
-
-
-
-
-
-
-
-
-
-      <div class="col-lg-3 col-2" >
-            <!-- small box -->
-         <div class="small-box bg-pnne">
-              <div class="inner">
-                <h3>COLLECTIONS  </h3>
-
-         
-           <h5>   <b>{{currencydetails}}  {{formatPrice(totalmonthlycollectionsselectedreport ) }} </b> </h5>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-
- 
-
-
-
-
-
-
-
-          
-</div>
-        </div>
-        <div id="axiosForm"> 
-                <div class="loader" v-if="loading">
-       
-    </div>
-         
-              <table class="table"  >
-                  <thead>
-                    <tr> 
-                                      
-                        <th>BRANCH</th>
-                        <th>TOTAL SALES ( {{currencydetails}} )</th>
-                        <th>TOTAL PAYOUT ( {{currencydetails}} )</th>
-                        <th>GGR ( {{currencydetails}} )</th>
-                        <th> COLLECTIONS ( {{currencydetails}} )</th>
-                        <th> CREDITS ( {{currencydetails}} )</th>
-                     
-                        <th> EXPENSES ( {{currencydetails}} )</th>
-                        <th>NET PROFIT ( {{currencydetails}} )</th>
-                          
-                      </tr>
-                    
-                  </thead>
-                 
-                  <tbody>
-                    <tr>
-                       <tr v-for="mrhdghh in allbranchesmreports.data" :key="mrhdghh.id">
-                                             
-                    
-                     <td>   <template v-if="mrhdghh.branchname_dailycodes">	{{mrhdghh.branchname_dailycodes.branchname}}</template></td>  
-                     <td>{{formatPrice(mrhdghh.sales)}}</td>
-                     <td>{{formatPrice(mrhdghh.payout)}}</td>
-                      <td>{{formatPrice(mrhdghh.profit)}}</td>
-                      <td>{{formatPrice(mrhdghh.collections)}}</td>
-                      <td>{{formatPrice(mrhdghh.credits)}}</td>
-                      <td>{{formatPrice(mrhdghh.expenses)}}</td>
- <td>{{formatPrice(mrhdghh.ntrevenue)}}</td>
-                    <!-- <td>
-
-
-        
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-info"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount)/salestotalmonthly)*100) }} % </div>
-         
- </div> -->
-      
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-danger"
-         role="progressbar"
-         v-bind:style="{ width: Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daypayoutamount)/payoutmonthly)*100) }} % </div>
-         
- </div> -->
-
-       
- <!-- <div class="progress" style="height: 25px; font-size: 19px;">
-    <div
-         class="progress-bar progress-bar-striped bg-success"
-         role="progressbar"
-         v-bind:style="{ width: Math.round( ((monthrecs.daysalesamount)/salestotalmonthly)*100 )+ '%'}"
-         v-bind:aria-valuenow="value"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         >  {{Math.round(((monthrecs.daysalesamount - monthrecs.daypayoutamount)/salestotalmonthly)*100) }} % </div>
-         
- </div> -->
-
-<!-- {{formatPrice(submenuinfo.currentsalesfigure *500)}} -->
-
-
-
-
-
-
-
-<!-- 
-                    </td> -->
-                                        </tr>
-              
-                    
-                  </tbody>
-                  <tfoot>
-                        <tr>
-                      
-                    </tr>
-                  </tfoot>
-                </table>
-      </div>
-
-
-
-    <div class="card-footer">
-                <ul class="pagination pagination-sm m-0 float-right">
-                   <pagination :data="componentfeaturesrecords" @pagination-change-page="paginationResultscomponentfeatures"></pagination>
-                </ul>
-              </div>
-                     
-                 
-                    </div>
-                  </div>
  <!-- tab one end -->
 
 
@@ -1114,8 +406,11 @@ grandtotalpayoutsoccer:null,
 grandtotalonlinedeposits:null,
 grandtotalonlinewithdraws:null,
 grandtotalpayoutvirtualsales:null,
+collectionsaccountbalance:null,
+bankaccountbalance:null,
 
-
+totaloperationalexpenses:null,
+totalcapitalexpenses:null,
 
 
 grandtotalsales:null,
@@ -2045,6 +1340,14 @@ axios.get("api/grandtotalonlinewithdraws").then(({ data }) => (this.grandtotalon
  
  axios.get("api/grandtotalpayoutvirtualsales").then(({ data }) => (this.grandtotalpayoutvirtualsales = data));
   axios.get("api/bethapasalesreport").then(({ data }) => (this.salesdetailsrecords = data));
+
+ axios.get("api/totalcapitalexpenses").then(({ data }) => (this.totalcapitalexpenses = data));
+  axios.get("api/totaloperationalexpenses").then(({ data }) => (this.totaloperationalexpenses = data));
+
+ axios.get("api/collectionsaccountbalance").then(({ data }) => (this.collectionsaccountbalance = data));
+  axios.get("api/bankaccountbalance").then(({ data }) => (this.bankaccountbalance = data));
+
+
 
   },
 
