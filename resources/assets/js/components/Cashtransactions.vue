@@ -1331,7 +1331,7 @@ window.onload = function(){
 
                             <label class="col-sm-2 col-form-label">Cancelled </label>
                               <div class="col-sm-6">
-                          <input v-model="form.vcan" value="0" readonly="true" type="text" name="vcan"
+                          <input v-model="form.vcan" value="0"  type="text" name="vcan"
         class="form-control" :class="{ 'is-invalid': form.errors.has('vcan') }">
       <has-error :form="form" field="vcan"></has-error>
                               </div>
@@ -1759,7 +1759,7 @@ window.onload = function(){
 
                             <label class="col-sm-2 col-form-label">Cancelled </label>
                               <div class="col-sm-6">
-                          <input v-model="form.vcan"  readonly="true" type="text" name="vcan"
+                          <input v-model="form.vcan"   type="text" name="vcan"
         class="form-control" :class="{ 'is-invalid': form.errors.has('vcan') }">
       <has-error :form="form" field="vcan"></has-error>
                               </div>
